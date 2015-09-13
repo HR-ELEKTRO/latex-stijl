@@ -1,0 +1,503 @@
+\chapter[Gebuik \LaTeX{}-stijl Hogeschool Rotterdam]{Gebuik \LaTeX{}-stijl \\ Hogeschool Rotterdam}
+
+\lstdefinestyle{lstyle}{
+	language={[AlLaTeX]TeX}, 
+    stringstyle=,
+    keywordstyle=,
+    identifierstyle=,
+    commentstyle=,  
+}
+
+\newcommand{\lcode}[2][]{%
+    \lstinline[
+        style=lstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newenvironment{llstShortInline}{%
+    \lstMakeShortInline[
+        style=lstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{
+    \lstDeleteShortInline{|}%
+}
+
+% vanaf hier handige afkorting |bla| voor \lcode{bla} maar pas op: werkt niet in footnotes, captions etc
+\begin{llstShortInline}
+
+% verwijzingen naar specifiek deel van \cite{lshort}
+% #1 OPTIONEEL = naam van deel, b.v. chapter, section, subsection, enz (default = "section") 
+% #2 = nummer van deel, bijvoorbeeld 6.2
+\makeatletter
+\newcommand{\lshortdeel}[2][section]{%
+    \@saveurlcite{lshort}%
+    \edef\@savedurldeel{\@savedurl\#nameddest=#1.#2}%
+    \href{\@savedurldeel}{#2}%
+}
+\makeatother
+
+\newcommand{\lshortcitechapter}[1]{\citepdfdeel{chapter}{hoofdstuk~}{lshort}{#1}}
+\newcommand{\lshortcitesection}[1]{\citepdfdeel{section}{paragraaf~}{lshort}{#1}}
+\newcommand{\lshortcitesubsection}[1]{\citepdfdeel{subsection}{paragraaf~}{lshort}{#1}}
+
+In dit hoofdstuk wordt het gebruik van de \LaTeX{}-stijl |style_nl_NL| toegelicht. Ik ga er daarbij vanuit dat je al goed bekend bent met \LaTeXe{}. Als je een opfrisser nodig hebt dan kan ik de, online beschikbare, introductie \citetitle{lshort} \cite{lshort} van harte aanbevelen. Als je haast hebt, kun je volstaan met het lezen van paragrafen \lshortdeel{1.3}, \lshortdeel{1.8}, \lshortdeel{2.1}, \lshortdeel{2.6}, \lshortdeel{2.7}, \lshortdeel{2.9}, \lshortdeel{2.10}, \lshortdeel[subsection]{2.11.1} en \lshortdeel[subsection]{2.11.3}.
+
+Let er wel op dat sommige paragrafen in \cite{lshort} niet relevant zijn als je de in deze \MakeLowercase\documenttype{} beschreven stijl gebruikt. Bijvoorbeeld: \lshortcitesubsection{2.4.1} kan worden vervangen door \cref{sec:aanhalingstekens}, \lshortcitesubsection{2.4.9} is overbodig vanwege de in deze stijl gebruikte karakter encoding, zie \csecref{sec:karakterencoding}, \lshortcitesection{2.8} wordt \squote{overruled} door \csecref{sec:verwijzingen}, \lshortcitesubsection{2.11.5} wordt vervangen door \csecref{sec:listings}, \lshortcitesubsection{2.11.6} wordt vervangen door \csecref{sec:tabellen} en \lshortcitesection{2.12} wordt vervangen door \csecref{sec:figuren,sec:tabellen}. 
+
+Als je een document gaat maken waar wiskundige formules in voorkomen dan raad ik je aan om ook \lshortcitechapter{3} te lezen. De package |asmmath| die beschreven wordt in dit hoofdstuk wordt ook in deze \MakeLowercase\documenttype{} beschreven stijl gebruikt. De in paragrafen~\lshortdeel[subsection]{3.5.2} en \lshortdeel[subsection]{3.5.3} van \cite{lshort} beschreven package |IEEEtrantools| moet je, als je deze wilt gebruiken, zelf opnemen in je document. 
+
+Tot slot van deze paragraaf, wil ik iedereen met voldoende tijd en historisch besef aanraden om het originele \LaTeX{}-boek \citetitle{latex} van \citeauthor{latex} \cite{latex} te lezen.
+
+\section{Structuur}
+Deze \MakeLowercase\documenttype{} bestaat uit een master document genaamd |main.tex|. De \enquote{stijl} van het document wordt bepaald in de preamble en is in een apart bestand geplaatst genaamd |style_nl_NL.tex|. Er is ook een style voor Engelse documenten |style_en_US.tex|, zie \csecref{sec:enlishstyle}. Veel documenten binnen een opleiding Elektrotechniek zullen programmeercode (C, MATLAB, enz) bevatten. De specifieke commando's die daarvoor gebruik kunnen worden zijn in een apart bestand geplaatst genaamd |styleCode.tex|. De figuren zijn geplaatst in het directory |./figs| en de programma's zijn geplaatst in het directory |./progs|.
+
+Er is een makefile waarmee je het dictaat kunt compileren in twee versies: een papieren en een ebook versie. De papieren versie is bedoeld om dubbelzijdig te printen, heeft een bindmarge, hoofdstukken beginnen op oneven pagina's en links hebben geen kleur (klikken op papier werkt namelijk niet), maar werken wel (voor het geval iemand toch liever deze versie elektronisch leest). De ebook versie is enkelzijdig en heeft gekleurde links. De makefile maakt daarbij gebruik van het bestand |args.tex| om argumenten aan de \LaTeX\hyp{}code mee te geven. Als je \emph{géén} gebruik maakt van de makefile, kun je deze opties zelf aanpassen in |args.tex|. Als je \emph{wél} gebruik maakt van de makefile, dan worden deze opties vanuit de makefile overschreven en moet je de opties dus in de makefile aanpassen.
+
+De volgende opties zijn beschikbaar:
+\begin{itemize}
+    \item |\ebookfalse|; Om de papieren versie te compileren.
+    \item |\ebooktrue|; Om de ebook versie te compileren.
+    \item |\chartertrue|; Om te kiezen voor de lettertypes Charter en Bera Sans. 
+    \item |\timestrue|; Om te kiezen voor de lettertypes Times Roman en Helvetica.
+\end{itemize}
+
+Als beide opties |\chartertrue| en |\timestrue| niet gebruikt worden, dan worden de standaard Computer Modern lettertypes van \LaTeX{} gebruikt.
+
+In de makefile maak ik (uiteraard) gebruik van \LaTeX{}\hyp{}commando's en ook van enkele eenvoudige Unix commando's. Ik maak gebruik van Biber in plaats van BibTeX omdat Biber UTF8 ondersteund. De paden naar deze executables moeten waarschijnlijk aangepast worden als je gebruik wilt maken van mijn makefile.
+
+\lstinputfragment[
+    language={make},
+    linerange={15-16}, 
+]{../makefile}
+
+Als je in de het dictaat onderscheid wilt maken tussen de ebook en de papieren versie, dan kan dat door gebruik te maken van |\iftoggle{ebook}|. De code:
+
+\begin{lstfragment}[style=lstyle]
+Dit is de \iftoggle{ebook}{ebook}{papieren} versie van dit dictaat.
+\end{lstfragment}
+
+geeft de volgende uitvoer: 
+Dit is de \iftoggle{ebook}{ebook}{papieren} versie van dit dictaat.
+
+De stijl file kan zowel gebruikt worden voor de documentclass book als article. Voordat |style_nl_NL.tex| wordt ingelezen moeten de commando's: |\myClass|, |\modulecode|, |\titel|, |\documenttype|, |\huidigeversie| en |\auteurs| gedefinieerd zijn.
+
+Bijvoorbeeld:
+\lstinputfragment[
+	style=lstyle,
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+	linerange={neededcommands-neededcommands},
+]{../main.tex}
+
+In een book begint elk hoofdstuk op een nieuwe pagina, in een article niet. De class article kun je gebruiken voor eenvoudige documenten zoals bijvoorbeeld een modulewijzer.
+%TODO voorbeeld toevoegen. 
+
+Als je de de commando's |\frontmatter| en |\mainmatter| gebruikt in een book, dan worden de pagina's tussen deze twee commando's (in de papieren versie) Romeins genummerd. In de ebook versie worden de pagina's altijd gewoon doorgenummerd zodat het paginanummer dat door de reader wordt weergegeven overeenkomt met het werkelijke paginanummer.
+
+\section{Titelpagina}
+Een titelpagina kun je eenvoudig maken met het commando |\titelpagina|. Bijvoorbeeld:
+\lstinputfragment[
+	style=lstyle,
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+	linerange={titelpagina-titelpagina},
+]{../titlepage.tex}
+
+Dit commando heeft één argument: de filenaam van het plaatje (zonder extensie) dat zich in het directory |./figs| moet bevinden. Neem een vectorplaatje of een rasterplaatje met een hoge resolutie (minstens 1024 pixels breed). De hoogte moet ongeveer $\frac{1}{2}\times$ de breedte zijn. Denk ook aan de copyrights als je het document wilt publiceren. 
+
+Dit commando maakt gebruik van de commando's |\modulecode|, |\titel|, \hcode[style=lstyle]{\\docu\\-ment\\-type}, |\huidigeversie| en |\auteurs|. Het logo (\hcode{./figs/\\-logo\\-HR.png}) en vervagende logo \hcode{./figs/\\-logo\\-HR\\-fade\\-top.png}) zijn hard gecodeerd in de stijl maar kunnen daar natuurlijk wel aangepast worden. Deze bestanden moeten aanwezig zijn in het |./figs| directory.
+
+\section{Versiehistorie}
+Een tabel waarin de versiehistorie staat weergegeven kan eenvoudig aangemaakt worden met het commando |\versiehistorie|. Dit commando maakt gebruik van een |\longtabu| wat ervoor zorgt dat het geen probleem is als de tabel langer is dan een pagina. De tabel heeft 4 kolommen: Datum, Versie, Omschrijving en Auteur. De kolommen moeten gescheiden worden door een |&|-teken (zoals gebruikelijk bij tabellen in \LaTeX{}). Gebruik |\\ \line| om de rijen te scheiden. Het is de bedoeling dat de meest recente versie bovenaan in de tabel komt.
+
+In de kolom Auteur kun je gebruik maken van het commando |\mailafko| om de standaard HR afkorting van de auteur aanklikbaar te maken. Door het aanklikken van de afkorting kan de auteur eenvoudig worden gemaild.  
+
+Als je in de kolom Omschrijving gebruik wilt maken van een puntsgewijze lijst dan moet je gebruik maken van de environment |itemizeintabu| omdat omdat |\baslineskip| wordt aangepast in |\tabu|.
+
+De versiehistorie van dit document ziet er in \LaTeX{}-code als volgt uit:
+\lstinputfragment[
+	style=lstyle,
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+	linerange={versiehistorie-versiehistorie},
+]{../titlepage.tex}
+
+\section{Licentie}
+ Onder de versiehistorie kan de licentie voor het gebruik van het document vermeld worden. Ik adviseer om gebruik te maken van de Creative Commons Naams\-ver\-mel\-ding\hyp{}Niet\-Com\-mer\-cieel\hyp{}Ge\-lijk\-De\-len 3.0 Nederland\hyp{}licentie. Dit kan als volgt in de \LaTeX{}-code worden opgenomen:
+ \lstinputfragment[
+ 	style=lstyle,
+     rangebeginprefix= \%>,
+     rangeendprefix=\%<,
+ 	linerange={licentie-licentie},
+ ]{../titlepage.tex}
+ 
+ \section{Karakter encoding}
+ \label{sec:karakterencoding}
+Ik gebruik UTF8 source encoding, dit maakt het eenvoudig om karakters zoals ëïéè enz.\ in te voeren.\footnote{%
+    Om er voor te zorgen dat de spatie achter enz.\ niet als een spatie aan het einde van de zin wordt gezien moet je de code \code[language={[AlLaTeX]TeX}]{enz.\\ } gebruiken. Anders wordt de spatie na enz.\ te ver opgerekt. Maar dat wist je natuurlijk al lang.
+}
+
+\section{Afbreken van woorden}
+Woorden met een koppelteken worden in \LaTeX{} alleen afgebroken bij dat koppelteken. Dat geeft soms niet van die mooie resultaten. 
+
+Bijvoorbeeld de zin: heel heel erg veel data-elementen data-elementen data-elementen data-elementen data-elementen en data-elementen data-elementen data-elementen data-elementen data-elementen data-elementen data-elementen data-elementen en data-elementen wordt \enquote{vreemd} afgebroken. 
+
+De voorgaande zin geeft in de ebook versie twee overfull hboxen (de regels komen aan de rechterkant buiten de kantlijn terecht. Dit heb ik opgelost door het commando |\hyp{}| te definiëren. Als je de koppeltekens door dit commando vervangt, wordt het woord wel op andere plaatsen afgebroken. 
+
+Bijvoorbeeld de zin: heel heel erg veel data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen en data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen en data\hyp{}elementen wordt correct afgebroken.
+
+Als je Engelse woorden gebruikt in een Nederlands dictaat, dan worden die op een Nederlandse manier afgebroken. Om deze woorden correct af te laten breken moet je ze markeren. Dit kan eenvoudig gedaan worden met het  commando |\USE| dat in de stijl gedefinieerd is.
+
+\section{Afbreken van pagina's}
+Om weduwen (enkele regels aan de bovenkant van een pagina) en wezen (enkele regels aan het einde van een pagina) te voorkomen gebruik ik de package |nowidow| met een optie waarbij er altijd 2 regels bijeen gehouden worden. Het commando \code[mathescape]{\\noclub[$n$]} kan meteen na een paragraaf gebruikt worden om aan te geven dat de eerste $n$ regels van deze paragraaf bij elkaar moeten blijven en het commando \code[mathescape]{\\nowidow[$m$]} kan meteen na een paragraaf gebruikt worden om aan te geven dat de laatste $m$ regels van deze paragraaf bij elkaar moeten blijven. In het verleden gebruikte ik de package |needspace| maar |nowidow| is veel handiger omdat je daarmee  \squote{automatisch} weduwen en wezen kunt voorkomen. Package |needspace| kan nog steeds van pas komen als je meerdere paragrafen bij elkaar wilt houden maar deze package is niet in |style_nl_NL.tex| opgenomen.
+
+De papieren versie is two-sided en gebruikt standaard |\flushbottom| wat ervoor zorgt dat de inhoud van een pagina verticaal verdeeld wordt over de pagina door rubber spaces (ruimte tussen paragrafen en rondom floats) op te rekken. Als je dit niet wilt, dan moet je het commando |\raggedbottom| ergens in het begin van je document gebruiken. De ebook versie is one-sided en gebruikt standaard |\raggedbottom|.
+
+\section{Aanhalingstekens}
+\label{sec:aanhalingstekens}
+Als je een woord tussen dubbele aanhalingtekens wilt plaatsen, dan kun je dat, zoals je vast wel weet, in \LaTeX{} niet doen door het teken |"| te gebruiken omdat dit teken gebruikt wordt om karakters van een trema te voorzien. De code |"extra"| geeft dus "extra". Omdat ik UFT8 code gebruik kun je een ë gewoon intypen als |ë|. Het probleem met de aanhalingstekens kun je oplossen door de code |``trema''|: ``trema'' maar in de stijl is het commando |\dquote| gedefinieerd waarmee je ook dubbele aanhalingstekens om een tekstfragment kunt plaatsten. Bijvoorbeeld: |\dqoute{trema}| geeft: \dquote{trema}. Omdat in dit commando gebruik gemaakt wordt van de package |csquote| is het nu gemakkelijker om de stijl van de aanhalingstekens te veranderen (bijvoorbeeld in oldschool Nederlandse aanhalingstekens: ,,oudhollandse aanhalingstekens''), dit kun je dan doen door de parameter van de package |csquote| aan te passen.
+
+Naast het commando |\dquote| is er ook het commando |\squote| waarmee een tekstfragment van enkele aanhalingstekens kan worden voorzien.
+
+Volgens het genootschap Onze Taal gebruik je dubbele aanhalingstekens alleen om een letterlijk citaat weer te geven\footnote{\url{https://onzetaal.nl/taaladvies/advies/aanhalingstekens-dubbele-aanhalingstekens}} en gebruik je enkele aanhalingstekens in alle andere gevallen zoals: als alternatief voor cursivering, voor ironisch bedoelde woorden, bij een gefingeerd citaat en bij een citaat binnen een citaat\footnote{\url{https://onzetaal.nl/taaladvies/advies/enkele-aanhalingstekens}}.
+
+Het gebruik van aanhalingstekens in het Engels wijkt hier erg vanaf (zie: \csecref{sec:quotes}).
+
+\section{Figuren}
+\label{sec:figuren}
+Er zijn verschillende soorten figuren die je in een document kunt gebruiken: figuren van internet en zelfgemaakte figuren. Je kunt figuren zelf maken in \LaTeX{} zelf maar ook m.b.v. andere software (zoals: PowerPoint, Visio, Inkscape, MATLAB, enz.). Figuren moeten voorzien zijn van een titel en een label (zodat je ernaar kunt verwijzen, zie \csecref{sec:verwijzingen}). Als je voor figuren een vectorafbeelding gebruikt, dan schaalt dat figuur mooi mee als je inzoomt in het document.
+
+Figuren die niet in \LaTeX{} zelf gemaakt zijn bevinden zich in een apart bestand (met bijvoorbeeld de extensie |.pdf|, |.png| of |.jpg|). Er wordt vanuit gegaan dat deze in de directory |./figs| worden geplaatst. Ook wordt ervan uitgegaan dat het bestand alleen het kale figuur bevat (dus zonder titel of kader) en dat er zoveel mogelijk witruimte om het figuur heen verwijderd is.   
+
+Omdat ik de standaard door \LaTeX{} gebruikte witruimte boven en onder een figuur niet zo mooi vind en om er voor te zorgen dat de gebruiker van deze stijl niet vergeet om een titel en label op te geven is het commando |\figuur| in de stijl opgenomen.
+
+Dit commando heeft vier parameters waarvan de eerste optioneel\footnote{Optionele argumenten worden in \LaTeX{} tussen rechte haken opgegeven, verplichte argumenten worden tussen accolades opgegeven. Het \lcode{\\figuur} commando heeft dus de volgende vorm: \hcode{\\figuur\[arg1\]\{arg2\}\{arg3\}\{arg4\}}.} is. De eerste parameter bevat de \squote{placement} argumenten voor de |\figure| environment. Bijvoorbeeld |tb| of |H|, de default waarde is |!htbp|. \LaTeX{} zal dan de figuur proberen te plaatsen op de plaats waar de figuur gedefinieerd is in de code, als dat niet lukt aan de bovenkant van een pagina zo dicht mogelijk bij die plaats, als dat niet lukt aan de onderkant van een pagina zo dicht mogelijk bij die plaats en als dat niet lukt op een pagina met verzamelde figuren. Deze parameter moet alleen in uitzonderlijke gevallen gebruikt worden. We gebruiken niet voor niets \LaTeX{} om ons document vorm te geven: laat \LaTeX{} zijn werk doen, bijna altijd levert dit een betere layout dan handmatig \squote{gepiel}. 
+Het tweede argument is (zijn) de optie(s) voor het |\includegraphics| commando. Bijvoorbeeld |heigth=5cm|, |scale=1.5|, of |width=.9\textwidth|. Het opgeven van de breedte als een factor van de tekstbreedte zorgt ervoor dat het figuur altijd past (zowel in de papieren als in de ebook versie). Het opgeven van een absolute waarde zorgt ervoor dat het figuur altijd even groot is. 
+De derde parameter is de filenaam (zonder extensie). Dit bestand moet in het directory |./figs| geplaatst zijn. De filenaam wordt ook als deel van het label gebruikt: het label wordt |fig:filenaam|. Dit heeft wel als consequentie dat de filenaam geen tekens mag bevatten die niet in een \LaTeX{} label gebruikt mogen worden. De laatste parameter is de titel van het figuur.
+
+De code: |\figuur{width=.5\textwidth}{zebra}{Een zebra.}| produceert \cref{fig:zebra}. 
+\figuur{width=.5\textwidth}{zebra}{Een zebra.}
+
+Als de witruimte onder of boven de figuur niet naar je zin is, dan kun je de |\vspace| commando's in het commando |\myFigure| wijzigen.
+
+\subsection{Figuren van internet} 
+Veel public domain vectorafbeeldingen in SVG\hyp{}formaat zijn te vinden op Pixabay\footnote{\url{http://pixabay.com}}. Je kunt Inkscape\footnote{\url{https://inkscape.org/en/}} gebruiken om deze plaatje op te slaan in pdf\hyp{}formaat. Indien nodig kun je overtollige witruimte verwijderen met het programma |pdfcrop|\footnote{Dit programma is onderdeel van de Tex Live distributie (\url{http://www.tug.org/texlive/}, zie \url{http://archive.cs.uu.nl/mirror/CTAN/support/pdfcrop/README}).}. 
+
+\subsection{Figuren zelf tekenen met een extern programma}
+Als je figuren zelf tekent met een extern programma probeer dan een programma te gebruiken waarmee je een vectorafbeelding\footnote{Zie:\url{https://en.wikipedia.org/wiki/Vector_graphics}.} kan maken, bijvoorbeeld Visio, PowerPoint of Inkscape. Sla de figuur op in het pdf-formaat of print het naar een pdf-bestand. Overtollige witruimte kan worden verwijderd met het al eerder genoemde programma |pdfcrop|.
+
+\subsection{Grafieken aanmaken met MATLAB}
+MATLAB kan goed gebruikt worden om grafieken te maken. De MATLAB-code \proglink{lpfbodelog.m} die gegeven is in \cref{lst:lpfbodelog} produceert het bodediagram dat in \cref{fig:lpfbodelog} is weergegeven.
+
+% commando's lstinput en floatlstinput lezen code uit (deel van) een bestand.
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% #3 = label=lst:#3
+% #4 = titel
+\floatlstinput[
+    style=mstyle, 
+    %style=linenumbers
+]{lpfbodelog.m}{lpfbodelog}{MATLAB programma dat een bodediagram van een laagdoorlaatfilter produceert, zie \cref{fig:lpfbodelog}.}
+
+\figuur{width=.9\textwidth}{lpfbodelog}{Bodediagram van een laagdoorlaatfilter met een kantelfrequentie van 1~kHz.}
+
+\subsection{Screenshots}
+Screenshots komen vaak voor in handleidingen waarin het gebruik van een of ander programma wordt uitgelegd. Maak géén gebruik van screenshots als je ook gebruik kunt maken van een vectorafbeelding. Sla screenshots op in het |.png|-formaat (en niet in het |.jpg|-formaat) om er voor te zorgen dat het screenshot er in het document exact zo uitziet als op het scherm.
+
+Zoals al eerder vermeld moet je de neiging om figuren op een vaste plaats te dwingen zo snel mogelijk afleren. \LaTeX{} weet het meestal beter! Screenshots in tutorials die stapsgewijs moeten worden doorlopen vormen hier een uitzondering op en je kunt hier als eerste optionele parameter van het commando |\figuur| het argument |H| gebruiken
+als het screenshot op een vaste plaats in de tekst moet komen te staan.
+
+\subsection{Schema's tekenen in \LaTeX{} met de package \texorpdfstring{\code{tikz}}{tikz}}
+In plaats van een extern tekenprogramma kun je tekeningen ook rechtstreeks in \LaTeX{} maken met behulp van de package |tikz|\footnote{\url{https://www.ctan.org/pkg/pgf}}. Dit is een zeer uitgebreide package met een vrij steile leercurve. Er zijn wel hele mooie resultaten mee te behalen. Deze package is in de stijl opgenomen en wordt gebruikt om de titlepage te \squote{tekenen}. De tikzlibraries |fadings| en |shadows| worden daar ook in gebruikt maar overige tikzlibraries moet je zelf opnemen in de preamble van je document. De code die gegeven is in \cref{lst:tikzvoorbeeld} produceert het blokdiagram dat in \cref{fig:dsp} is weergegeven. In de code wordt gebruik gemaakt van de environment |myFigure| die in de stijl is gedefinieerd en niet van de standaard environment |figure| zodat de witruimte aangepast wordt overeenkomstig de met het commando |figuur| aangemaakte figuren.
+%TODO: \csecref{sec:...} bevat nog een voorbeeld van het gebruik van de |tikz| package. 
+
+\floatlstinput[
+    style=lstyle, 
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+    linerange={tikzvoorbeeld-tikzvoorbeeld},
+]{../chap02.tex}{tikzvoorbeeld}{\LaTeX{}-code waarmee \cref{fig:dsp} gemaakt is.}
+
+%>tikzvoorbeeld
+% specific tikz settings for block diagrams
+\tikzset{%
+  block/.style = {draw, thick, rectangle, minimum height = 3em, minimum width = 3em, inner sep=1em, font=\sffamily\Large},
+}
+
+\begin{myFigure}
+    \centering%
+    \begin{tikzpicture}[auto, thick, ->, >={Stealth[scale=1.5, inset=0.6pt]}, shorten >=1pt]
+        \draw
+            node (text) {$x(t)$} 
+            node [coordinate, node distance=.5cm, right of=text] (input) {} 
+            node [block, node distance=2cm, right of=input] (adc) {ADC}
+            node [block, node distance=3.5cm, right of=adc] (dsp) {DSP}
+            node [block, node distance=3.5cm, right of=dsp] (dac) {DAC}
+            node [coordinate, node distance=2cm, right of=dac] (output) {}
+            node [node distance=.5cm, right of=output] {$y(t)$}; 
+        \draw (input) -- (adc);
+        \draw (adc) -- node[pos=.35] {$x[n]$} (dsp);
+        \draw (dsp) -- node[pos=.35] {$y[n]$} (dac);
+        \draw (dac) -- (output);
+    \end{tikzpicture}
+    \caption{Digitale signaal bewerking in een analoge omgeving.}
+    \label{fig:dsp}
+\end{myFigure}
+%<tikzvoorbeeld
+
+Hierin wordt gebruikt gemaakt van de tikzlibraries |shapes|, |arrows| en \hcode{arrows.\\-me\\-ta}.
+
+\subsection{Gafieken tekenen in \LaTeX{} met de package \texorpdfstring{\code{pgfplots}}{pgfplots}}
+Grafieken kunnen ook rechtstreeks in \LaTeX{} gemaakt worden met behulp van de package |pgfplots|\footnote{\url{https://www.ctan.org/pkg/pgfplots}}. Deze package bouwt weer voort op |tikz|. De package |pgfplots| is niet in de stijl opgenomen. Voorbeelden van het gebruik van |pgfplots| vind je op \url{http://pgfplots.sourceforge.net/gallery.html}. De code die gegeven is in \cref{lst:pgfplotsvoorbeeld} produceert de grafiek die in \cref{fig:frm} is weergegeven. 
+
+\floatlstinput[
+    style=lstyle, 
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+    linerange={pgfplotsvoorbeeld-pgfplotsvoorbeeld},
+]{../chap02.tex}{pgfplotsvoorbeeld}{\LaTeX{}-code waarmee \cref{fig:frm} gemaakt is.}
+
+
+%>pgfplotsvoorbeeld
+\begin{myFigure}
+    \centering%
+    \begin{tikzpicture}[>={Stealth[scale=1.5,inset=0.6pt]}, shorten >=1pt]
+        \begin{axis}[
+                width=0.9\textwidth, height=0.45\textwidth,
+                minor tick num=1, axis lines*=middle, 
+                xmin=0, xmax=15, ymin=-2.5, ymax=3.5,
+                xlabel style={at={(ticklabel* cs:1), align=center},anchor=west, align=center},
+                xlabel={$\longrightarrow$ \\ $x$},
+                ylabel style={at={(ticklabel* cs:.9)},anchor=north, align=center}, ylabel={$e(x)$ \\ $\longrightarrow$ },
+            ]
+            \addplot[thick, smooth, red, mark=*] table {data/data1.dat};
+            \addplot[const plot, fill=gray, fill opacity=0.5] table {data/data1.dat};
+            \addplot[ycomb, black, mark=none] table {data/data1.dat};
+            \addplot[thick, dashed, blue] coordinates {(15,0)(15,1)}
+            node[above, black] {t};
+            \addplot[thick, dashed, blue] coordinates {(1,0)(1,-1.3)};
+            \addplot[thick, dashed, blue] coordinates {(2,0)(2,-1.3)};
+            \addplot[thick, blue] coordinates {(2,-1)};
+            \node[coordinate] (a1) at (axis cs:1,-1) {};
+            \node[coordinate] (a2) at (axis cs:2,-1) {};
+            \draw[<->] (a1) -- (a2)
+            node[anchor=north] at (axis cs:1.5,-1.3) {$T_s$};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Numeriek integreren volgens de Forward Rectangular Method (FRM).} 
+    \label{fig:frm}
+\end{myFigure}
+%<pgfplotsvoorbeeld
+
+%TODO: \subsection{Flowdiagrammen tekenen met} 
+
+\section{Tabellen}
+\label{sec:tabellen}
+Voor tabellen wordt de package |tabu| \footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt met behulp van de in de stijl gedefinieerde commando's: |\tabel|, |\tabelmaxpaginabreedgeschaald| en \hcode{\\lan\\-ge\\-ta\\-bel}.
+
+% commando voor tabel
+% #1 OPTIONAL = placement argument voor table e.g. tb or H 
+% #2 = titel
+% #3 = labelnaam=tab:#3
+% #4 = tabu kolom definities
+% #5 = kop tabel (eerste regel)
+% #6 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+
+Het commando |\tabel| heeft zes parameters waarvan de eerste optioneel is. De eerste parameter bevat de \squote{placement} argumenten voor de |\table| environment. De default waarde is |!htbp|. De tweede parameter is de titel van de tabel. De derde parameter is een deel van het label, de labelnaam wordt |tab:derde-argument|. De vierde parameter is de kolomdefinitie voor de |tabu| environment\footnote{\url{http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/tabu/tabu.pdf}}. De vijfde parameter is de eerste rij van de tabel (de kop van de tabel) en de laatste parameter is de inhoud van de tabel. Kolommen worden gescheiden door het |&|-teken en rijen worden gescheiden door |\\|, zoals gebruikelijk in \LaTeX{}.
+
+De code die gegeven is in \cref{lst:tabelvoorbeeld} produceert  \cref{tab:zomaar}. 
+
+\floatlstinput[
+    style=lstyle, 
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+    linerange={tabelvoorbeeld-tabelvoorbeeld},
+]{../chap02.tex}{tabelvoorbeeld}{\LaTeX{}-code waarmee \cref{tab:zomaar} gemaakt is.}
+
+%>tabelvoorbeeld
+\tabel{Zomaar een tabel}{zomaar}{lrr}{
+	Getal & Decimaal & Hexadecimaal
+}{        
+    een & 1 & 1 \\ 
+    tien & 10 & A \\ 
+    twintig & 20 & 14 \\ 
+    tweehonderdvijfenvijftig & 255 & FF
+}
+%<tabelvoorbeeld
+
+Het commando |\tabelmaxpaginabreedgeschaald| heeft exact dezelfde parameters als het commando |\tabel|. Het enige verschil is dat het commando \hcode[style=lstyle]{\\tabel\\-max\\-pa\\-gina\\-breed\\-ge\\-schaald} de tabel zodanig schaalt dat hij de volledige tekstbreedte van de pagina benut. Dit is vooral handig als de tabel bij het gebruik van het commando |\tabel| te breed is om op de pagina te passen. 
+
+Het commando |\langetabel| moet gebruikt worden als een tabel langer is dan een pagina. Dit commando zorgt ervoor dat de tabel netjes wordt verdeeld over meerdere pagina's. De parameters zijn bijna gelijk aan die van het commando |\tabel|. Er is een extra, zevende, parameter waaraan het aantal kolommen moet worden meegegeven en de eerste (optionele) parameter bevat het \squote{position} argument voor de |longtabu| environment: |c|, |l| of |r|, default wordt |c| gebruikt. Met deze parameter kun je de lange tabel horizontaal uitlijnen: |c| = centreren, |l| = links en |r| = rechts. Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaats waar hij gedefinieerd is neergezet. Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's. Gebruik het commando |\langetabel| dus alleen als een tabel die gemaakt is met het commando |\tabel| niet op een pagina past. 
+
+%TODO naar hoofdstuk met voorbeelden verplaatsen
+%Een figuur gevolgd door een tabel kan natuurlijk ook. De titels moeten dan niet te dicht op elkaar komen te staan.
+%
+%\figuur{scale=.25}{cow-48494}{Een koe.}
+%
+%\tabel{Zomaar een tabel}{zomaar2}{lrr}{Getal & Decimaal & Hexadecimaal}{een & 1 & 1 \\
+%    een & 1 & 1 \\
+%    een & 1 & 1 \\
+%    een & 1 & 1}
+%
+%\lipsum[2] 
+%
+%Hieronder zijn \cref{fig:zebras}, \cref{tab:zomaar3} en \cref{fig:dog-48490} onder elkaar als floats in de tekst opgenomen. Let er op dat je in de code steeds een lege regel tussen de commando's |\figuur| en |\tabel| gebruikt omdat anders de verticale spacing niet correct is.
+%
+%\figuur{scale=.05}{zebras2}{Heel kleine zebra's.}
+%
+%\tabel{Zomaar een tabel}{zomaar3}{lrr}{
+%	Getal & Decimaal & Hexadecimaal
+%}{        
+%    een & 1 & 1 \\ 
+%    tien & 10 & A \\ 
+%    twintig & 20 & 14 \\ 
+%    twee & 2 & 2 
+%}
+%
+%\figuur{scale=.1}{dog-48490}{Hier heb je een vergrootglas bij nodig.}
+%
+%\Cref{tab:datastructuren} is voorbeeld van het gebruik van het commando |\langetabel|.
+
+Als de ruimte om een tabel je niet bevalt, dan kun je de |\vspace| commando's in het commando |\myTable| aanpassen.
+
+\section{Verwijzingen en citaten}
+\label{sec:verwijzingen}
+
+De verwijzingen naar een tabel, figuur enz.\ maak ik met |\cref{label}|, de tekst tabel, figuur enz.\ wordt er dan vanzelf bijgezet en dit wordt ook onderdeel van de link. Bijvoorbeeld de code |\cref{tab:zomaar}| geeft: \cref{tab:zomaar}. Andere voorbeelden van verwijzingen: \cref{sec:inleiding,fig:zebra,fig:frm}. De \LaTeX{}-code van de vorige zin is:
+
+\begin{lstfragment}[style=lstyle]
+Andere voorbeelden van verwijzingen: \cref{sec:inleiding, fig:zebra, fig:frm}.
+\end{lstfragment}
+
+Als een zin met een verwijzing begint, dan kun je |\Cref| gebruiken om de verwijzing met een hoofdletter te laten beginnen. \Cref{fig:zebra} staat op \cpageref{fig:zebra}. De voorgaande regel is als volgt gecodeerd:
+
+\begin{lstfragment}[style=lstyle]
+\Cref{fig:zebra} staat op \cpageref{fig:zebra}.
+\end{lstfragment}
+
+Om te verwijzen naar een section of chapter is het commando |\csecref| in de stijl gedefinieerd dat, alleen in de printed versie, een verwijzing naar de betreffende pagina toevoegt. Bijvoorbeeld de code |\csecref{sec:inleiding}| geeft: \cref{sec:inleiding} in de ebook versie en \cref{sec:inleiding} (\cpageref{sec:inleiding}) in de papieren versie.
+
+Als je naar een met \LaTeX{} gemaakt document verwijst, dan kun je een link opnemen naar een specifiek gedeelte van dit document met behulp van het in de stijl gedefinieerde commando |\pdfdeelref|.
+
+Zo verwijst deze link: \pdfdeelref{section}{paragraaf~}{http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2} naar paragraaf 6.2 van mijn \Cpp{}-dictaat. De voorgaande link is als volgt gecodeerd:
+
+\begin{lstfragment}[style=lstyle]
+\pdfdeelref{section}{paragraaf~}{%
+http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp%
+\iftoggle{ebook}{_ebook}{}.pdf}{6.2}
+\end{lstfragment}
+
+Als eerste argument wordt de naam van het betreffende gedeelte, b.v. chapter, section, subsection, enz.\ opgegeven. Als tweede argument wordt de naam voor het betreffende gedeelte,  b.v. hoofdstuk~, paragraaf~, enz.\ opgegeven. De URL van het betreffende pdf\hyp{}document moet als derde argument worden opgegeven. Als vierde argument wordt het nummer van het betreffende gedeelte opgegeven.
+
+Merk op dat de link in de ebook versie van dit document verwijst naar de ebook versie van het dictaat en dat de link in de \squote{papieren} versie verwijst naar de \squote{papieren} versie van het dictaat. 
+
+De code:
+\begin{lstfragment}[style=lstyle]
+Bla, bla, zie \pdfdeelref{chapter}{hoofdstuk~}{%
+http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS%
+\iftoggle{ebook}{_ebook}{}.pdf}{7} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+\end{lstfragment}
+Levert de volgende uitvoer:
+Bla, bla, zie \pdfdeelref{chapter}{hoofdstuk~}{http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS\iftoggle{ebook}{_ebook}{}.pdf}{7} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+
+Dit commando kan ook handig gebruikt worden als optioneel argument van het |\cite| command:
+
+\begin{lstfragment}[style=lstyle]
+Bla, bla namespaces, zie \cite[\pdfdeelref{section}{paragraaf~}{%
+http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp%
+\iftoggle{ebook}{_ebook}{}.pdf}{6.2}]{Broeders2014}.
+\end{lstfragment}
+
+Bovenstaande code geeft: Bla, bla namespaces, zie \cite[\pdfdeelref{section}{paragraaf~}{http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}]{Broeders2014}.
+
+Als de URL ook in de biblatex informatie is opgenomen dan is het eenvoudiger om het command |\citepdfdeel| gebruikt worden. Dit commando heeft dezelfde parameters als het |\pdfdeelref| commando behalve dat als derde parameter de biblatex key in plaats van de URL wordt opgegeven.
+
+Dus de code:
+
+\begin{lstfragment}[style=lstyle]
+Bla, bla namespaces, zie \citepdfdeel{section}{paragraaf~}{Broeders2014}{6.2}.
+\end{lstfragment}
+
+Levert de volgende uitvoer\footnote{Als het compileren van deze code fouten oplevert, dan moet je eerst het commando bibber uitvoeren.}: Bla, bla namespaces, zie \citepdfdeel{section}{paragraaf~}{Broeders2014}{6.2}.
+
+Het commando |\pdfpagref| is vergelijkbaar met |\pdfdeelref| maar verwijst naar een pagina.
+
+De code:
+\begin{lstfragment}[style=lstyle]
+Bla, bla, zie \pdfpagref[6]{%
+http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS.pdf}%
+{14} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+\end{lstfragment}
+Levert de volgende uitvoer:
+Bla, bla, zie \pdfpagref[6]{%
+http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS.pdf}%
+{14} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+
+Als eerste (optionele) argument kan het verschil tussen het paginanummer dat wordt weergegeven in de pdf-viewer en het paginanummer weergegeven op de pagina zelf, worden opgegeven. Dit is nodig omdat bij veel documenten de paginanummering niet op de eerste pagina begint. Als tweede argument wordt de URL van het betreffende pdf-document opgegeven en als derde argument wordt het nummer dat wordt weergegeven op de pagina zelf opgegeven. In de bovenstaande code wordt verwezen de pagina met paginanummer 14 maar dat is in werkelijkheid de $20^{\text{ste}}$ pagina in het document vandaar dat als eerste parameter $20-14=6$ wordt meegegeven. 
+
+Het commando |\citepdfpag| is vergelijkbaar met |\citepdfdeel| maar verwijst naar een pagina. Het commando |\citepdfpag| heeft dezelfde parameters als |\pdfpagref|, behalve dat als tweede parameter de biblatex key in plaats van de URL wordt opgegeven.
+
+De code |\citepdfpag[14]{lshort}{85}| levert als uitvoer: \citepdfpag[14]{lshort}{85}, een verwijzing naar pagina 85 van bron \cite{lshort}.
+
+\section{Opdrachten}
+Veel dictaten en studiehandleidingen zullen opdrachten bevatten. Traditioneel bevinden de bij een hoofdstuk behorende opdrachten zich in een aparte paragraaf aan het einde van een hoofdstuk. De lezer zal waarschijnlijk meer geactiveerd worden als de opdrachten in de tekst van het hoofdstuk worden opgenomen. Het is dan handig om elke opdracht in een kader te plaatsen. Je kunt hiervoor de environment |opdracht| gebruiken. Deze environment heeft één parameter, namelijk de titel van de opdracht. De opdrachten worden automatisch genummerd. Als je in een |opdracht|\hyp{}environment een label gebruikt, dan kun je m.b.v. een |\cref|\hyp{}commando naar de betreffende opdracht verwijzen. 
+
+%>opdrachtvoorbeeld
+\begin{opdracht}{De opdracht environment}
+    \label{opdr:opdracht}
+    Dit is een voorbeeld van een opdracht die in een kader geplaats is door gebruik te maken van het in de stijl gedefinieerde |opdracht|\hyp{}environment.
+	\begin{enumerate}[label=\alph*)]
+		\item Geef de \LaTeX\hyp{}code die nodig om dit opdrachtkader te maken.
+		\item Geef de \LaTeX\hyp{}code die nodig om vanuit de tekst naar deze opdracht te verwijzen.
+	\end{enumerate}
+\end{opdracht}
+%<opdrachtvoorbeeld
+
+De code waarmee het bovenstaande opdrachtkader is gemaakt is gegeven in \cref{lst:opdrachtvoorbeeld}. Je kunt vanuit de tekst verwijzen naar deze opdracht met de code |\cref{opdr:opdracht}|. Deze code produceert de volgende tekst: \cref{opdr:opdracht}.
+
+\floatlstinput[
+    style=lstyle, 
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+    linerange={opdrachtvoorbeeld-opdrachtvoorbeeld},
+]{../chap02.tex}{opdrachtvoorbeeld}{\LaTeX{}-code waarmee \cref{opdr:opdracht} gemaakt is.}
+
+Soms, bijvoorbeeld in een practicumhandleiding, is het handig om de opdrachten in de handleiding zelf af te kunnen tekenen. Het commando |\handtekening| produceert een kader waarin de docent de opdracht kan aftekenen. De code |\handtekening{}| levert het volgende kader:
+
+\handtekening{}
+
+Deze kaders worden automatisch genummerd. Het commando |\handtekening{}| heeft een optioneel argument waarmee je een deelopdracht kunt aanduiden. Als je dit gebruikt, dan wordt het nummer van het betreffende kader niet verhoogd (behalve bij deelopdracht a).
+
+Bijvoorbeeld voor \cref{opdr:onzin} is aleen een kader gemaakt om de deelopdrachten a en c af te laten tekenen. 
+
+\begin{opdracht}{Een onzinnige opdracht}
+    \label{opdr:onzin}
+    \begin{enumerate}[label=\alph*)]
+		\item Maak \cref{opdr:onzin}b.
+		\item Maak \cref{opdr:onzin}c.
+		\item Laat \cref{opdr:onzin}b en c aftekenen door de docent.
+	\end{enumerate}
+\end{opdracht}
+
+\handtekening[a]
+\handtekening[c]
+
+De bovenstaande kaders zijn gemaakt met de \LaTeX\hyp{}code:
+\begin{lstfragment}[style=lstyle]
+\handtekening[a]
+\handtekening[c]
+\end{lstfragment}
+
+Als je het nummer van een handtekeningkader wil aanpassen dan kan dat met de code:
+\begin{lstfragment}[style=lstyle]
+\setcounter{handtekening}{13}
+\end{lstfragment}
+
+\end{llstShortInline}

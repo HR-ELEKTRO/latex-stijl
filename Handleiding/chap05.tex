@@ -1,0 +1,56 @@
+\chapter{Algemene \LaTeX{}-tips en -trucs}
+\begin{llstShortInline}
+Nog enkele algemene \LaTeX{}-tips en -trucs:
+\begin{itemize}
+    \item Latex kent minstens vier verschillende verschillende liggende streepjes, zie \cref{tab:streepjes}. De laatste moet je als rekenkundig minteken gebruiken.
+    \tabel{Liggende streepjes in \LaTeX{}}{streepjes}{ccc}{%
+        Engelse naam\footnotemark{} & code & resultaat
+    }{%
+        hyphen & \lcode{-} & - \\
+        en dash & \lcode{--} & --  \\
+        em dash & \lcode{---} & --- \\
+        minus sign & \lcode{\$-\$} & $-$
+    }
+    \footnotetext{Zie: \url{https://en.wikipedia.org/wiki/Dash}.}
+    \item |~| geeft een \enquote{harde} spatie. De regel wordt niet afgebroken bij deze harde spatie. |\,| geeft een halve spatie.
+    \item package |menukeys|\footnote{\url{https://www.ctan.org/pkg/menukeys}} is handig als je menu-opties en toetsaanslagen wilt benadrukken in tutorials.
+    \item Kolomkoppen behoren gecentreerd te zijn. De tabelcommando's in de stijl doen dat automatisch.
+    \item Als je in math\hyp{}mode een regelmatige rij met getallen wilt opgegeven, dan kan het commando |\ldots| van pas komen: $2, 4, 6, \ldots{}, 100$. Als je een regelmatige som van getallen wilt opgegeven, dan geeft het commando |\cdots| een mooier resultaat: $2 + 4 + 6 + \cdots{} + 100$.
+    \item Gebruik |\ensuremath| om eigen math\hyp{}commando's in text\hyp{} en math\hyp{}mode te kunnen gebruiken
+    \item Bibtex:
+    \begin{itemize}
+        \item Gebruik |and| tussen namen van verschillende auteurs.
+        \item Gebruik accolades rond dubbele achternamen.
+        \item Neem \code[mathescape,language={[AlLaTeX]TeX}]{Langid = \{$\ldots{}$\}} op in elke entry zodat er correct wordt afgebroken.
+        \item Gebruik |--| bij het aangeven van een aangesloten aantal pagina's:\\ |Pages = {293--326}|.
+        \item Geef ISBN nummers op met streepjes ertussen:\\ |ISBN = {978-0-201-89684-8}| om een overfull hbox te voorkomen. Gebruik: \url{http://tools.wmflabs.org/isbn/IsbnCheckAndFormat} om ISBN nummers zonder streepjes om te zetten in de officiële notatie (met steepjes). 
+    \end{itemize}
+    \item |\sloppy| zorgt ervoor dat overfull hbox vermeden wordt door spaties ongelimiteerd lang te maken. Gebruik daarna |\fussy| om weer netjes uit te vullen. In de ebook versie en ook in de papieren versie geeft de url bij het bovenstaande puntje een overfull hbox. Kijk wat er met |\sloppy| gebeurt: 
+    \sloppy
+    \begin{itemize}
+        \item
+          Gebruik: \url{http://tools.wmflabs.org/isbn/IsbnCheckAndFormat} om ISBN nummers zonder streepjes om te zetten in de officiële notatie (met steepjes).%
+    \end{itemize}
+    \fussy
+    \item Gebruik |\ | tussen een kleine letter en een punt die niet het einde van een zin is. B.v.\ bij enz.\ en andere afko's. De \LaTeX{}-code van de vorige zin is: |B.v.\ bij enz.\ en andere afko's.|
+    \item Gebruik |\@| tussen een hoofdletter en een punt, vraagteken of uitroepteken aan het einde van een zin (om einde zin spatie te krijgen). Ik gebruik geen vitamine~C\@. Gebruik jij wel vitamine~C\@? Of ook niet. De \LaTeX{}-code van de vorige drie zinnen is: |Ik gebruik geen vitamine~C\@. Gebruik jij wel vitamine~C\@? Of ook niet.|
+    \item Een moving argument is een argument dat ook op een andere plaatst dan waar het gedefinieerd wordt, wordt gebruikt. B.v.\ het argument van \hcode{\\sec\\-tion} wordt ook in de inhoudsopgave gebruik. Fragile commands mogen niet in moving argumenten gebruikt worden. Als je toch een fragile command als moving argument wil gebruiken, dan moet je er |\protect| voorzetten. Bijvoorbeeld als je een |\footnote| in een |\section| wilt opnemen:
+    \begin{lstfragment}[style=lstyle]
+\hcode{\section{\texorpdfstring{Titel\protect \footnote{Bedenk zelf een goede titel}}{Titel}}}
+    \end{lstfragment}
+    \vspace{-\baselineskip}
+    \section{\texorpdfstring{Titel\protect \footnote{Bedenk zelf een goede titel}}{Titel}}
+    \item |\texorpdfstring| is handig als je \LaTeX\hyp{}code in een titel wilt gebruiken. De titel komt namelijk ook in de inhoudsopgave van het pdf document maar daar mag geen \LaTeX\hyp{}code in gebruikt worden. Bijvoorbeeld:
+    \begin{lstfragment}[style=lstyle]
+section{\texorpdfstring{$E=mc^2$}{E=mc2}}
+    \end{lstfragment}
+    \vspace{-\baselineskip}
+    \section{\texorpdfstring{$E=mc^2$}{E=mc2}}
+    \item |\centering| start \emph{geen} nieuwe paragraaf \code[mathescape, style=lstyle]{\\begin\{center\} $\ldots$ \\end\{center\}} wel.
+    \item Gebruik liever geen absolute lengtes zoals |cm|, |mm| en |pt| maar relatieve zoals |em| (breedte van een M) of |ex| (hoogte van een x).
+    \item Het eerste woord in een zin wordt nooit afgebroken, dat kan wel eens problemen geven in een smalle kolom in een tabel. Zet er |\hspace{0pt}| voor om het toch af te laten breken.
+    \item Gebruik een |\mbox| om ongewenst afbreken te voorkomen.
+    \item \#, \$, \%, \textasciitilde, \_, \textasciicircum, \textbackslash, \{ en \} zijn speciale karakters en moeten als volgt ingevoerd worden: 
+    |\#|, |\$|, |\%|, |\textasciitilde|, |\_|, |\textasciicircum|, |\textbackslash|, |\{| en |\}|.
+\end{itemize}
+\end{llstShortInline}

@@ -1,0 +1,69 @@
+% Voorbeeld van een dictaat met printed en ebook versie.
+% Harry Broeders
+% 9 juli 2015
+% Te gebruiken volgens Creative Commons Naamsvermelding-NietCommercieel-GelijkDelen 3.0 Nederland-licentie.
+% De bijbehorende makefile genereert zowel de printed als de ebook versie
+
+% In de makefile kunnen argumenten worden meegegeven:
+% Keuze lettertypes
+% 	FONT = \chartertrue voor Charter met Berasans fonts
+% 	FONT = \timestrue voor Times met Helvet fonts
+%   (default) standaard LaTeX fonts (Computer Modern)
+
+% \myClass, \title en \author moeten gedefinieerd zijn voordat style.tex ingelezen wordt
+% Keuze book of article
+% Een book heeft chapters die op een nieuwe pagina beginnen (een oneven pagina in de printed versie).
+% Een article heeft alleen sections (en subsections).
+%>neededcommands
+\newcommand{\myClass}{book}
+\newcommand{\modulecode}{LHR01}
+\newcommand{\titel}{LaTeX-stijl HR}
+\newcommand{\documenttype}{Handleiding}
+\newcommand{\huidigeversie}{2.1}
+% start a new line by using \\ 
+\newcommand{\auteurs}{
+    J.Z.M. Broeders
+}
+%<neededcommands
+
+\input{style_nl_NL.tex}
+%\bibliographystyle{apacite}
+\input{styleCode.tex}
+
+%>progurl
+\newcommand{\progsurl} {http://www.medewerker.hro.nl/brojz/LHR01}
+%<progurl
+
+% specific tikz libraries for shapes and arrows
+\usetikzlibrary{shapes, arrows, arrows.meta}
+
+% specifieke libraries:
+% http://ftp.snt.utwente.nl/pub/software/tex/graphics/pgf/contrib/pgfplots/doc/pgfplots.pdf
+% http://pgfplots.sourceforge.net/gallery.html
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+% gedeeltelijke compilation (gebruik dit om de compilatiesnelheid te vergroten als je werkt aan een specifiek .tex bestand)
+%\includeonly{chap05}
+
+\begin{document}
+\frontmatter
+\include{titlepage}
+\cleardoublepage
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\tableofcontents
+\cleardoublepage
+
+\mainmatter
+\include{chap01}
+\include{chap02}
+\include{chap03}
+\include{chap04}
+\include{chap05}
+
+\printbibliography[heading=bibintoc]{}
+\appendix
+\include{app01}
+\backmatter
+\end{document}

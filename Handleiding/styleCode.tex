@@ -1,0 +1,344 @@
+% mooie C++
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/relsize/relsize-doc.pdf
+\usepackage{relsize}
+\iftoggle{charter}{
+    \newcommand{\Cpp}{C\nolinebreak\raisebox{.2ex}[0pt][0pt]{\smaller{+\nolinebreak+}}}
+}{
+\newcommand{\Cpp}{C\nolinebreak\raisebox{.3ex}[0pt][0pt]{\smaller{+\nolinebreak+}}}
+}
+
+% define kleuren die in listings gebruikt worden
+\definecolor{cgreen}{RGB}{0,128,0}
+\definecolor{cdarkred}{RGB}{163,21,21}
+\definecolor{cbrown}{RGB}{121,37,0}
+\definecolor{cpurple}{RGB}{97,63,153}
+\definecolor{cblue}{RGB}{0,0,255}
+
+\definecolor{mgreen}{RGB}{33,138,77}
+\definecolor{mpurple}{RGB}{159,31,242}
+
+\definecolor{agreen}{RGB}{0,128,0}
+\definecolor{ablue}{RGB}{0,0,255}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/listings/listings.pdf
+\usepackage{listings}
+\lstset{
+    inputencoding={utf8}, 
+    literate=
+        {ä}{{\"a}}1 
+        {ë}{{\"e}}1 
+        {ï}{{\"i}}1 
+        {ö}{{\"o}}1
+        {ü}{{\"u}}1
+        {á}{{\'a}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ú}{{\'u}}1
+        {à}{{\`a}}1
+        {è}{{\`e}}1
+        {ì}{{\`i}}1
+        {ò}{{\`o}}1
+        {ù}{{\`u}}1
+        {â}{{\^a}}1
+        {ê}{{\^e}}1
+        {î}{{\^i}}1
+        {ô}{{\^o}}1
+        {û}{{\^u}}1,
+    basicstyle=\ttfamily\small,
+    tabsize=4,
+    showstringspaces=false,
+    upquote=true,
+    numbers=none,
+    aboveskip=.1\baselineskip,
+    belowskip=0pt,
+    abovecaptionskip=.6\baselineskip,
+    belowcaptionskip=0pt,
+    includerangemarker=false,
+    prebreak={\raisebox{0ex}[0ex][0ex]{\textcolor{black}{\ensuremath{\hookleftarrow}}}}, 
+    postbreak={\raisebox{0ex}[0ex][0ex]{\textcolor{black}{\ensuremath{\space\hookrightarrow\space}}}}, 
+    breaklines=true, 
+    breakatwhitespace=true, 
+    breakindent=0.1em,
+    numberbychapter=true,
+    captionpos=b,
+}
+
+\lstdefinestyle{linenumbers}{
+    numbers=left, 
+    stepnumber=1, 
+    numberstyle=\tiny\textcolor{red}, 
+    numbersep=1em
+}
+
+% C
+\lstdefinestyle{cstyle}{
+    language=C,
+    morekeywords={interrupt},
+    stringstyle=\color{cdarkred},
+    keywordstyle=\color{cblue},
+    identifierstyle=,
+    commentstyle=\color{cgreen},
+}
+
+% C++
+\lstdefinestyle{cppstyle}{
+    language=C++,
+    morekeywords={alignas,alignof,char16_t,char32_t,concept,constexpr,decltype,noexcept,nullptr,requires,static_assert,thread_local,override,final},
+    stringstyle=\color{cdarkred},
+    keywordstyle=\color{cblue},
+    identifierstyle=,
+    commentstyle=\color{cgreen},
+}
+
+% MATLAB
+\lstdefinestyle{mstyle}{
+    language=Matlab,
+    morekeywords={},
+    stringstyle=\color{mpurple},
+    keywordstyle=,
+    identifierstyle=,
+    commentstyle=\color{mgreen},
+}
+
+% AVR assembler
+\lstdefinelanguage[AVR]{Assembler}{
+    morekeywords=[1]{
+        adc,add,adiw,andi,asr,bclr,bld,brbc,brbs,brcc,brcs,break,breq,brge,brhc,brhs,brid,brie,brlo,brlt,brmi,brne,brpl,brsh,brtc,brts,brvc,brvs,bset,bst,cbi,cbr,clc,clh,cli,cln,clr,cls,clt,clv,clz,com,count,cp,cpc,cpi,cpse,dec,eicall,eijmp,elpm,end,eor,espm,fmul,fmuls,fmulsu,in,inc,jmp,ld,ldd,ldi,lds,lsl,lsr,mov,movw,neg,nop,ori,out,pop,push,rcall,ret,reti,rjmp,rol,sbc,sbci,sbi,sbic,sbis,sbiw,sbr,sbrc,sbrs,sec,seh,sei,sen,ser,ses,sev,sez,sleep,st,std,sts,sub,subi,swap,tst,wdr
+    },
+    morekeywords=[2]{
+        .byte,.cseg,.csegsize,.db,.device,.dseg,.dw,.endm,.equ,.eseg,.exit,.include,.includepath,.listmac,.macro,.nolist,.org,.set,.define,.undef,.ifdef,.ifndef,.else,.elseif,.elif,.message,.warning,.error,byte1,byte2,byte3,byte4,exp2,high,hwrd,log2,low,lwrd,page
+    },
+    alsoletter=.,
+    sensitive=false,
+    morecomment=[l]{\#},
+    morecomment=[l]{;},
+    morestring=[b]{"},
+    morestring=[b]{'}
+}[keywords,comments,strings]
+
+\lstdefinestyle{astyle}{
+    language=[AVR]Assembler,
+    stringstyle=,
+    keywordstyle=[1]\color{ablue},
+    keywordstyle=[2],
+    identifierstyle=,
+    commentstyle=\color{agreen},  
+}
+
+% Commando's \floatlstinput en \lstinput lezen code uit (een deel van) een bestand en plaatsen dit in een listing.
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% #3 = label=lst:#3
+% #4 = titel
+\newcommand{\floatlstinput}[4][]{%
+\lstinputlisting[
+    belowskip=-.2\baselineskip,
+    rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
+    rangeendprefix=//<,% Alleen nuttig voor C en C++ 
+    float=!htbp, 
+    label=lst:#3, 
+    caption={#4},%    
+    #1
+]{progs/#2}%
+}
+
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% #3 = label=lst:#3
+% #4 = titel
+\newcommand{\lstinput}[4][]{%
+\lstinputlisting[
+    aboveskip=.8\baselineskip,
+    belowskip=.4\baselineskip,
+    rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
+    rangeendprefix=//<,% Alleen nuttig voor C en C++ 
+    label=lst:#3, 
+    caption=#4,%    
+    #1
+]{progs/#2}%
+}
+
+% Commando \lstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% geen titel, geen label
+\newcommand{\lstinputfragment}[2][]{%
+\lstinputlisting[
+    aboveskip=.8\baselineskip,
+    belowskip=.4\baselineskip,
+    rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
+    rangeendprefix=//<,% Alleen nuttig voor C en C++ 
+    #1
+]{progs/#2}%
+}
+
+% De code in de environments floatlst en lst wordt in een listing geplaatst.
+% #1 = (optional) extra key=value paren voor lstset b.v.
+%      style = cstyle, cppstyle, mstyle, astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+% #2 = label=lst:#2
+% #3 = titel
+\lstnewenvironment{floatlst}[3][]{%
+    \lstset{
+        belowskip=-.2\baselineskip,
+        float=!htbp, 
+        label=lst:#2, 
+        caption={#3},%   
+        #1
+    }%
+}{%
+}
+
+% #1 = (optional) extra key=value paren voor lstset b.v.
+%      style = cstyle, cppstyle, mstyle, astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+% #2 = label=lst:#2
+% #3 = titel
+\lstnewenvironment{lst}[3][]{%
+    \lstset{
+        aboveskip=.8\baselineskip,
+        belowskip=.4\baselineskip,
+        label=lst:#2, 
+        caption={#3},%    
+        #1
+    }%
+}{%
+}
+
+% De code in de environments lstfragment wordt in een codefragment geplaatst.
+% #1 = (optional) extra key=value paren voor lstset b.v.
+%      style = cstyle, cppstyle, mstyle, astyle (C, C++, MATLAB, AVR assembler)
+%      style = linenumbers
+% geen titel, geen label
+\lstnewenvironment{lstfragment}[1][]{%
+    \lstset{
+        aboveskip=.4\baselineskip,%
+        #1
+    }%
+}{%
+}
+
+% \intextcodefont is nodig om \small te verwijderen
+\newcommand{\intextcodefont}{\ttfamily}
+\lstdefinestyle{lstinlinestyle}{
+    basicstyle=\intextcodefont, 
+    prebreak={}, 
+    postbreak={}, 
+    breakindent=0pt,
+}
+
+% Commando's \code, \ccode, \cppcode, \mcode en \acode kunnen gebruikt worden om inline code te definiëren.
+% #1 = (optional) extra key=value paren voor lstinline.
+% #2 = inline code
+\newcommand{\code}[2][]{%
+    \lstinline[
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\ccode}[2][]{%
+    \lstinline[
+        style=cstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\cppcode}[2][]{%
+    \lstinline[
+        style=cppstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\mcode}[2][]{%
+    \lstinline[
+        style=mstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\acode}[2][]{%
+    \lstinline[
+        style=astyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+% met \hcode kun je ercoor zorgen dat lange identifiers afgebroken kunnen worden. Mogelijke afbreekpunten met \\- markeren.
+\newcommand{\hcode}[2][]{%
+    \lstinline[
+        style=lstinlinestyle,
+        literate={\\-}{}{0\discretionary{-}{}{}},%
+        #1
+    ]@#2@%
+}
+
+% handige afkorting |bla| voor \ccode{bla} maar pas op: werkt niet in footnotes, captions etc.
+% werkt niet als je | in latex code gebruikt (b.v. in math).
+% vandaar environment van gemaakt.
+\newenvironment{clstShortInline}{%
+    \lstMakeShortInline[
+        style=cstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{cpplstShortInline}{%
+    \lstMakeShortInline[
+        style=cppstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{mlstShortInline}{%
+    \lstMakeShortInline[
+        style=mstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{alstShortInline}{%
+    \lstMakeShortInline[
+        style=astyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+% gebruik voor opmaak van console output
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/fancyvrb/fancyvrb.pdf
+% nodig om underline voor input te kunnen gebruiken: \cinput{...}
+\usepackage{fancyvrb}
+\definecolor{darkgreen}{RGB}{0,100,0}
+\newcommand{\cinput}[1]{\color{darkgreen}{\underline{#1}}}
+\newenvironment{coutput}{%
+    \Verbatim[commandchars=\\\{\}]%
+    }{%
+    \endVerbatim%
+}
+
+\newcommand{\proglink}[1]{%
+    \href{\progsurl/#1}{\hcode{#1}}%
+}

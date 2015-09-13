@@ -1,0 +1,44 @@
+% \titelpagina definieert de titlepage
+% 1 = Naam van het plaatje in directory ./fig. 
+%     Neem een hoog resolutie plaatje.
+%     De hoogte moet ongeveer 0.5 x de breedte zijn.
+%>titelpagina
+\titelpagina{academieplein}
+%<titelpagina
+
+% commando voor versiehistory tabel
+% #1 = tabel inhoud
+%      tabel heeft 4 kolommen:
+%      Datum & Versie & Omschrijving & Auteur
+%      Gebruik \\ \line om de rijen te scheiden.
+%>versiehistorie
+\versiehistorie{
+    22-07-2015 & \huidigeversie\footnotemark{} & 
+        Voorbeelden toegevoegd.\newline
+        \code{\\hcode}\hyp{}commando verbeterd.
+        Commando's \code{\\pdfdeelref} en \code{\\citepdfdeel} toegevoegd. Diverse commando's robuster gemaakt.
+    & \mailafko{BroJZ}
+    \\ \hline
+    09-07-2015 & 2.0 & 
+        Eerste versie voor HR.
+    & \mailafko{BroJZ}
+    \\ \hline
+    09-04-2015 & 1.0 &
+        Laatste versie voor HHS.
+    & \mailafko{BroJZ}
+}
+%<versiehistorie
+
+\footnotetext{Toelichting versiecodering $A$.$Bc$: $A$ = grote aanpassing, $B$ = kleine aanpassing, $c$ = taal- of wiskundige
+correcties.}
+
+%>licentie    
+\vspace*{\stretch{20}}
+\includegraphics{figs/by-nc-sa_eu.pdf}
+\par
+\documenttype{} \titel{} van Hogeschool Rotterdam is in licentie gegeven volgens een \href{http://creativecommons.org/licenses/by-nc-sa/3.0/nl/} {Creative Commons Naamsvermelding\hyp{}NietCommercieel\hyp{}GelijkDelen 3.0 Nederland\hyp{}licentie}.
+%<licentie
+\Cref{fig:zebra,fig:binary,fig:fractal} in deze \MakeLowercase\documenttype{} zijn afkomstig van \href{http://pixabay.com}{Pixabay} en vallen onder het publieke domein volgens een 
+\href{http://creativecommons.org/publicdomain/zero/1.0/deed.nl}{Publiek Domein Verklaring (CC0 1.0)}.
+
+De \LaTeX\hyp{}code van deze \MakeLowercase\documenttype{} kun je downloaden via deze link: \url{http://www.medewerker.hro.nl/brojz/Handleiding_LaTeX-stijl_HR.zip}.
