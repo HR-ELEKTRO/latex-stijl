@@ -44,7 +44,8 @@
         {ê}{{\^e}}1
         {î}{{\^i}}1
         {ô}{{\^o}}1
-        {û}{{\^u}}1,
+        {û}{{\^u}}1
+        {©}{{\copyright}}1,
     basicstyle=\ttfamily\small,
     tabsize=4,
     showstringspaces=false,
@@ -160,7 +161,7 @@
     rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
     rangeendprefix=//<,% Alleen nuttig voor C en C++ 
     label=lst:#3, 
-    caption=#4,%    
+    caption={#4},%    
     #1
 ]{progs/#2}%
 }
@@ -339,6 +340,12 @@
     \endVerbatim%
 }
 
-\newcommand{\proglink}[1]{%
-    \href{\progsurl/#1}{\hcode{#1}}%
+%http://ctan.cs.uu.nl/macros/generic/xstring/xstring_doc_en.pdf
+\usepackage{xstring}
+\makeatletter
+\newrobustcmd{\proglink}[1]{%
+	\normalexpandarg%
+	\StrDel{#1}{\\-}[\bare@link]%
+	\href{\progsurl/\bare@link}{\hcode{#1}}%
 }
+\makeatother
