@@ -1,7 +1,7 @@
 # Define target and source file here:
 TARGET       = Handleiding_LaTeX-stijl_HR
 SOURCE       = main
-DEPENDENCIES = titlepage.tex chap01.tex chap02.tex chap03.tex chap04.tex chap05.tex app01.tex bibliography.bib style_nl_NL.tex styleCode.tex 
+DEPENDENCIES = *.tex bibliography.bib 
 
 # Define font here:
 #FONT         = \timestrue
@@ -12,7 +12,7 @@ FONT         = \chartertrue
 # Options:
 PDFLATEXOPT  = -shell-escape -interaction=nonstopmode -file-line-error
 
-LATEXBINDIR  = C:\texlive\2014\bin\win32
+LATEXBINDIR  = C:\texlive\2015\bin\win32
 UTILSBINDIR  = C:\WinAVR-20100110\utils\bin
 PDFLATEX     = $(LATEXBINDIR)\pdflatex.exe
 BIBER        = $(LATEXBINDIR)\biber.exe
