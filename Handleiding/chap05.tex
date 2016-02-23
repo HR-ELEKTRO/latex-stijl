@@ -53,4 +53,12 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
     \item \#, \$, \%, \textasciitilde, \_, \textasciicircum, \textbackslash, \{ en \} zijn speciale karakters en moeten als volgt ingevoerd worden: 
     |\#|, |\$|, |\%|, |\textasciitilde|, |\_|, |\textasciicircum|, |\textbackslash|, |\{| en |\}|.
 \end{itemize}
+
+Nog enkele tips voor het gebruik van \LaTeX{} in combinatie met git:
+\begin{itemize}
+	\item Als de \LaTeX{}-code in een VCS wordt opgenomen worden alle wijzigingen en contributies netjes bijgehouden. Binnen de opleiding Elektrotechniek van de Hogeschool Rotterdam maken we gebruik van BitBucket (zie: \url{https://bitbucket.org/HR_ELEKTRO/}). We maken gebruik van BitBucket en niet van GitHub omdat de eerste gratis private repositories biedt.
+	\item De pdf bestanden die met \LaTeX{} gegenereerd worden kunnen gepubliceerd worden in het Downloads directory van de repository. Het zou handig zijn als dit automatisch gedaan zou kunnen worden met een make commando. Zodra ik tijd heb zal ik dit proberen te implementeren.
+	\item Het is handig om na elke zin een enter in te typen. Git vergelijkt bestanden namelijk regel voor regel en wijzigingen worden dus veel duidelijker weergegeven als de regels niet te lang zin. Zelf heb ik de neiging om gewoon door te typen (verpest door het gebruik van MS-Word), dus deze tip is in dit document (nog) niet toegepast.  
+\end{itemize}
+
 \end{llstShortInline}

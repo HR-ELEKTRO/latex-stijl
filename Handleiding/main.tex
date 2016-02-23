@@ -4,6 +4,9 @@
 % Te gebruiken volgens Creative Commons Naamsvermelding-NietCommercieel-GelijkDelen 3.0 Nederland-licentie.
 % De bijbehorende makefile genereert zowel de printed als de ebook versie
 
+% Note: Als de makefile NIET wordt gebruikt, moet je niet vergeten om eerst bibber %       te draaien omdat je anders foutmeldingn krijgt van de LaTeX-compiler: 
+%       Undefined control sequence. ... het lezen van paragrafen \lshortdeel{1.3}.
+
 % In de makefile kunnen argumenten worden meegegeven:
 % Keuze lettertypes
 % 	FONT = \chartertrue voor Charter met Berasans fonts
@@ -19,7 +22,7 @@
 \newcommand{\modulecode}{LHR01}
 \newcommand{\titel}{LaTeX-stijl HR}
 \newcommand{\documenttype}{Handleiding}
-\newcommand{\huidigeversie}{2.1}
+\newcommand{\huidigeversie}{2.2}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
     J.Z.M. Broeders
@@ -31,7 +34,10 @@
 \input{styleCode.tex}
 
 %>progurl
-\newcommand{\progsurl} {http://www.medewerker.hro.nl/brojz/LHR01}
+\newcommand{\progsurl}{%
+	https://bitbucket.org/HR_ELEKTRO/latex-stijl/src/%
+	3ea0cb67be4b991ad1a8616b0a90d9cdccb5d574/%
+	Handleiding/progs}
 %<progurl
 
 % specific tikz libraries for shapes and arrows

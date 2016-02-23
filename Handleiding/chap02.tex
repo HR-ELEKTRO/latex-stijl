@@ -66,7 +66,7 @@ De volgende opties zijn beschikbaar:
 
 Als beide opties |\chartertrue| en |\timestrue| niet gebruikt worden, dan worden de standaard Computer Modern lettertypes van \LaTeX{} gebruikt.
 
-In de makefile maak ik (uiteraard) gebruik van \LaTeX{}\hyp{}commando's en ook van enkele eenvoudige Unix commando's. Ik maak gebruik van Biber in plaats van BibTeX omdat Biber UTF8 ondersteund. De paden naar deze executables moeten waarschijnlijk aangepast worden als je gebruik wilt maken van mijn makefile.
+In de makefile maak ik (uiteraard) gebruik van \LaTeX{}\hyp{}commando's en ook van enkele eenvoudige Unix commando's. Ik maak gebruik van Biber in plaats van BibTeX omdat Biber UTF8 ondersteunt. De paden naar deze executables moeten waarschijnlijk aangepast worden als je gebruik wilt maken van mijn makefile.
 
 \lstinputfragment[
     language={make},
@@ -106,7 +106,7 @@ Een titelpagina kun je eenvoudig maken met het commando |\titelpagina|. Bijvoorb
 	linerange={titelpagina-titelpagina},
 ]{../titlepage.tex}
 
-Dit commando heeft één argument: de filenaam van het plaatje (zonder extensie) dat zich in het directory |./figs| moet bevinden. Neem een vectorplaatje of een rasterplaatje met een hoge resolutie (minstens 1024 pixels breed). De hoogte moet ongeveer $\frac{1}{2}\times$ de breedte zijn. Denk ook aan de copyrights als je het document wilt publiceren. 
+Dit commando heeft één argument: de filenaam van het plaatje (zonder extensie) dat zich in het directory |./figs| moet bevinden. Neem een vectorplaatje of een rasterplaatje met een hoge resolutie (minstens 1024 pixels breed). De hoogte moet ongeveer $\frac{1}{2}\times$ de breedte zijn.
 
 Dit commando maakt gebruik van de commando's |\modulecode|, |\titel|, \hcode[style=lstyle]{\\docu\\-ment\\-type}, |\huidigeversie| en |\auteurs|. Het logo (\hcode{./figs/\\-logo\\-HR.png}) en vervagende logo \hcode{./figs/\\-logo\\-HR\\-fade\\-top.png}) zijn hard gecodeerd in de stijl maar kunnen daar natuurlijk wel aangepast worden. Deze bestanden moeten aanwezig zijn in het |./figs| directory.
 
@@ -299,7 +299,7 @@ Grafieken kunnen ook rechtstreeks in \LaTeX{} gemaakt worden met behulp van de p
 
 \section{Tabellen}
 \label{sec:tabellen}
-Voor tabellen wordt de package |tabu| \footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt met behulp van de in de stijl gedefinieerde commando's: |\tabel|, |\tabelmaxpaginabreedgeschaald| en \hcode{\\lan\\-ge\\-ta\\-bel}.
+Voor tabellen wordt de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt met behulp van de in de stijl gedefinieerde commando's: |\tabel|, |\tabelmaxpaginabreedgeschaald| en \hcode{\\lan\\-ge\\-ta\\-bel}.
 
 % commando voor tabel
 % #1 OPTIONAL = placement argument voor table e.g. tb or H 
@@ -482,7 +482,7 @@ Bijvoorbeeld voor \cref{opdr:onzin} is aleen een kader gemaakt om de deelopdrach
     \begin{enumerate}[label=\alph*)]
 		\item Maak \cref{opdr:onzin}b.
 		\item Maak \cref{opdr:onzin}c.
-		\item Laat \cref{opdr:onzin}b en c aftekenen door de docent.
+		\item Laat \cref{opdr:onzin}a en c aftekenen door de docent.
 	\end{enumerate}
 \end{opdracht}
 
