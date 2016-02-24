@@ -4,7 +4,7 @@
 \newif\ifcharter
 % define FONT = \chartertrue in makefile of \chartertrue in args.tex voor charter met berasans fonts 
 \newif\iftimes
-% define FONT = \timestrue in makefile of \timestrue in args.tex  voor Times Roman met Helvetica fonts
+% define FONT = \timestrue in makefile of \timestrue in args.tex voor Times Roman met Helvetica fonts
 
 \IfFileExists{args.tex}{
     \input{args}
@@ -266,9 +266,9 @@
 %>versiehistorie
 % commando voor versiehistory tabel
 % #1 = tabel inhoud
-%      tabel heeft 4 kolommen:
-%      Datum & Versie & Omschrijving & Auteur
-%      Gebruik \\ \line om de rijen te scheiden.
+% tabel heeft 4 kolommen:
+% Datum & Versie & Omschrijving & Auteur
+% Gebruik \\ \line om de rijen te scheiden.
 \newcommand{\versiehistoryheader}{%
     \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} Datum & Versie & Omschrijving & Auteur
     \\ \hline
@@ -505,7 +505,7 @@
         linewidth=.8pt, 
         frametitlebackgroundcolor=red,
         frametitle={\sectionfont\color{white}Opdracht~\theopdracht: #1}
-        ]
+    ]
     }{
     \end{mdframed}
 }

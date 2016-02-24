@@ -344,8 +344,8 @@
 \usepackage{xstring}
 \makeatletter
 \newrobustcmd{\proglink}[1]{%
-	\normalexpandarg%
-	\StrDel{#1}{\\-}[\bare@link]%
-	\href{\progsurl/\bare@link}{\hcode{#1}}%
+    \normalexpandarg%
+    \StrDel{#1}{\\-}[\bare@link]%
+    \href{\progsurl/\bare@link}{\hcode{#1}}%
 }
 \makeatother
