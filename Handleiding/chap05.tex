@@ -78,14 +78,24 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
 
 Nog enkele tips voor het gebruik van \LaTeX{} in combinatie met git:
 \begin{itemize}
-    \item Als de \LaTeX{}-code in een VCS wordt opgenomen worden alle wijzigingen en contributies netjes bijgehouden.
+    \item 
+	    Als de \LaTeX{}-code in een VCS wordt opgenomen worden alle wijzigingen en contributies netjes bijgehouden.
         Binnen de opleiding Elektrotechniek van de Hogeschool Rotterdam maken we gebruik van BitBucket (zie: \url{https://bitbucket.org/HR_ELEKTRO/}).
         We maken gebruik van BitBucket en niet van GitHub omdat de eerste gratis private repositories biedt.
-    \item De pdf bestanden die met \LaTeX{} gegenereerd worden kunnen gepubliceerd worden in het Downloads directory van de repository.
-        Het zou handig zijn als dit automatisch gedaan zou kunnen worden met een make commando.
-        Zodra ik tijd heb zal ik dit proberen te implementeren.
-    \item Het is handig om na elke zin een enter in te typen.
-        Git vergelijkt bestanden namelijk regel voor regel en wijzigingen worden dus veel duidelijker weergegeven als de regels niet te lang zin.
+    \item 
+	    Het is handig om na elke zin een enter in te typen.
+	    Git vergelijkt bestanden namelijk regel voor regel en wijzigingen worden dus veel duidelijker weergegeven als de regels niet te lang zin.
+    \item 
+	    De makefile voorziet in de commando's \code{make commit} en \code{make push}.
+	    Het commando \code[]{make commit} vraagt naar de commit message.
+	    Het commando \code[]{make push} pushed de commit naar de BitBucket repository en upload de target bestanden naar de download directory van de repository. 
+	    Om het commando \code{make push} te kunnen gebruiken moet de juiste waarde toegekend worden aan de variabelen \code{USER} en \code{REPOSITORY} in de makefile.
+		\lstinputfragment[
+		    language={make},
+		    linerange={5-6}, 
+		]{../makefile}
 \end{itemize}
+
+\
 
 \end{llstShortInline}

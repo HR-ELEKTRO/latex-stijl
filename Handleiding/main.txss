@@ -56,7 +56,7 @@ File10\Col=0
 File10\FirstLine=0
 File10\FoldedLines=
 MasterFile=main.tex
-CurrentFile=app01.tex
+CurrentFile=main.tex
 Bookmarks=@Invalid()
 File11\FileName=makefile
 File11\Line=0
@@ -65,5 +65,5 @@ File11\FirstLine=0
 File11\FoldedLines=
 
 [InternalPDFViewer]
-File=main.pdf
+File=
 Embedded=true

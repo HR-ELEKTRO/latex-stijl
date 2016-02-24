@@ -1,7 +1,9 @@
 # Define target and source file here:
 TARGET       = Handleiding_LaTeX-stijl_HR
 SOURCE       = main
-DEPENDENCIES = *.tex bibliography.bib 
+DEPENDENCIES = *.tex bibliography.bib
+USER         = HarryBroeders
+REPOSITORY   = HR_ELEKTRO/latex-stijl/downloads 
 
 # Define font here:
 #FONT         = \timestrue
@@ -14,11 +16,14 @@ PDFLATEXOPT  = -shell-escape -interaction=nonstopmode -file-line-error
 
 LATEXBINDIR  = C:\texlive\2015\bin\win32
 UTILSBINDIR  = C:\WinAVR-20100110\utils\bin
+GITBINDIR    = %USERPROFILE%\AppData\Local\Atlassian\SourceTree\git_local\bin
+
 PDFLATEX     = $(LATEXBINDIR)\pdflatex.exe
 BIBER        = $(LATEXBINDIR)\biber.exe
 RM           = $(UTILSBINDIR)\rm.exe
 MAKE         = $(UTILSBINDIR)\make.exe
 MV           = $(UTILSBINDIR)\mv.exe
+GIT          = $(GITBINDIR)\git.exe
 
 .PHONY : all
 all : $(TARGET).pdf $(TARGET)_ebook.pdf
@@ -31,6 +36,15 @@ clean :
 build :
 	$(MAKE) clean
 	$(MAKE)
+	
+.PHONY : commit
+commit :	
+	cmd /C $(GIT) commit -a
+	
+.PHONY : push
+push :
+	cmd /C $(GIT) push
+	upload-to-bitbucket $(USER) $(REPOSITORY) $(TARGET).pdf $(TARGET)_ebook.pdf 
 
 $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
