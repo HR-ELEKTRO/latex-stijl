@@ -399,9 +399,10 @@ De code die gegeven is in \cref{lst:pgfplotsvoorbeeld} produceert de grafiek die
                 width=0.9\textwidth, height=0.45\textwidth,
                 minor tick num=1, axis lines*=middle, 
                 xmin=0, xmax=15, ymin=-2.5, ymax=3.5,
-                xlabel style={at={(ticklabel* cs:1), align=center},anchor=west, align=center},
+                xlabel style={at={(ticklabel* cs:1.05)}, anchor=near ticklabel, align=center},
                 xlabel={$\longrightarrow$ \\ $x$},
-                ylabel style={at={(ticklabel* cs:.9)},anchor=north, align=center}, ylabel={$e(x)$ \\ $\longrightarrow$ },
+                ylabel style={at={(ticklabel* cs:.9)}, anchor=near ticklabel, align=center},
+                ylabel={$e(x)$ \\ $\longrightarrow$ },
             ]
             \addplot[thick, smooth, red, mark=*] table {data/data1.dat};
             \addplot[const plot, fill=gray, fill opacity=0.5] table {data/data1.dat};
