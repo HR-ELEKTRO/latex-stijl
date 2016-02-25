@@ -15,10 +15,6 @@ if "%4"=="" goto :bad
 	del hide.py
 	::without Python you can use
 	::set /P pwd=Enter password (will be visible): 
-	echo import getpass\nprint(getpass.getpass())>hide.py
-	set /p password=Enter password: <nul
-	for /f "tokens=*" %%i in ('hide.com') do set pwd=%%i
-	del hide.com
 	set pge=%2
 	set fil1=%3
 	set fil2=%4
