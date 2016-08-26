@@ -10,6 +10,7 @@
     \input{args}
 }{
     \ebookfalse
+    \chartertrue
 }
 
 \ifebook 
@@ -293,7 +294,7 @@
 %<versiehistorie
 
 \newcommand{\mailafko}[1]{%
-    \href{mailto:#1@hr.nl}{#1}
+    \href{mailto:#1@hr.nl}{#1}%
 }
 
 % environment voor itemize in tabu (B.v. versie tabel.)
@@ -689,9 +690,11 @@
 % float definieert de H placement specifier om figuren op vast plaats te zetten
 \usepackage{float}
 % pas regels voor plaatsen floats aan
-\renewcommand{\topfraction}{.95} %in plaats van .70
-\renewcommand{\bottomfraction}{.95} %in plaats van .30
-\renewcommand{\textfraction}{0.05} %in plaats van .20
+% Zie http://tex.stackexchange.com/questions/39017/how-to-influence-the-position-of-float-environments-like-figure-and-table-in-lat
+\renewcommand{\topfraction}{.90} %in plaats van .70
+\renewcommand{\bottomfraction}{.90} %in plaats van .30
+\renewcommand{\textfraction}{.10} %in plaats van .20
+\renewcommand{\floatpagefraction}{.90} %in plaats van .5
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/caption/caption-eng.pdf
 \usepackage[
@@ -778,7 +781,8 @@
         pdftitle={\titel{}},
         pdfauthor={Hogeschool Rotterdam},
         pdfdisplaydoctitle=true,
-        pdfpagelayout=TwoPageRight,
+        %pdfpagelayout=TwoPageRight,
+        pdfpagelayout=SinglePage,
         %pdfstartview={XYZ null null 1.50}, %voor debuggen
         %pdfstartview=FitH, % voor debuggen
     }
