@@ -14,8 +14,8 @@ FONT         = \chartertrue
 # Options:
 PDFLATEXOPT  = -shell-escape -interaction=nonstopmode -file-line-error
 
-LATEXBINDIR  = C:\texlive\2015\bin\win32
-UTILSBINDIR  = C:\WinAVR-20100110\utils\bin
+LATEXBINDIR  = C:\texlive\2016\bin\win32
+UTILSBINDIR  = C:\gnuwin32\bin
 GITBINDIR    = %USERPROFILE%\AppData\Local\Atlassian\SourceTree\git_local\bin
 
 PDFLATEX     = $(LATEXBINDIR)\pdflatex.exe
