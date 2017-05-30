@@ -8,5 +8,7 @@ Deze documenten bevinden zich in diverse repositories waar vanuit de handleiding
 Je kunt voordat je zelf documenten in deze stijl wilt gaan maken of voordat je deze stijl naar je eigen smaak gaat aanpassen het beste de hele handleiding eerst even doorlezen.
 Je kunt de gecompileerde handleiding vinden in de [Downloads](https://bitbucket.org/HR_ELEKTRO/latex-stijl/downloads) van dit repository.
 
+Een installatie- en gebruikshandleiding kun je vinden in de [Wiki](https://bitbucket.org/HR_ELEKTRO/latex-stijl/wiki/Home) van deze repository.
+
 Op- en aanmerkingen zijn altijd welkom.
 Maak een [issue](https://bitbucket.org/HR_ELEKTRO/latex-stijl/issues?status=new&status=open) aan of stuur een mail naar [Harry Broeders](mailto:j.z.m.broeders@hr.nl)
