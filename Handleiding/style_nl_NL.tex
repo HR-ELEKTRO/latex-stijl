@@ -818,3 +818,16 @@
 }{}
 \crefname{appendix}{bijlage}{bijlagen}
 \Crefname{appendix}{Bijlage}{Bijlagen}
+\DeclareCaptionType[fileext=ext, name=Schakeling, placement=tbph!]{circuit}
+\crefname{circuit}{schakeling}{Schakeling}
+
+\newcommand{\schakeling}[3]{
+	\begin{circuit}[h!]
+		\centering
+		\begin{circuitikz}
+			#1
+		\end{circuitikz}	
+		\caption{#2}
+		\label{sch:#3}
+	\end{circuit}
+}
