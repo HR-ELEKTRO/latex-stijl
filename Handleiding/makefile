@@ -6,24 +6,24 @@ USER         = HarryBroeders
 REPOSITORY   = HR_ELEKTRO/latex-stijl/downloads 
 
 # Define font here:
-#FONT         = \timestrue
-FONT         = \chartertrue
+#FONT         = "\timestrue"
+FONT         = "\chartertrue"
+#FONT         = "\opensanstrue"
 # For standard latex fonts use:
 #FONT         = 
 
 # Options:
 PDFLATEXOPT  = -shell-escape -interaction=nonstopmode -file-line-error
 
-LATEXBINDIR  = C:\texlive\2016\bin\win32
-UTILSBINDIR  = C:\gnuwin32\bin
-GITBINDIR    = %USERPROFILE%\AppData\Local\Atlassian\SourceTree\git_local\bin
-
-PDFLATEX     = $(LATEXBINDIR)\pdflatex.exe
-BIBER        = $(LATEXBINDIR)\biber.exe
-RM           = $(UTILSBINDIR)\rm.exe
-MAKE         = $(UTILSBINDIR)\make.exe
-MV           = $(UTILSBINDIR)\mv.exe
-GIT          = $(GITBINDIR)\git.exe
+LATEXBINDIR  = C:/texlive/2017/bin/win32
+UTILSBINDIR  = C:/gnuwin32/bin
+PDFLATEX     = $(LATEXBINDIR)/pdflatex.exe
+BIBER        = $(LATEXBINDIR)/biber.exe
+RM           = $(UTILSBINDIR)/rm.exe
+MAKE         = $(UTILSBINDIR)/make.exe
+MV           = $(UTILSBINDIR)/mv.exe
+ECHO         = $(UTILSBINDIR)/echo.exe
+GIT          = $(GITBINDIR)/git.exe
 
 .PHONY : all
 all : $(TARGET).pdf $(TARGET)_ebook.pdf
@@ -48,8 +48,9 @@ push :
 
 $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
-	echo '\ebooktrue' >args.tex
-	echo '$(FONT)' >>args.tex
+	$(ECHO) "\ebooktrue" >args.tex
+	$(ECHO) $(FONT) >>args.tex
+	$(BIBER) $(SOURCE)
 	$(PDFLATEX) $(SOURCE).tex
 	$(BIBER) $(SOURCE)
 	$(PDFLATEX) $(SOURCE).tex
@@ -57,8 +58,9 @@ $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 
 $(TARGET).pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
-	echo '\ebookfalse' >args.tex
-	echo '$(FONT)' >>args.tex
+	$(ECHO) "\ebookfalse" >args.tex
+	$(ECHO) $(FONT) >>args.tex
+	$(BIBER) $(SOURCE)
 	$(PDFLATEX) $(SOURCE).tex
 	$(BIBER) $(SOURCE)
 	$(PDFLATEX) $(SOURCE).tex
