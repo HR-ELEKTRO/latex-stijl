@@ -2,11 +2,11 @@
 % define \ebooktrue voor ebook versie of \ebookfalse voor papieren versie in args.tex
 % wordt automatisch gedaan in makefile: echo "\ebooktrue">args.tex 
 \newif\ifcharter
-% define FONT = \chartertrue in makefile of \chartertrue in args.tex voor charter met berasans fonts 
+% define FONT = "\chartertrue" in makefile of \chartertrue in args.tex voor charter met berasans fonts 
 \newif\iftimes
-% define FONT = \timestrue in makefile of \timestrue in args.tex voor Times Roman met Helvetica fonts
+% define FONT = "\timestrue" in makefile of \timestrue in args.tex voor Times Roman met Helvetica fonts
 \newif\ifopensans
-% define FONT = \opensanstrue in makefile of \opensanstrue in args.tex voor Open Sans fonts
+% define FONT = "\opensanstrue" in makefile of \opensanstrue in args.tex voor Open Sans fonts
 
 \IfFileExists{args.tex}{
     \input{args}
@@ -61,7 +61,8 @@
 \iftoggle{ebook} {
     \usepackage[
         papersize={150mm,200mm},
-        top=12.5mm,
+        top=14mm,
+        head=10mm,
         headsep=5mm,
         bottom=15mm,
         footskip=11.7mm,
@@ -318,7 +319,7 @@
 % environment voor itemize in tabu (B.v. versie tabel.)
 \newenvironment{itemizeintabu}{
     %Opties zijn nodig omdat \baslineskip wordt aangepast in \tabu
-    \vspace{-.5\baselineskip}
+    \vspace{.5\baselineskip}
     \begin{itemize}[leftmargin=*, itemsep=1mm]
 }{
         \vspace*{-.7\baselineskip}
@@ -718,6 +719,8 @@
 \settowidth{\page@number@width}{\thepage}
 \addtolength{\page@number@width}{6mm}
 
+\newcommand{\rease@header}{\vspace{4pt}}
+
 \newcommand{\module@code@box}{\colorbox{red}{\makebox[\module@code@width][c]{\color{white}\textbf{\modulecode}}}}
 \newcommand{\page@number@box}{\colorbox{red}{\makebox[\page@number@width][c]{\color{white}\textbf{\thepage}}}}
 
@@ -727,21 +730,21 @@
     \fancyhead{}
     \fancyfoot{}
     \ifboolexpr{togl {ebook} or togl {onesided}}{
-        \fancyhead[L]{\headerfont\module@code@box{}} 
+        \fancyhead[L]{\headerfont\module@code@box{}\rease@header{}}
 		\expandafter\ifstrequal\expandafter{\myClass}{article}{
-	        \fancyhead[R]{\headerfont\nouppercase{\rightmark}} 
+        	\fancyhead[R]{\headerfont\nouppercase{\rightmark}\rease@header{}}
 		}{
-        \fancyhead[R]{\headerfont\nouppercase{\leftmark}}
+        	\fancyhead[R]{\headerfont\nouppercase{\leftmark}\rease@header{}} 
         } 
         \fancyfoot[L]{\headerfont{}Rotterdam University}
         \fancyfoot[R]{\headerfont\documenttype{} \titel{}\hspace{1em}\page@number@box{}}
     }{
 		\expandafter\ifstrequal\expandafter{\myClass}{article}{
-	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}} 
-	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}}         
+	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}} 
+	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}         
 		}{
-        \fancyhead[OR]{\headerfont\nouppercase{\leftmark}\hspace{1em}\module@code@box{}} 
-        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}}
+        	\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}} 
+        	\fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}\rease@header{}}         
         }         
         \fancyfoot[OR]{\headerfont{} Rotterdam University of Applied Sciences\hspace{1em}\page@number@box{}}
         \fancyfoot[EL]{\headerfont\page@number@box{}\hspace{1em}\documenttype{} \titel{}}
@@ -750,12 +753,10 @@
     \renewcommand{\footrulewidth}{0.4pt}
 }
 \makeatother
+\markboth{\text{}}{\text{}}
 \pagestyle{fancy}
 \myfancy
 \fancypagestyle{plain}{\myfancy}
-
-% om warning te voorkomen
-\setlength{\headheight}{17pt} 
 
 \makeatletter
 \iftoggle{ebook}{
