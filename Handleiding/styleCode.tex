@@ -92,6 +92,16 @@
     commentstyle=\color{cgreen},
 }
 
+% Python
+\lstdefinestyle{pystyle}{
+	language=Python,
+	%morekeywords={},
+	stringstyle=\color{cdarkred},
+	keywordstyle=\color{cblue},
+	identifierstyle=,
+	commentstyle=\color{cgreen},
+}
+
 % MATLAB
 \lstdefinestyle{mstyle}{
     language=Matlab,
@@ -129,7 +139,7 @@
 
 % Commando's \floatlstinput en \lstinput lezen code uit (een deel van) een bestand en plaatsen dit in een listing.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -148,7 +158,7 @@
 }
 
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -168,7 +178,7 @@
 
 % Commando \lstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, mstyle of astyle (C, C++, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -185,7 +195,7 @@
 
 % De code in de environments floatlst en lst wordt in een listing geplaatst.
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, mstyle, astyle (C, C++, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
 %      style = linenumbers
 % #2 = label=lst:#2
 % #3 = titel
@@ -201,7 +211,7 @@
 }
 
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, mstyle, astyle (C, C++, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
 %      style = linenumbers
 % #2 = label=lst:#2
 % #3 = titel
@@ -218,7 +228,7 @@
 
 % De code in de environments lstfragment wordt in een codefragment geplaatst.
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, mstyle, astyle (C, C++, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
 %      style = linenumbers
 % geen titel, geen label
 \lstnewenvironment{lstfragment}[1][]{%
@@ -238,7 +248,7 @@
     breakindent=0pt,
 }
 
-% Commando's \code, \ccode, \cppcode, \mcode en \acode kunnen gebruikt worden om inline code te definiëren.
+% Commando's \code, \ccode, \cppcode, \pycode, \mcode en \acode kunnen gebruikt worden om inline code te definiëren.
 % #1 = (optional) extra key=value paren voor lstinline.
 % #2 = inline code
 \newcommand{\code}[2][]{%
@@ -262,6 +272,14 @@
         style=lstinlinestyle,%
         #1
     ]@#2@%
+}
+
+\newcommand{\pycode}[2][]{%
+	\lstinline[
+	style=pystyle,
+	style=lstinlinestyle,%
+	#1
+	]@#2@%
 }
 
 \newcommand{\mcode}[2][]{%
@@ -308,6 +326,15 @@
     ]{|}%
 }{%
     \lstDeleteShortInline{|}%
+}
+
+\newenvironment{pylstShortInline}{%
+	\lstMakeShortInline[
+	style=pystyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
 }
 
 \newenvironment{mlstShortInline}{%
