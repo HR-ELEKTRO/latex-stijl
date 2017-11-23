@@ -14,6 +14,10 @@
 \definecolor{cpurple}{RGB}{97,63,153}
 \definecolor{cblue}{RGB}{0,0,255}
 
+\definecolor{pgreen}{RGB}{0,100,0}
+\definecolor{pgray}{RGB}{169,169,199}
+\definecolor{ppurple}{RGB}{127,0,116}
+
 \definecolor{mgreen}{RGB}{33,138,77}
 \definecolor{mpurple}{RGB}{159,31,242}
 
@@ -93,13 +97,19 @@
 }
 
 % Python
+% color scheme from Thonny http://thonny.org/
 \lstdefinestyle{pystyle}{
 	language=Python,
-	%morekeywords={},
-	stringstyle=\color{cdarkred},
-	keywordstyle=\color{cblue},
-	identifierstyle=,
-	commentstyle=\color{cgreen},
+	% redefined keywords for Python 3
+	keywords={False,class,finally,is,return,None,continue,for,lambda,try,True,def,from,
+		nonlocal,while,and,del,global,not,with,as,elif,if,or,yield,assert,else,import,
+		pass,break,except,in,raise},
+	keywords=[2]{},
+	morekeywords={},
+	stringstyle=\color{pgreen},
+	keywordstyle=\color{ppurple}\bfseries,
+	identifierstyle={},
+	commentstyle=\color{pgray},
 }
 
 % MATLAB
@@ -298,7 +308,7 @@
     ]@#2@%
 }
 
-% met \hcode kun je ercoor zorgen dat lange identifiers afgebroken kunnen worden. Mogelijke afbreekpunten met \\- markeren.
+% met \hcode kun je ervoor zorgen dat lange identifiers afgebroken kunnen worden. Mogelijke afbreekpunten met \\- markeren.
 \newcommand{\hcode}[2][]{%
     \lstinline[
         style=lstinlinestyle,
