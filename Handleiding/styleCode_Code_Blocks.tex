@@ -8,9 +8,11 @@
 }
 
 % define kleuren die in listings gebruikt worden
-\definecolor{cgreen}{RGB}{63,127,95}
-\definecolor{cpurple}{RGB}{127,0,116}
-\definecolor{cblue}{RGB}{42,0,255}
+\definecolor{cgreen}{RGB}{0,128,0}
+\definecolor{cdarkred}{RGB}{163,21,21}
+\definecolor{cbrown}{RGB}{121,37,0}
+\definecolor{cpurple}{RGB}{97,63,153}
+\definecolor{cblue}{RGB}{0,0,255}
 
 \definecolor{pgreen}{RGB}{0,100,0}
 \definecolor{pgray}{RGB}{169,169,199}
@@ -74,24 +76,22 @@
     numbersep=1em
 }
 
-% C 
-% corlor scheme from Code Composer Studio
+% C
 \lstdefinestyle{cstyle}{
     language=C,
-    morekeywords={__interrupt, __asm, interrupt, asm, __attribute__},
-    stringstyle=\color{cblue},
-    keywordstyle=\color{cpurple}\bfseries,
+    morekeywords={interrupt},
+    stringstyle=\color{cdarkred},
+    keywordstyle=\color{cblue},
     identifierstyle=,
     commentstyle=\color{cgreen},
 }
 
 % C++
-% corlor scheme from Code Composer Studio
 \lstdefinestyle{cppstyle}{
     language=C++,
     morekeywords={alignas,alignof,char16_t,char32_t,concept,constexpr,decltype,noexcept,nullptr,requires,static_assert,thread_local,override,final},
-    stringstyle=\color{cblue},
-    keywordstyle=\color{cpurple}\bfseries,
+    stringstyle=\color{cdarkred},
+    keywordstyle=\color{cblue},
     identifierstyle=,
     commentstyle=\color{cgreen},
 }
