@@ -134,6 +134,10 @@
 %\newcommand{\captionfont}{rm,small}
 \newcommand{\captionfont}{sf,small}
 
+% http://ctan.cs.uu.nl/macros/latex/contrib/url/url.pdf
+% zorgt voor afbreken binnen url
+\usepackage[hyphens]{url}
+
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/amslatex/math/amsldoc.pdf
 \usepackage{amsmath}
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/mathtools/mathtools.pdf
@@ -604,7 +608,7 @@
 
 %>handtekening
 \newcounter{handtekening}
-\newcommand{\handtekening}[1][]{
+\newcommand{\handtekening}[1][]{%
     \ifstrequal{#1}{}{\stepcounter{handtekening}}{}%
     \ifstrequal{#1}{a}{\stepcounter{handtekening}}{}%
 	%frame voor handtekening alleen in printed versie
@@ -659,8 +663,8 @@
 \DeclareCiteCommand{\@saveurlcite}{}{\savefield{url}{\@savedurl}}{}{}
 \newcounter{cite@pag}
 \newcommand{\citepdfpag}[3][0]{%
-    \setcounter{cite@pag}{#3}
-    \addtocounter{cite@pag}{#1}
+    \setcounter{cite@pag}{#3}%
+    \addtocounter{cite@pag}{#1}%
     \@saveurlcite{#2}%
     \edef\@savedurlpag{\@savedurl\#page=\thecite@pag}%
     \cite[\href{\@savedurlpag}{pagina~#3}]{#2}%
@@ -912,10 +916,6 @@
         %pdfstartview=FitH, % voor debuggen
     }
 }
-
-% http://ctan.cs.uu.nl/macros/latex/contrib/url/url.pdf
-% zorgt voor afbreken binnen url
-\usepackage{url}
 
 % http://ctan.cs.uu.nl/macros/latex/contrib/cleveref/cleveref.pdf
 \usepackage[dutch, noabbrev, nameinlink]{cleveref}
