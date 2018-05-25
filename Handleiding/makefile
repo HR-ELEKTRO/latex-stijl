@@ -51,18 +51,18 @@ $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebooktrue" >args.tex
 	$(ECHO) $(FONT) >>args.tex
-	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
-	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
-	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
-	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
+	$(BIBER) $(BIBEROPT) $(basename $<)
+	$(PDFLATEX) $(PDFLATEXOPT) $<
+	$(BIBER) $(BIBEROPT) $(basename $<) 
+	$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(MV) $(SOURCE).pdf $(TARGET)_ebook.pdf
 
 $(TARGET).pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebookfalse" >args.tex
 	$(ECHO) $(FONT) >>args.tex
-	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
-	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
-	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
-	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
+	$(BIBER) $(BIBEROPT) $(basename $<)
+	$(PDFLATEX) $(PDFLATEXOPT) $<
+	$(BIBER) $(BIBEROPT) $(basename $<)
+	$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(MV) $(SOURCE).pdf $(TARGET).pdf
