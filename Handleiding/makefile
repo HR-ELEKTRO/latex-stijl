@@ -13,7 +13,8 @@ FONT         = "\chartertrue"
 #FONT         = 
 
 # Options:
-PDFLATEXOPT  = -shell-escape -interaction=nonstopmode -file-line-error
+PDFLATEXOPT  = -shell-escape -interaction=batchmode -file-line-error -halt-on-error
+BIBEROPT  = --quiet
 
 LATEXBINDIR  = C:/texlive/2017/bin/win32
 UTILSBINDIR  = C:/gnuwin32/bin
@@ -50,18 +51,18 @@ $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebooktrue" >args.tex
 	$(ECHO) $(FONT) >>args.tex
-	$(BIBER) --quiet $(basename $<) $(SOURCE)
-	$(PDFLATEX) -interaction=batchmode $(SOURCE).tex
-	$(BIBER) --quiet $(basename $<) $(SOURCE)
-	$(PDFLATEX) -interaction=batchmode $(SOURCE).tex
+	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
+	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
+	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
+	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
 	$(MV) $(SOURCE).pdf $(TARGET)_ebook.pdf
 
 $(TARGET).pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebookfalse" >args.tex
 	$(ECHO) $(FONT) >>args.tex
-	$(BIBER) --quiet $(basename $<) $(SOURCE)
-	$(PDFLATEX) -interaction=batchmode $(SOURCE).tex
-	$(BIBER) --quiet $(basename $<) $(SOURCE)
-	$(PDFLATEX) -interaction=batchmode $(SOURCE).tex
+	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
+	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
+	$(BIBER) $(BIBEROPT) $(basename $<) $(SOURCE)
+	$(PDFLATEX) $(PDFLATEXOPT) $(SOURCE).tex
 	$(MV) $(SOURCE).pdf $(TARGET).pdf
