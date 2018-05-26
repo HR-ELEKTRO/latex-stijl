@@ -13,7 +13,7 @@ FONT         = "\chartertrue"
 #FONT         = 
 
 # Options:
-PDFLATEXOPT  = -shell-escape -interaction=batchmode -file-line-error -halt-on-error
+PDFLATEXOPT  = -shell-escape -interaction=batchmode -file-line-error
 BIBEROPT  = --quiet
 
 LATEXBINDIR  = C:/texlive/2017/bin/win32
@@ -31,11 +31,16 @@ all : $(TARGET).pdf $(TARGET)_ebook.pdf
 
 .PHONY : clean
 clean :
-	$(RM) -f '*.aux' $(TARGET).pdf $(TARGET)_ebook.pdf $(SOURCE).log $(SOURCE).toc $(SOURCE).out $(SOURCE).bcf $(SOURCE).blg $(SOURCE).bbl $(SOURCE).run.xml
+	-$(RM) -f '*.aux' $(SOURCE).log $(SOURCE).toc $(SOURCE).out $(SOURCE).bcf $(SOURCE).blg $(SOURCE).bbl $(SOURCE).run.xml
+
+.PHONY : cleanall
+cleanall :
+	-$(RM) -f $(TARGET).pdf $(TARGET)_ebook.pdf 
+	$(MAKE) clean
 
 .PHONY : build
 build :
-	$(MAKE) clean
+	$(MAKE) cleanall
 	$(MAKE)
 	
 .PHONY : commit
@@ -51,8 +56,7 @@ $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebooktrue" >args.tex
 	$(ECHO) $(FONT) >>args.tex
-	$(BIBER) $(BIBEROPT) $(basename $<)
-	$(PDFLATEX) $(PDFLATEXOPT) $<
+	-$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(BIBER) $(BIBEROPT) $(basename $<) 
 	$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(MV) $(SOURCE).pdf $(TARGET)_ebook.pdf
@@ -61,8 +65,7 @@ $(TARGET).pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebookfalse" >args.tex
 	$(ECHO) $(FONT) >>args.tex
-	$(BIBER) $(BIBEROPT) $(basename $<)
-	$(PDFLATEX) $(PDFLATEXOPT) $<
+	-$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(BIBER) $(BIBEROPT) $(basename $<)
 	$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(MV) $(SOURCE).pdf $(TARGET).pdf
