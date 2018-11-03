@@ -185,6 +185,10 @@
 \usepackage{tikz}
 \usetikzlibrary{fadings}
 \usetikzlibrary{shadows}
+\usepackage{pgfplots}
+\usepackage[siunitx]{circuitikz}
+
+
 
 %>titelpagina
 % \titelpagina definieert de titlepage
@@ -402,6 +406,25 @@
 	\end{myFigure}
 }
 %<tikzfiguur
+
+%>tikzinlinefiguur
+% commando voor figuur getekend met tikz
+% figuren staan inline
+% #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
+% #2 = label
+% #3 = tikz code
+% #4 = titel
+\newcommand{\tikzinlinefiguur}[4][!htbp]{
+	\begin{myFigure}[#1]
+		\centering%
+		\begin{tikzpicture}
+		#3
+		\end{tikzpicture}
+		\caption{#4}
+		\label{fig:#2}
+	\end{myFigure}
+}
+%<tikzinlinefiguur
 
 \usepackage{newfloat}
 %http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/caption/newfloat.pdf
