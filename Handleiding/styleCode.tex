@@ -147,6 +147,13 @@
     commentstyle=\color{agreen},  
 }
 
+\lstdefinestyle{nostyle}{
+	stringstyle=,
+	keywordstyle=,
+	identifierstyle=,
+	commentstyle=,
+}
+
 % Commando's \floatlstinput en \lstinput lezen code uit (een deel van) een bestand en plaatsen dit in een listing.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
 %      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
@@ -312,6 +319,7 @@
 \newcommand{\hcode}[2][]{%
     \lstinline[
         style=lstinlinestyle,
+        style=nostyle,
         literate={\\-}{}{0\discretionary{-}{}{}},%
         #1
     ]@#2@%
