@@ -1,0 +1,21 @@
+% \titelpagina definieert de titlepage
+% 1 = Naam van het plaatje in directory ./fig. 
+%     Neem een hoog resolutie plaatje.
+%     De hoogte moet ongeveer 0.5 x de breedte zijn.
+\titelpagina{academieplein}
+\iftoggle{ebook}{%
+}{{
+    \centering
+	\vspace*{8cm}
+	{\sffamily\bfseries\Large\selectfont%
+		\documenttype{} \titel\par
+	} 
+	{\sffamily\selectfont%
+		Versie \huidigeversie\par%
+		\auteurs\par%
+	} 
+}}
+\vspace*{\stretch{20}}
+\includegraphics{figs/by-nc-sa_eu.pdf}
+\par
+\documenttype{} \titel{} van Hogeschool Rotterdam is in licentie gegeven volgens een \href{http://creativecommons.org/licenses/by-nc-sa/3.0/nl/} {Creative Commons Naamsvermelding\hyp{}NietCommercieel\hyp{}GelijkDelen 3.0 Ne\-der\-land\hyp{}licentie}.

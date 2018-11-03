@@ -1,0 +1,48 @@
+% De bijbehorende makefile genereert zowel de printed als de ebook versie
+
+\newcommand{\myClass}{book}
+\newcommand{\modulecode}{DIC10}
+\newcommand{\titel}{Voorbeelddictaat}
+\newcommand{\documenttype}{Dictaat}
+\newcommand{\huidigeversie}{1.0}
+\newcommand{\auteurs}{
+    J.Z.M. Broeders
+}
+
+\input{style_nl_NL.tex}
+\usepackage{lipsum}
+
+\begin{document}
+\frontmatter
+\include{titlepage}
+\cleardoublepage
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\tableofcontents
+\cleardoublepage
+
+\mainmatter
+\chapter*{Inleiding}
+\addcontentsline{toc}{chapter}{Inleiding}
+\markboth{Inleiding}{}
+\label{sec:inleiding}
+
+Hier komt de inleiding van dit dictaat.
+Uitleg over \LaTeX{} en de in dit dictaat gebruikte \LaTeX{}-stijl kun je vinden in \cite{Broeders2017}.  
+Op- en aanmerkingen zijn altijd welkom.
+Je kunt me mailen op \url{mailto:J.Z.M.Broeders@hr.nl}.
+
+\chapter{Titel}
+\label{sec:h1}
+Hier komt het eerste hoofdstuk.
+\section{Paragraaf}
+Dit is de eerste paragraaf van \cref{sec:h1}. 
+Er volgt nog wat random tekst om je het idee te geven hoe het eruit kan gaan zien.
+
+\lipsum[1-10]
+\section{Paragraaf}
+En dit is de tweede paragraaf van \cref{sec:h1}.
+
+\printbibliography[heading=bibintoc]{}
+\backmatter
+\end{document}
