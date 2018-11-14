@@ -621,6 +621,33 @@ Soms, bijvoorbeeld in een practicumhandleiding, is het handig om de opdrachten i
 Het commando |\handtekening| produceert een kader waarin de docent de opdracht kan aftekenen.
 De code |\handtekening{}| levert het volgende kader:
 
+%temphandtekening vervangt handtekening zodat frame altijd geprint wordt
+\newcommand{\temphandtekening}[1][]{%
+	\ifstrequal{#1}{}{\stepcounter{handtekening}}{}%
+	\ifstrequal{#1}{a}{\stepcounter{handtekening}}{}%
+	\vspace{.4\baselineskip}%
+	\begin{mdframed}[
+		userdefinedwidth=.65\linewidth,
+		nobreak=true,
+		align=center,
+		innerleftmargin=1.5em,
+		innerrightmargin=1.5em,
+		innertopmargin=.8\baselineskip,
+		innerbottommargin=.6\baselineskip,
+		linecolor=red, 
+		linewidth=.8pt, 
+		frametitlebackgroundcolor=red,
+		frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1:}
+		]
+		\vspace*{5\baselineskip}%
+	\end{mdframed}%
+}%
+
+\temphandtekening{}
+
+Als een ebook wordt gemaakt (door het commando |\ebooktrue| in |args.tex| te plaatsen), dan levert de code \hcode{\\hand\\-te\\-ken\\-ing} geen kader op.
+De code \hcode{\\hand\\-te\\-ken\\-ing\{\}} levert in een ebook de volgende tekst op:
+\addtocounter{handtekening}{-1}%
 \handtekening{}
 
 Deze kaders worden automatisch genummerd.
@@ -638,8 +665,8 @@ Bijvoorbeeld voor \cref{opdr:onzin} is aleen een kader gemaakt om de deelopdrach
     \end{enumerate}
 \end{opdracht}
 
-\handtekening[a]
-\handtekening[c]
+\temphandtekening[a]
+\temphandtekening[c]
 
 De bovenstaande kaders zijn gemaakt met de \LaTeX\hyp{}code:
 \begin{lstfragment}[style=lstyle]
