@@ -298,7 +298,7 @@
 % Datum & Versie & Omschrijving & Auteur
 % Gebruik \\ \line om de rijen te scheiden.
 \newcommand{\versiehistoryheader}{%
-    \rowfont[c]{\bf\color{white}}\rowcolor{red} Datum & Versie & Omschrijving & Auteur
+    \rowfont[c]{\bfseries\rmfamily\color{white}}\rowcolor{red} Datum & Versie & Omschrijving & Auteur
     \\ \hline
 }
 \newcommand{\versiehistorie}[1]{
@@ -477,7 +477,7 @@
         \begin{tabu}{|#4|}
             \taburulecolor{red}
             \hline
-            \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\bfseries\rmfamily\color{white}}\rowcolor{red} #5\\ \hline
             #6\\ \hline
         \end{tabu}
     \end{myTable}
@@ -494,7 +494,7 @@
             \begin{tabu}{|#4|}
                 \taburulecolor{red}
                 \hline
-                \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+                \rowfont[c]{\bfseries\rmfamily\color{white}}\rowcolor{red} #5\\ \hline
                 #6\\ \hline
             \end{tabu}%
         \end{adjustbox}
@@ -517,11 +517,11 @@
             \caption{#2}\label{tab:#3} \\
             \taburulecolor{red}
             \hline
-            \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\bfseries\rmfamily\color{white}}\rowcolor{red} #5\\ \hline
             \endfirsthead
             \caption[]{Vervolg. #2}\\
             \hline
-            \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\bfseries\rmfamily\color{white}}\rowcolor{red} #5\\ \hline
             \endhead
             \multicolumn{#7}{r}{\sffamily\small Wordt vervolgd op volgende pagina.}\\
             \endfoot
@@ -742,6 +742,10 @@
 
 \expandafter\ifstrequal\expandafter{\myClass}{book}{
 % Voetnoot teller NIET resetten bij elk hoofdstuk
+%BUGFIX voor LaTeX Live 2018:
+%Zie https://tex.stackexchange.com/questions/425600/latex-error-command-counterwithout-already-defined
+\let\counterwithout\relax
+\let\counterwithin\relax
 \usepackage{chngcntr}
 \counterwithout{footnote}{chapter}
 }{}
