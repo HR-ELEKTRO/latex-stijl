@@ -346,7 +346,8 @@
         \ifstrequal{#1}{H}{
             \vspace{-.8\baselineskip}%
         }{
-            \vspace{-.2\baselineskip}%
+        	% Changed for LaTeX Live 2018
+            \vspace{0pt}%
         }
     }
 }{
@@ -725,9 +726,10 @@
 \titleformat{\section}{\sectionfont\Large}{\thesection}{1em}{}
 \titleformat{\subsection}{\sectionfont\large}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\sectionfont\large}{\thesubsubsection}{1em}{}
-\titlespacing{\section}{0pt}{.6\baselineskip}{0.2\baselineskip}
-\titlespacing{\subsection}{0pt}{.6\baselineskip}{0.2\baselineskip}
-\titlespacing{\subsubsection}{0pt}{.6\baselineskip}{0.2\baselineskip}
+% Changed for LaTeX Live 2018 
+%\titlespacing{\section}{0pt}{.8\baselineskip}{0.2\baselineskip}
+%\titlespacing{\subsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+%\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/footmisc/footmisc.pdf
 % ruimte onder aan de pagina tussen tekst en voetnoot niet na voetnoot

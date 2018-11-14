@@ -164,7 +164,7 @@
 % #4 = titel
 \newcommand{\floatlstinput}[4][]{%
 \lstinputlisting[
-    belowskip=-.2\baselineskip,
+    %belowskip=-.2\baselineskip,
     rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
     rangeendprefix=//<,% Alleen nuttig voor C en C++ 
     float=!htbp, 
@@ -218,7 +218,8 @@
 % #3 = titel
 \lstnewenvironment{floatlst}[3][]{%
     \lstset{
-        belowskip=-.2\baselineskip,
+        % Changed for LaTeX Live 2018
+        %belowskip=-.2\baselineskip,
         float=!htbp, 
         label=lst:#2, 
         caption={#3},%   
