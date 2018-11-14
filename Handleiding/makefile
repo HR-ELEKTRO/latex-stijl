@@ -24,7 +24,6 @@ RM           = $(UTILSBINDIR)/rm.exe
 MAKE         = $(UTILSBINDIR)/make.exe
 MV           = $(UTILSBINDIR)/mv.exe
 ECHO         = $(UTILSBINDIR)/echo.exe
-GIT          = $(GITBINDIR)/git.exe
 
 .PHONY : all
 all : $(TARGET).pdf $(TARGET)_ebook.pdf
@@ -43,15 +42,6 @@ build :
 	$(MAKE) cleanall
 	$(MAKE)
 	
-.PHONY : commit
-commit :	
-	cmd /C $(GIT) commit -a
-	
-.PHONY : push
-push :
-	cmd /C $(GIT) push
-	upload-to-bitbucket $(USER) $(REPOSITORY) $(TARGET).pdf $(TARGET)_ebook.pdf 
-
 $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) "\ebooktrue" >args.tex
