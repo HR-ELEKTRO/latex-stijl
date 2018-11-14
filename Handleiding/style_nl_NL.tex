@@ -303,7 +303,9 @@
 }
 \newcommand{\versiehistorie}[1]{
     \section*{Versiehistorie}
-	\begin{longtabu}{|ccX[jm]c|}
+    % I used X[jm] before but this does not work anymore.
+    % See: https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates
+	\begin{longtabu}{|ccX[j]c|}
         \taburulecolor{red}
         \hline
         \versiehistoryheader
