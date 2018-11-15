@@ -254,7 +254,7 @@
             \draw [line width=3pt] (0,\y@rectbottom) -- (\paperwidth,\y@rectbottom)
                                    (0,\y@recttop) -- (\paperwidth,\y@recttop);
             \node at (\x@logo,\y@logo) {
-                \includegraphics[height=\height@logo]{figs/HR_logo}
+                \includegraphics[height=\height@logo]{figs/logoHR}
             };
             \node[yscale=-1, opacity=0.6] at (\x@logo,\y@logospiegel) {
                 \includegraphics[height=\height@logo]{figs/logoHRfadetop}
@@ -298,12 +298,14 @@
 % Datum & Versie & Omschrijving & Auteur
 % Gebruik \\ \line om de rijen te scheiden.
 \newcommand{\versiehistoryheader}{%
-    \rowfont[c]{\bf\color{white}}\rowcolor{red} Datum & Versie & Omschrijving & Auteur
+    \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} Datum & Versie & Omschrijving & Auteur
     \\ \hline
 }
 \newcommand{\versiehistorie}[1]{
     \section*{Versiehistorie}
-	\begin{longtabu}{|ccX[jm]c|}
+    % I used X[jm] before but this does not work anymore.
+    % See: https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates
+	\begin{longtabu}{|ccX[j]c|}
         \taburulecolor{red}
         \hline
         \versiehistoryheader
@@ -344,7 +346,8 @@
         \ifstrequal{#1}{H}{
             \vspace{-.8\baselineskip}%
         }{
-            \vspace{-.2\baselineskip}%
+        	% Changed for LaTeX Live 2018
+            \vspace{0pt}%
         }
     }
 }{
@@ -477,7 +480,7 @@
         \begin{tabu}{|#4|}
             \taburulecolor{red}
             \hline
-            \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
             #6\\ \hline
         \end{tabu}
     \end{myTable}
@@ -494,7 +497,7 @@
             \begin{tabu}{|#4|}
                 \taburulecolor{red}
                 \hline
-                \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+                \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
                 #6\\ \hline
             \end{tabu}%
         \end{adjustbox}
@@ -517,11 +520,11 @@
             \caption{#2}\label{tab:#3} \\
             \taburulecolor{red}
             \hline
-            \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
             \endfirsthead
             \caption[]{Vervolg. #2}\\
             \hline
-            \rowfont[c]{\bf\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
             \endhead
             \multicolumn{#7}{r}{\sffamily\small Wordt vervolgd op volgende pagina.}\\
             \endfoot
@@ -650,7 +653,7 @@
         linecolor=red, 
         linewidth=.8pt, 
         frametitlebackgroundcolor=red,
-        frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1):}
+        frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1:}
     ]
 	    	\vspace*{5\baselineskip}%
 	    \end{mdframed}%
@@ -723,9 +726,10 @@
 \titleformat{\section}{\sectionfont\Large}{\thesection}{1em}{}
 \titleformat{\subsection}{\sectionfont\large}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\sectionfont\large}{\thesubsubsection}{1em}{}
-\titlespacing{\section}{0pt}{.6\baselineskip}{0.2\baselineskip}
-\titlespacing{\subsection}{0pt}{.6\baselineskip}{0.2\baselineskip}
-\titlespacing{\subsubsection}{0pt}{.6\baselineskip}{0.2\baselineskip}
+% Changed for LaTeX Live 2018 
+%\titlespacing{\section}{0pt}{.8\baselineskip}{0.2\baselineskip}
+%\titlespacing{\subsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+%\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/footmisc/footmisc.pdf
 % ruimte onder aan de pagina tussen tekst en voetnoot niet na voetnoot
@@ -742,6 +746,10 @@
 
 \expandafter\ifstrequal\expandafter{\myClass}{book}{
 % Voetnoot teller NIET resetten bij elk hoofdstuk
+%BUGFIX voor LaTeX Live 2018:
+%Zie https://tex.stackexchange.com/questions/425600/latex-error-command-counterwithout-already-defined
+\let\counterwithout\relax
+\let\counterwithin\relax
 \usepackage{chngcntr}
 \counterwithout{footnote}{chapter}
 }{}
