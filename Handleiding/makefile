@@ -2,8 +2,6 @@
 TARGET       = Handleiding_LaTeX-stijl_HR
 SOURCE       = main
 DEPENDENCIES = *.tex bibliography.bib
-USER         = HarryBroeders
-REPOSITORY   = HR_ELEKTRO/latex-stijl/downloads 
 
 # Define font here:
 #FONT         = "\timestrue"
