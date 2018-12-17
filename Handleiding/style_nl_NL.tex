@@ -106,7 +106,7 @@
 \iftoggle{charter}{
     % charter voor tekst en math
     \usepackage{charter}
-    \usepackage[bitstream-charter]{mathdesign}
+    \usepackage[charter]{mathdesign}
     \usepackage[scaled]{berasans}
     % some extra space between lines
     \setstretch{1.1}
@@ -179,16 +179,15 @@
 % xcolor is nodig om tabellen te kunnen kleuren
 \usepackage[table]{xcolor}
 % alle rood moet Rotterdam's rood zijn ;-)
-\definecolor{red}{HTML}{cc0033}
+\definecolor{hrred}{HTML}{cc0033}
 
 % Zie: http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf
 \usepackage{tikz}
 \usetikzlibrary{fadings}
 \usetikzlibrary{shadows}
 \usepackage{pgfplots}
+\pgfplotsset{compat=newest}
 \usepackage[siunitx]{circuitikz}
-
-
 
 %>titelpagina
 % \titelpagina definieert de titlepage
@@ -478,9 +477,9 @@
         \caption{#2}
         \label{tab:#3}
         \begin{tabu}{|#4|}
-            \taburulecolor{red}
+            \taburulecolor{hrred}
             \hline
-            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
             #6\\ \hline
         \end{tabu}
     \end{myTable}
@@ -495,9 +494,9 @@
         \label{tab:#3}
         \begin{adjustbox}{max width=\textwidth}%
             \begin{tabu}{|#4|}
-                \taburulecolor{red}
+                \taburulecolor{hrred}
                 \hline
-                \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
+                \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
                 #6\\ \hline
             \end{tabu}%
         \end{adjustbox}
@@ -518,13 +517,13 @@
         \vspace*{.2\baselineskip}%
         \begin{longtabu}[#1]{#4}
             \caption{#2}\label{tab:#3} \\
-            \taburulecolor{red}
+            \taburulecolor{hrred}
             \hline
-            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
             \endfirsthead
             \caption[]{Vervolg. #2}\\
             \hline
-            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} #5\\ \hline
+            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
             \endhead
             \multicolumn{#7}{r}{\sffamily\small Wordt vervolgd op volgende pagina.}\\
             \endfoot
@@ -601,9 +600,9 @@
         innerrightmargin=1.5em,
         innertopmargin=.8\baselineskip,
         innerbottommargin=.6\baselineskip,
-        linecolor=red, 
+        linecolor=hrred, 
         linewidth=.8pt, 
-        frametitlebackgroundcolor=red,
+        frametitlebackgroundcolor=hrred,
         frametitle={\sectionfont\color{white}Opdracht~\theopdracht: #1}
     ]
     }{
@@ -621,9 +620,9 @@
 		innerrightmargin=1.5em,
 		innertopmargin=.8\baselineskip,
 		innerbottommargin=.6\baselineskip,
-		linecolor=red, 
+		linecolor=hrred, 
 		linewidth=.8pt, 
-		frametitlebackgroundcolor=red,
+		frametitlebackgroundcolor=hrred,
 		frametitle={\sectionfont\color{white} Conclusie~\theopdracht}
 		]
 		\vspace*{5\baselineskip}
@@ -650,9 +649,9 @@
         innerrightmargin=1.5em,
         innertopmargin=.8\baselineskip,
         innerbottommargin=.6\baselineskip,
-        linecolor=red, 
+        linecolor=hrred, 
         linewidth=.8pt, 
-        frametitlebackgroundcolor=red,
+        frametitlebackgroundcolor=hrred,
         frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1:}
     ]
 	    	\vspace*{5\baselineskip}%
@@ -862,7 +861,7 @@
     font={\captionfont},
     format=hang,
     justification=RaggedRight,
-    labelfont={color=red, bf},
+    labelfont={color=hrred, bf},
     hypcap=true,
     skip=.8\baselineskip
 ]{caption}
@@ -968,6 +967,3 @@
 \Crefname{appendix}{Bijlage}{Bijlagen}
 \crefname{circuit}{schakeling}{schakelingen}
 \Crefname{circuit}{Schakeling}{Schakelingen}
-
-% Package voor todo notes
-\usepackage{todonotes}
