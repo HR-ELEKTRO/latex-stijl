@@ -1,0 +1,532 @@
+% De bijbehorende makefile genereert zowel de printed als de ebook versie
+
+\newcommand{\myClass}{book}
+\newcommand{\modulecode}{TST10}
+\newcommand{\titel}{Figuren, tabellen en listings}
+\newcommand{\documenttype}{Dictaat}
+\newcommand{\huidigeversie}{1.0}
+\newcommand{\auteurs}{
+    J.Z.M. Broeders
+}
+
+\input{style_nl_NL.tex}
+\input{styleCode.tex}
+\usepackage{lipsum}
+
+\begin{document}
+\begin{llstShortInline}
+% gebruik raggedbottom omdat tekst anders uitgevuld wordt over hele pagina.
+\raggedbottom
+\frontmatter
+\include{titlepage}
+\cleardoublepage
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\tableofcontents
+\cleardoublepage
+
+\mainmatter
+\chapter*{Inleiding}
+\addcontentsline{toc}{chapter}{Inleiding}
+\markboth{Inleiding}{}
+\label{sec:inleiding}
+Dit dictaat wordt gebruikt om de afstanden tussen tekst en figuren, tabellen en listing uit te testen.
+Uitleg over \LaTeX{} en de in dit dictaat gebruikte \LaTeX{}-stijl kun je vinden in \cite{Broeders2017}.  
+Op- en aanmerkingen zijn altijd welkom.
+Je kunt me mailen op \url{mailto:J.Z.M.Broeders@hr.nl}.
+
+\chapter{Ruimte rond figuren, tabellen en listings}
+In dit hoofdstuk worden verschillende commando's en environments getest.
+Deze pagina is verder leeg.
+\clearpage 
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de figuur of tabel te meten. 
+In \cref{fig:fractal} zie je een fractal gedefinieerd met het commando |\figuur|. Vind je het een mooi plaatje?
+
+\figuur{scale=.1}{fractal}{Dit is een plaatje van een fractal.}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen.
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de figuur of tabel te meten. 
+In \cref{fig:fractal2} zie je nogmaals hetzelfde figuur maar nu niet als float gedefinieerd met het commando |\figuur[H]|. 
+
+%\figuur[H]{scale=.1}{fractal}{Dit is een plaatje van een fractal.}
+%commando hrfigure gebruikt zodat een ander label geefinieerd kan worden.
+\hrfigure[placement=H,scale=.1,label=fig:fractal2,caption=Dit is een plaatje van een fractal.]{fractal}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en het figuur te meten. 
+De tekst moet twee regels vullen.
+
+\clearpage
+In \cref{formule} zie je een formule gedefinieerd met de environment |equation|.
+Soms ontstaat te veel ruimte als de regel \squote{laat} afgebroken wordt.
+\begin{equation}
+\label{formule}
+e^{j\pi}+1=0
+\end{equation} 
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de formule te meten. 
+De tekst moet twee regels vullen.
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+In \cref{tab:conv} vind je een conversietabel gedefinieerd met het commando |\tabel|. 
+Dit is om de regel verder te vullen.
+
+\tabel{Dit is een tabel om hexadecimale getallen om te zetten naar decimaal.}{conv}{ll}{
+	hexadecimaal & decimaal
+}{
+	\num{0} & \num{0} \\
+	\num{1} & \num{1} \\
+	A & \num{10} \\
+	\num{10} & \num{16} \\
+	\num{100} & \num{256} 
+}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+
+Hieronder nogmaals een tabel maar nu gedefinieerd met het commando |\tabel[H]|.
+
+\tabel[H]{Dit is een tabel om hexadecimale getallen om te zetten naar decimaal.}{convdub}{ll}{
+	hexadecimaal & decimaal
+}{
+	\num{1} & \num{1} \\
+	\num{100} & \num{256} 
+}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de tabel te meten. 
+De tekst moet twee regels vullen. 
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+In \cref{tab:breed} vind je een tabel gedefinieerd met het commando |\tabelmaxpaginabreedgeschaald|. 
+Dit is om de regel verder te vullen.
+
+\tabelmaxpaginabreedgeschaald{Dit is een brede tabel.}{breed}{cccccccccc}{
+	kolom 1 & kolom 2 & kolom 3 & kolom 4 & kolom 5 & 
+	kolom 6 & kolom 7 & kolom 8 & kolom 9 & kolom 10 
+}{
+	data 1 & data 2 & data 3 & data 4 & data 5 & 
+	data 6 & data 7 & data 8 & data 9 & data 10 
+}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de tabel te meten. 
+De tekst moet twee regels vullen. 
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de tabel te meten. 
+In \cref{tab:lang} vind je een tabel gedefinieerd met het commando |\langetabel|. 
+Dit is om de regel verder te vullen.
+
+\langetabel{Dit is een lange tabel.}{lang}{ccc}{
+	kolom 1 & kolom 2 & kolom 3 
+}{
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 
+}{3}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de tabel te meten. 
+De tekst moet twee regels vullen. 
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+In \cref{fig:rectangle} vind je een figuur gedefinieerd met het commando |\tikzfiguur|. 
+Dit is om de regel verder te vullen.
+
+\tikzfiguur{rectangle}{Dit is een rechthoek getekend met TikZ.}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+
+In \cref{fig:rectangle2} vind je nog een figuur, ditmaal gedefinieerd met het commando |\tikzinlinefiguur|. 
+Dit is om de regel verder te vullen.
+
+\tikzinlinefiguur{rectangle2}{
+\draw
+node [rectangle,thick,draw,font=\sffamily] {Dit is een ook rechthoek};
+}{Dit is nog ook rechthoek.}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+In \cref{sch:schema} vind je een schakeling gedefinieerd met het commando |\schakeling|. 
+Dit is om de regel verder te vullen.
+
+\schakeling{
+	\draw
+		node[european or port] {};
+}
+{Dit is een OF-poort.}{schema}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+In \cref{opdr} is een beschrijving van een opdracht gegeven gedefinieerd met de environment |opdracht|. 
+Dit is om de regel verder te vullen.
+
+\begin{opdracht}{Titel van de opdracht.}
+\label{opdr}
+Dit is een opdracht. Doe het volgende:
+\begin{itemize}
+	\item stap 1;
+	\item stap 2.
+\end{itemize}
+\end{opdracht}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+Doe het volgende:
+\begin{itemize}
+	\item stap 1;
+	\item stap 2.
+\end{itemize}
+
+De bijbehorende conclusie gedefinieerd met het commando |\conclusie|.
+
+\conclusie{Geef hierboven de conclusie.} 
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+het effect van het commando |\handtekening| zie je hieronder. 
+
+\handtekening{}
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de versietabel te meten. 
+Hieronder vind je een versietabel gedefinieerd met het commando |\versiehistorie|. 
+Dit is om de regel verder te vullen.
+
+\versiehistorie{
+	25-12-2018 & 2.0 & Paar puntjes verbeterd (\code{itemizeintabu}):
+	\begin{itemizeintabu}
+		\item punt 1;
+		\item punt 2.
+	\end{itemizeintabu} & \mailafko{BroJZ} \\
+	25-12-2018 & 1.1 & Eerste versie. 
+	Paar puntjes verbeterd (\code{itemize}):
+	\begin{itemize}
+		\item punt 1;
+		\item \code{itemize} werkt niet goed.
+	\end{itemize} & \mailafko{BroJZ} \\
+	25-12-2018 & 1.0 & Eerste versie. & \mailafko{BroJZ}
+}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. Paar puntjes verbeterd:
+\begin{itemize}
+	\item punt 1;
+	\item punt 2.
+\end{itemize}
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+In \cref{lst:hello} vind je een listing die gedefinieerd is met het commando |\floatlstinput|.
+
+\floatlstinput[style=cstyle]{hello.c}{hello}{Een bekend C-programma.}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+Hieronder vindt je een stukje programma gedefinieerd met het commando |\lstinputfragment|. 
+
+\lstinputfragment[style=cstyle]{hello.c}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de listing te meten. De tekst moet twee regels vullen.
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de listing te meten. 
+De tekst moet twee regels vullen. 
+In \cref{lst:hello2} vind je een listing die gedefinieerd is met het commando |\lstinput|.
+
+\lstinput[style=cstyle]{hello.c}{hello2}{Een bekend C-programma. Deze tekst is expres langer gemaakt om te zien hoe dat eruit ziet.}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de listing te meten. 
+De tekst moet twee regels vullen. 
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen twee paragrafen te meten. 
+De tekst moet twee regels vullen. 
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. De tekst moet twee regels vullen. In \cref{lst:hello3} vind je een listing gedefinieerd met de environment |floatlst|.
+
+\begin{floatlst}[style=cstyle]{hello3}{Een bekend C-programma.}
+#include <stdio.h>
+int main()
+{
+	printf("Hallo hier!\n");
+	return 0;
+}
+\end{floatlst}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. 
+De tekst moet twee regels vullen. 
+Hieronder vind je een stukje code gedefinieerd met de environment |lstfragment|.
+
+\begin{lstfragment}[style=cstyle]
+int main()
+{
+	printf("Hallo lezer!\n");
+	return 0;
+}
+\end{lstfragment}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de listing te meten. De tekst moet twee regels vullen. Hieronder vind je een stukje programma uit- en invoer gedefinieerd met de environment |coutput| en het commando |\cinput|.
+
+\begin{coutput}
+> \cinput{hello.exe}
+Hallo daar!
+>
+\end{coutput}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de uit- en invoer te meten. De tekst moet twee regels vullen.
+
+\clearpage
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de listing te meten. De tekst moet twee regels vullen. In \cref{lst:hello4} vind je een listing gedefinieerd met de environment |lst|.
+
+\begin{lst}[style=cstyle]{hello4}{Een bekend C-programma.}
+#include <stdio.h>
+int main()
+{
+	printf("Hallo hier!\n");
+	return 0;
+}
+\end{lst}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de listing te meten. 
+De tekst moet twee regels vullen. 
+
+\clearpage
+\section{Figuur voor tabel}
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. De tekst moet twee regels vullen.
+
+%\figuur{scale=.1}{fractal}{Dit is een plaatje van een fractal.}
+%commando hrfigure gebruikt zodat een ander label geefinieerd kan worden.
+\hrfigure[scale=.1,label=fig:fractal3,caption=Dit is een plaatje van een fractal.]{fractal}
+
+\tabel{Dit is een tabel om hexadecimale getallen om te zetten naar decimaal.}{conv2}{ll}{
+	hexadecimaal & decimaal
+}{
+	\num{0} & \num{0} \\
+	\num{1} & \num{1} \\
+	A & \num{10} \\
+	\num{10} & \num{16} \\
+	\num{100} & \num{256} 
+}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. De tekst moet twee regels vullen.
+
+\clearpage
+\section{Tabel voor figuur}
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. De tekst moet twee regels vullen.
+
+\tabel{Dit is een tabel om hexadecimale getallen om te zetten naar decimaal.}{conv3}{ll}{
+	hexadecimaal & decimaal
+}{
+	\num{0} & \num{0} \\
+	\num{1} & \num{1} \\
+	A & \num{10} \\
+	\num{10} & \num{16} \\
+	\num{100} & \num{256} 
+}
+
+%\figuur{scale=.1}{fractal}{Dit is een plaatje van een fractal.}
+%commando hrfigure gebruikt zodat een ander label geefinieerd kan worden.
+\hrfigure[scale=.1,label=fig:fractal4,caption=Dit is een plaatje van een fractal.]{fractal}
+
+Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de float te meten. De tekst moet twee regels vullen.
+
+\chapter{Listings}
+In dit hoofdstuk worden verschillende listings van verschillende programmeertalen getest. Alle listings zijn gedefinieerd met de environment |lstfragment|.
+
+\clearpage
+\section{C-code}
+Dit is een stukje C-code:
+\begin{lstfragment}[style=cstyle]
+#include <stdio.h>
+/* Voorbeeld */
+int main()
+{
+	printf("Hallo daar!\n"); // Dit is commentaar.
+	return 0;
+}
+\end{lstfragment}
+Dit was een stukje C-code. 
+De stijl is overgenomen uit Code Composer Studio (een variant van Eclipse), zie \cref{fig:c-code}.
+
+\figuur{scale=1}{c-code}{Een C-programma weergegeven in Code Composer Studio.}
+
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{\texorpdfstring{\protect\Cpp-code}{C++-code}}
+Dit is een stukje \Cpp{}-code:
+\begin{lstfragment}[style=cppstyle,emph=main, emphstyle=\bfseries]
+#include <iostream>
+/* Voorbeeld */
+int main() {
+	cout << "Hallo daar!" << endl; // commentaar
+	return 0;
+}
+\end{lstfragment}
+Dit was een stukje \Cpp{}-code. 
+De stijl is overgenomen uit Code Composer Studio (een variant van Eclipse), zie \cref{fig:cpp-code}.
+De functienaam {\bfseries|main|} is vet gemaakt door de opties |emph=main| en |emphstyle=\bfseries| aan de environment |lstfragment| door te geven.
+
+\figuur{scale=1}{cpp-code}{Een \protect\Cpp-programma weergegeven in Code Composer Studio.}
+
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{\texorpdfstring{\LaTeX{}-code}{LaTeX-code}}
+Dit is een stukje \LaTeX{}-code:
+\begin{lstfragment}[style=lstyle, alsoletter=:, emph=fig:zebra, emphstyle=\lstllabel]
+% minimaal document met gebruik van HR-stijl
+\newcommand{\myClass}{article}
+\include{style_nl_NL}
+
+\begin{document}
+	Dit is het \emph{teken} voor pi: $\pi$.
+	\[ x^n + y^n = z^n \]
+	In \cref{fig:zebra} is een dier te zien. 
+	\hrfigure[scale=.5, caption=Dit is een Zebra.]{zebra}
+\end{document}
+\end{lstfragment}
+
+Dit was een stukje \LaTeX{}-code. 
+De stijl is overgenomen uit TeXstudio, zie \cref{fig:latex-code}.
+Het label {\lstllabel|fig:zebra|} is gekleurd door de opties |alsoletter=:|, |emph=fig:zebra| en |emphstyle=\lstllabel| mee te geven aan de environment |lstfragment|.
+
+\figuur{scale=1}{latex-code}{Een \LaTeX{}-programma weergegeven in TeXstudio.}
+
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{Python-code}
+Dit is een stukje Python-code:
+\begin{lstfragment}[style=pystyle, emph=a_list, emphstyle=\color{lstdarkerblue}]
+def avg(a_list):
+	# Vul hier je code in
+	return None
+
+test_list = [3.2, 5.7, 8.5, 9.1]
+print('Het gemiddelde = ')
+print(avg(test_list))
+\end{lstfragment}
+Dit was een stukje Python-code. 
+De stijl is overgenomen uit Thonny, zie \cref{fig:py-code}.
+De parameter {\color{lstdarkerblue}|a_list|} is gekleurd door de opties |emph=a_list| en |emphstyle=\color{lstdarkerblue}| mee te geven aan de environment |lstfragment|.
+Cursief afdrukken is niet mogelijk omdat het lettertype inconsolata geen cursieve tekens ondersteund.
+
+\figuur{scale=1}{py-code}{Een Python-programma weergegeven in Thonny.}
+
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{MATLAB-code}
+Dit is een stukje MATLAB-code:
+\begin{lstfragment}[style=mstyle,deletekeywords={disp}]
+% Indent All Functions
+function all_one
+	disp('Main function code')
+	function all_two
+		disp('Nested function code')
+	end
+end
+\end{lstfragment}
+Dit was een stukje MATLAB-code. 
+De stijl is overgenomen uit MATLAB, zie \cref{fig:matlab-code}.
+
+\figuur{scale=1}{matlab-code}{Een MATLAB-programma weergegeven in MATLAB.}
+
+In de standaard MATLAB definitie is \mcode{disp} blijkbaar een keyword. 
+Dit kan aangepast worden door de optie |deletekeywords={disp}| mee te geven aan de environment |lstfragment|.
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{AVR-assemblercode}
+Dit is een stukje AVR-assemblercode:
+\begin{lstfragment}[style=astyle]
+START:
+	ldi	r16,high(RAMEND)	;	Set Stack Pointer
+	out	SPH,r16				;
+	ldi	r16,low(ARMEND)
+	out	SPL,r16
+\end{lstfragment}
+Dit was een stukje AVR-assemblercode. 
+De stijl is overgenomen uit AVR Studio, zie \cref{fig:avr-code}.
+
+\figuur{scale=1}{avr-code}{Een AVR-assemblerprogramma weergegeven in AVR Studio.}
+
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{MSP430-assemblercode}
+Dit is een stukje MSP430-assemblercode:
+\begin{lstfragment}[style=amstyle]
+	mov.w   #10,r15  ; laad teller
+herhaal ; plaats hier de code die 10x herhaald moet worden
+	dec.w   r15      ; verlaag teller
+	jnz     herhaal  ; herhaal zolang teller niet nul is
+\end{lstfragment}
+Dit was een stukje MSP430-assemblercode. 
+De stijl is overgenomen uit Code Composer Studio, zie \cref{fig:msp430-code}.
+
+\figuur{scale=1}{msp430-code}{Een MSP430-assemblerprogramma weergegeven in Code Composer Studio.}
+
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{LEG-assemblercode}
+Dit is een stukje LEG-assemblercode:
+\begin{lstfragment}[style=legstyle,moreemph={fact:,else:},emphstyle=\color{blue}]
+	.globl fact
+fact:
+	SUBS	XZR, X0, #1
+	B.GT	else
+	BR		X30
+else:
+	SUB 	SP, SP, #16
+\end{lstfragment}
+Dit was een stukje LEG-assemblercode. 
+De stijl is overgenomen uit Arm DS-5 Community Edition (die is gebaseerd op Eclipse), zie \cref{fig:leg-code}.
+
+\figuur{scale=1}{leg-code}{Een LEG-assemblerprogramma weergegeven in Arm DS-5.}
+
+Je ziet dat cursief afdrukken van registernamen niet werkt. 
+Dit komt omdat het lettertype inconsolata geen italic font heeft, zie \url{https://tex.stackexchange.com/questions/183204/inconsolata-italics}. 
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\printbibliography[heading=bibintoc]{}
+\backmatter
+\end{llstShortInline}
+\end{document}
