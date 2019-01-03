@@ -1,33 +1,4 @@
 \chapter[Gebuik \LaTeX{}-stijl Hogeschool Rotterdam]{Gebuik \LaTeX{}-stijl \\ Hogeschool Rotterdam}
-
-\lstdefinestyle{lstyle}{
-    language={[AlLaTeX]TeX}, 
-    stringstyle=,
-    keywordstyle=,
-    identifierstyle=,
-    commentstyle=,  
-}
-
-\newcommand{\lcode}[2][]{%
-    \lstinline[
-        style=lstyle,
-        style=lstinlinestyle,%
-        #1
-    ]@#2@%
-}
-
-\newenvironment{llstShortInline}{%
-    \lstMakeShortInline[
-        style=lstyle,
-        style=lstinlinestyle,
-    ]{|}%
-}{
-    \lstDeleteShortInline{|}%
-}
-
-% vanaf hier handige afkorting |bla| voor \lcode{bla} maar pas op: werkt niet in footnotes, captions etc
-\begin{llstShortInline}
-
 % verwijzingen naar specifiek deel van \cite{lshort}
 % #1 OPTIONEEL = naam van deel, b.v. chapter, section, subsection, enz (default = "section") 
 % #2 = nummer van deel, bijvoorbeeld 6.2
@@ -65,7 +36,7 @@ Tot slot van deze paragraaf, wil ik iedereen met voldoende tijd en historisch be
 
 \section{Structuur}
 Deze \MakeLowercase\documenttype{} bestaat uit een master document genaamd |main.tex|.
-De \enquote{stijl} van het document wordt bepaald in de preamble en is in een apart bestand geplaatst genaamd |style_nl_NL.tex|.
+De \squote{stijl} van het document wordt bepaald in de preamble en is in een apart bestand geplaatst genaamd |style_nl_NL.tex|.
 Er is ook een style voor Engelse documenten |style_en_US.tex|, zie \csecref{sec:enlishstyle}.
 Veel documenten binnen een opleiding Elektrotechniek zullen programmeercode (C, MATLAB, enz) bevatten.
 De specifieke commando's die daarvoor gebruik kunnen worden zijn in een apart bestand geplaatst genaamd |styleCode.tex|.
@@ -84,10 +55,11 @@ De volgende opties zijn beschikbaar:
     \item |\ebookfalse|; Om de papieren versie te compileren.
     \item |\ebooktrue|; Om de ebook versie te compileren.
     \item |\chartertrue|; Om te kiezen voor de lettertypes Charter en Bera Sans.
+    \item |\opensanstrue|; Om te kiezen voor de lettertypes Open Sans en Computer Modern Bright.
     \item |\timestrue|; Om te kiezen voor de lettertypes Times Roman en Helvetica.
 \end{itemize}
 
-Als beide opties |\chartertrue| en |\timestrue| niet gebruikt worden, dan worden de standaard Computer Modern lettertypes van \LaTeX{} gebruikt.
+Als beide opties |\chartertrue|, |\opensanstrue| en |\timestrue| niet gebruikt worden, dan worden de standaard Computer Modern lettertypes van \LaTeX{} gebruikt.
 
 In de makefile maak ik (uiteraard) gebruik van \LaTeX{}\hyp{}commando's en ook van enkele eenvoudige Unix commando's.
 Ik maak gebruik van Biber in plaats van BibTeX omdat Biber UTF8 ondersteunt.
@@ -98,7 +70,7 @@ De paden naar deze executables moeten waarschijnlijk aangepast worden als je geb
     linerange={17-18}, 
 ]{../makefile}
 
-Als je in de het dictaat onderscheid wilt maken tussen de ebook en de papieren versie, dan kan dat door gebruik te maken van |\iftoggle{ebook}|.
+Als je in het document onderscheid wilt maken tussen de ebook en de papieren versie, dan kan dat door gebruik te maken van |\iftoggle{ebook}|.
 De code:
 
 \begin{lstfragment}[style=lstyle]
@@ -120,15 +92,25 @@ Bijvoorbeeld:
 ]{../main.tex}
 
 In een book begint elk hoofdstuk op een nieuwe pagina, in een article niet.
-De class article kun je gebruiken voor eenvoudige documenten zoals bijvoorbeeld een modulewijzer%
+De class article kun je gebruiken voor eenvoudige documenten zoals bijvoorbeeld een korte instructie%
 \footnote{%
-	Zie: \href{https://bitbucket.org/HR_ELEKTRO/tds02/downloads/Modulewijzer_TDS02.pdf}{Modulewijzer\_TDS02.pdf} en 
-	\href{https://bitbucket.org/HR_ELEKTRO/tds02/downloads/Modulewijzer_TDS02_ebook.pdf}{Modulewijzer\_TDS02\_ebook.pdf}.
+	Zie: \href{https://bitbucket.org/HR_ELEKTRO/tds02/downloads/Report_Requirements_TDS02.pdf}{Report\_Requirements\_TDS02.pdf} en 
+	\href{https://bitbucket.org/HR_ELEKTRO/tds02/downloads/Report_Requirements_TDS02_ebook.pdf}{Report\_RequirementsModulewijzer\_TDS02\_ebook.pdf}.
 	De sourcecode vind je hier: \url{https://bitbucket.org/HR_ELEKTRO/tds02/}.%
 }.
 
 Als je de de commando's |\frontmatter| en |\mainmatter| gebruikt in een book, dan worden de pagina's tussen deze twee commando's (in de papieren versie) Romeins genummerd.
 In de ebook versie worden de pagina's altijd gewoon doorgenummerd zodat het paginanummer dat door de reader wordt weergegeven overeenkomt met het werkelijke paginanummer.
+
+\section{Cursushandleiding}
+De in dit document beschreven stijl is ook te gebruiken om een cursushandleiding mee te maken. Er is daarvoor een speciale file |styleCursusHandleiding.tex| beschikbaar. Je kunt de cursushandleiding van EMS20\footnote{%
+	Zie \url{https://bitbucket.org/HR_ELEKTRO/ems20}, de source is te vinden in de private repository van EMS20. 
+} als voorbeeld gebruiken.
+
+\section{Tentamen}
+De in dit document beschreven commando's zijn ook te gebruiken om een tentamen mee te maken. Ivo Grondman heeft een class voor tentamens gemaakt |hrtoets.cls|. Er is een voorbeeldtoets\footnote{%
+	In de private repository \code{hrtoets}. 
+}  beschikbaar.
 
 \section{Titelpagina}
 Een titelpagina kun je eenvoudig maken met het commando |\titelpagina|.
@@ -144,8 +126,8 @@ Dit commando heeft één argument: de filenaam van het plaatje (zonder extensie)
 Neem een vectorplaatje of een rasterplaatje met een hoge resolutie (minstens 1024 pixels breed).
 De hoogte moet ongeveer $\frac{1}{2}\times$ de breedte zijn.
 
-Dit commando maakt gebruik van de commando's |\modulecode|, |\titel|, \hcode[style=lstyle]{\\docu\\-ment\\-type}, |\huidigeversie| en |\auteurs|.
-Het logo (\hcode{./figs/\\-logo\\-HR.png}) en vervagende logo \hcode{./figs/\\-logo\\-HR\\-fade\\-top.png}) zijn hard gecodeerd in de stijl maar kunnen daar natuurlijk wel aangepast worden.
+Dit commando maakt gebruik van de commando's |\modulecode|, |\titel|, {\lstlcs\hcode{\\docu\\-ment\\-type}}, |\huidigeversie| en |\auteurs|.
+Het logo (\hcode{./figs/\\-logo\\-HR.pdf}) en vervagende logo \hcode{./figs/\\-logo\\-HR\\-fade\\-top.png}) zijn hard gecodeerd in de stijl maar kunnen daar natuurlijk wel aangepast worden.
 Deze bestanden moeten aanwezig zijn in het |./figs| directory.
 
 \section{Versiehistorie}
@@ -183,7 +165,7 @@ Dit kan als volgt in de \LaTeX{}-code worden opgenomen:
  
  \section{Karakter encoding}
  \label{sec:karakterencoding}
-Ik gebruik UTF8 source encoding, dit maakt het eenvoudig om karakters zoals ëïéè enz.\ in te voeren.\footnote{%
+Ik gebruik UTF8 source encoding, dit maakt het eenvoudig om karakters zoals ë, ï, é, è enz.\ in te voeren.\footnote{%
     Om er voor te zorgen dat de spatie achter enz.\ niet als een spatie aan het einde van de zin wordt gezien moet je de code \code[language={[AlLaTeX]TeX}]{enz.\\ } gebruiken.
     Anders wordt de spatie na enz.\ te ver opgerekt.
     Maar dat wist je natuurlijk al lang.
@@ -193,14 +175,14 @@ Ik gebruik UTF8 source encoding, dit maakt het eenvoudig om karakters zoals ëï
 Woorden met een koppelteken worden in \LaTeX{} alleen afgebroken bij dat koppelteken.
 Dat geeft soms niet van die mooie resultaten.
 
-Bijvoorbeeld de zin: heel heel erg veel data-elementen data-elementen data-elementen data-elementen data-elementen en data-elementen data-elementen data-elementen
-data-elementen data-elementen data-elementen data-elementen data-elementen en data-elementen wordt \enquote{vreemd} afgebroken.
+Bijvoorbeeld de zin: heel erg erg veel data-elementen data-elementen data-elementen data-elementen en data-elementen en data-elementen data-elementen
+data-elementen data-elementen data-elementen data-elementen data-elementen en data-elementen wordt \squote{vreemd} afgebroken.
 
 De voorgaande zin geeft in de ebook versie twee overfull hboxen (de regels komen aan de rechterkant buiten de kantlijn terecht.
 Dit heb ik opgelost door het commando |\hyp{}| te definiëren.
 Als je de koppeltekens door dit commando vervangt, wordt het woord wel op andere plaatsen afgebroken.
 
-Bijvoorbeeld de zin: heel heel erg veel data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen en 
+Bijvoorbeeld de zin: heel erg erg veel data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen en 
 data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen data\hyp{}elementen 
 data\hyp{}elementen en data\hyp{}elementen wordt correct afgebroken.
 
@@ -263,8 +245,8 @@ een titel en label op te geven is het commando |\figuur| in de stijl opgenomen.
 
 Dit commando heeft vier parameters waarvan de eerste optioneel\footnote{Optionele argumenten worden in \LaTeX{} tussen rechte haken opgegeven, verplichte argumenten
 worden tussen accolades opgegeven.
-Het \lcode{\\figuur} commando heeft dus de volgende vorm: \hcode{\\figuur\[arg1\]\{arg2\}\{arg3\}\{arg4\}}.} is.
-De eerste parameter bevat de \squote{placement} argumenten voor de |\figure| environment.
+Het \lcode{\\figuur} commando heeft dus de volgende vorm: \lcode{\\figuur[arg1]{arg2}{arg3}{arg4}}.} is.
+De eerste parameter bevat de \squote{placement} argumenten voor de |figure|- environment.
 Bijvoorbeeld |tb| of |H|, de default waarde is |!htbp|.
 \LaTeX{} zal dan de figuur proberen te plaatsen op de plaats waar de figuur gedefinieerd is in de code, als dat niet lukt aan de bovenkant van een pagina zo dicht mogelijk bij die plaats, 
 als dat niet lukt aan de onderkant van een pagina zo dicht mogelijk bij die plaats en als dat niet lukt op een pagina met verzamelde figuren.
@@ -279,15 +261,33 @@ Het opgeven van een absolute waarde zorgt ervoor dat het figuur altijd even groo
 
 De derde parameter is de filenaam (zonder extensie).
 Dit bestand moet in het directory |./figs| geplaatst zijn.
-De filenaam wordt ook als deel van het label gebruikt: het label wordt |fig:filenaam|.
+De filenaam wordt ook als suffix van het label gebruikt: het label wordt {\lstllabel\code{fig:filenaam}}.
 Dit heeft wel als consequentie dat de filenaam geen tekens mag bevatten die niet in een \LaTeX{} label gebruikt mogen worden.
-De laatste parameter is de titel van het figuur.
+De vierde en laatste parameter is de titel van het figuur.
 
 De code: |\figuur{width=.5\textwidth}{zebra}{Een zebra.}| produceert \cref{fig:zebra}.
-
 \figuur{width=.5\textwidth}{zebra}{Een zebra.}
 
-Als de witruimte onder of boven de figuur niet naar je zin is, dan kun je de |\vspace| commando's in het commando |\myFigure| wijzigen.
+In plaats van het commando |\figuur| kun je ook het commando |\hrfigure| gebuiken. Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
+De tweede parameter geeft de filenaam (zonder extensie).
+Dit bestand moet in het directory |./figs| geplaatst zijn.
+
+De eerste parameter bestaat uit |name=value|-paren.
+De volgende |name|s kunnen gebruikt worden:
+\begin{itemize}
+	\item |label| kan gebruikt worden om een specifiek label op te geven. De default waarde is {\lstllabel\code{fig:filename}}. 
+	Als dezelfde filenaam twee keer in een document gebuikt wordt, dan is het noodzakelijk om een specifiek label op te geven om te voorkomen dat het label {\lstllabel\code{fig:filename}} dubbel gedefinieerd wordt.
+	\item |caption| kan gebruikt worden om de ondertitel op te geven. De default waarde is |filename|.  
+	\item |placement| kan gebruikt worden om de \squote{placement} argumenten voor de |\figure| environment te specificeren.
+	De default waarde is |!htbp|.
+	\item |...| alle overige |name=value|-paren worden doorgegeven aan het {\lstlcs\hcode{\\include\\-graphics}} commando.
+\end{itemize} 
+
+De code: |\hrfigure[width=2cm, label=kleinezebra, caption=Een kleine zebra.]{zebra}| produceert \cref{kleinezebra}.
+
+\hrfigure[width=2cm, label=kleinezebra, caption=Een kleine zebra.]{zebra}
+
+Als de witruimte onder of boven de figuur niet naar je zin is, dan kun je de |\vspace| commando's in de environment |myFigure| wijzigen.
 
 \subsection{Figuren van internet} 
 Veel public domain vectorafbeeldingen in SVG\hyp{}formaat zijn te vinden op Pixabay\footnote{\url{http://pixabay.com}}.
@@ -316,7 +316,6 @@ De MATLAB-code \proglink{lpfbodelog.m} die gegeven is in \cref{lst:lpfbodelog} p
 % #4 = titel
 \floatlstinput[
     style=mstyle, 
-    %style=linenumbers
 ]{lpfbodelog.m}{lpfbodelog}{MATLAB programma dat een bodediagram van een laagdoorlaatfilter produceert, zie \cref{fig:lpfbodelog}.}
 
 \figuur{width=.9\textwidth}{lpfbodelog}{Bodediagram van een laagdoorlaatfilter met een kantelfrequentie van 1~kHz.}
@@ -331,102 +330,269 @@ Zoals al eerder vermeld moet je de neiging om figuren op een vaste plaats te dwi
 Screenshots in tutorials die stapsgewijs moeten worden doorlopen vormen hier een uitzondering op en je kunt hier als eerste optionele parameter van het commando |\figuur|
 het argument |H| gebruiken als het screenshot op een vaste plaats in de tekst moet komen te staan.
 
-\subsection{Schema's tekenen in \LaTeX{} met de package \texorpdfstring{\code{tikz}}{tikz}}
+\subsection{Tekenen in \LaTeX{} met \texorpdfstring{Ti\boldmath$k$Z}{TikZ}}
 In plaats van een extern tekenprogramma kun je tekeningen ook rechtstreeks in \LaTeX{} maken met behulp van de package |tikz|\footnote{\url{https://www.ctan.org/pkg/pgf}}.
-Dit is een zeer uitgebreide package met een vrij steile leercurve.
+Dit is een zeer uitgebreide package met een vrij steile leercurve\footnote{%
+	Ik raad je sterk aan om de tutorials uit deel I van de pgfmanual \url{http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf} te bestuderen.
+}.
 Er zijn wel hele mooie resultaten mee te behalen.
 Deze package is in de stijl opgenomen en wordt gebruikt om de titlepage te \squote{tekenen}.
-De tikzlibraries |fadings| en |shadows| worden daar ook in gebruikt maar overige tikzlibraries moet je zelf opnemen in de preamble van je document.
+De tikzlibraries |fadings| en |shadows| worden daar ook in gebruikt. 
+Daarnaast worden ook de tikzlibraries |shapes|, |arrows|, |arrows.meta| en |positioning| in de stijl gebruikt maar overige tikzlibraries moet je zelf opnemen in de preamble van je document met het commando |\usetikzlibrary|.
+
+Er zijn, met dank aan Daniël Versluis, verschillende commando's opgenomen in de stijl om Ti$k$Z-tekeningen in een document op te nemen. 
+Het commando |\tikzfiguur| kan gerbuikt worden om een |tikzpicture|-environment die in een apart document is geplaatst in een document op te nemen. 
+Het commando is vergelijkbaar met het \cref{sec:figuren} besproken commando |\figuur|. 
+Het commando |\tikzfiguur| heeft drie parameters waarvan de eerste optioneel is.
+De eerste parameter bevat de \squote{placement} argumenten voor de |\figure| environment.
+Zoals al eerder vermeld is, moet deze parameter alleen in uitzonderlijke gevallen gebruikt worden.
+De tweede parameter is de filenaam (zonder extensie).
+Dit bestand moet in het directory |./tikz| geplaatst zijn.
+De filenaam wordt ook als suffix van het label gebruikt: het label wordt {\lstllabel\code{fig:filenaam}}.
+Dit heeft wel als consequentie dat de filenaam geen tekens mag bevatten die niet in een \LaTeX{} label gebruikt mogen worden.
+De derde en laatste parameter is de titel van het figuur.
+
 De code die gegeven is in \cref{lst:tikzvoorbeeld} produceert het blokdiagram dat in \cref{fig:dsp} is weergegeven.
-In de code wordt gebruik gemaakt van de environment |myFigure| die in de stijl is gedefinieerd en niet van de standaard environment |figure| 
-zodat de witruimte aangepast wordt overeenkomstig de met het commando |figuur| aangemaakte figuren.
+De inhoud van het bestand |dsp.tex| wordt weergegeven in \cref{lst:dsp}.
 
 \floatlstinput[
-    style=lstyle, 
+    style=lstyle,
     rangebeginprefix= \%>,
     rangeendprefix=\%<,
     linerange={tikzvoorbeeld-tikzvoorbeeld},
 ]{../chap02.tex}{tikzvoorbeeld}{\LaTeX{}-code waarmee \cref{fig:dsp} gemaakt is.}
 
 %>tikzvoorbeeld
-% specific tikz settings for block diagrams
-\tikzset{%
-    block/.style = {draw, thick, rectangle, minimum height = 3em, minimum width = 3em, inner sep=1em, font=\sffamily\Large},
-}
-
-\begin{myFigure}
-    \centering%
-    \begin{tikzpicture}[auto, thick, ->, >={Stealth[scale=1.5, inset=0.6pt]}, shorten >=1pt]
-        \draw
-            node (text) {$x(t)$} 
-            node [coordinate, node distance=.5cm, right of=text] (input) {} 
-            node [block, node distance=2cm, right of=input] (adc) {ADC}
-            node [block, node distance=3.5cm, right of=adc] (dsp) {DSP}
-            node [block, node distance=3.5cm, right of=dsp] (dac) {DAC}
-            node [coordinate, node distance=2cm, right of=dac] (output) {}
-            node [node distance=.5cm, right of=output] {$y(t)$}; 
-        \draw (input) -- (adc);
-        \draw (adc) -- node[pos=.35] {$x[n]$} (dsp);
-        \draw (dsp) -- node[pos=.35] {$y[n]$} (dac);
-        \draw (dac) -- (output);
-    \end{tikzpicture}
-    \caption{Digitale signaal bewerking in een analoge omgeving.}
-    \label{fig:dsp}
-\end{myFigure}
+\tikzfiguur{dsp}{Digitale signaalbewerking in een analoge omgeving.}
 %<tikzvoorbeeld
 
-Hierin wordt gebruikt gemaakt van de tikzlibraries |shapes|, |arrows| en \hcode{arrows.\\-me\\-ta}.
+\floatlstinput[
+	style=lstyle,
+]{../tikz/dsp.tex}{dsp}{Ti$k$Z-code uit het bestand \code{dsp.tex} waarmee \cref{fig:dsp} gemaakt is.}
 
-\subsection{Gafieken tekenen in \LaTeX{} met de package \texorpdfstring{\code{pgfplots}}{pgfplots}}
+Het in een apart (los) bestand plaatsen van de Ti$k$Z-code heeft een groot voordeel: het bestand kan dan ook bewerkt worden met andere programma's. Ik kan de WYSIWYG editor TikzEdt\footnote{%
+	\url{http://www.tikzedt.org/}.
+} van harte aanbevelen. 
+
+In plaats van het commando |\tikzfiguur| kun je ook het commando |\hrtikzfigure|\label{hrtikzfigure} gebuiken. Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
+De tweede parameter geeft de filenaam (zonder extensie).
+Dit bestand moet in het directory |./tikz| geplaatst zijn.
+
+De eerste parameter bestaat uit |name=value|-paren.
+De volgende |name|s kunnen gebruikt worden:
+\begin{itemize}
+	\item |label| kan gebruikt worden om een specifiek label op te geven. De default waarde is {\lstllabel\code{fig:filename}}. 
+	Als dezelfde filenaam twee keer in een document gebuikt wordt, dan is het noodzakelijk om een specifiek label op te geven om te voorkomen dat het label {\lstllabel\code{fig:filename}} dubbel gedefinieerd wordt.
+	\item |caption| kan gebruikt worden om de ondertitel op te geven. De default waarde is |filename|.  
+	\item |placement| kan gebruikt worden om de \squote{placement} argumenten voor de |figure|-environment te specificeren.
+	De default waarde is |!htbp|.
+\end{itemize} 
+
+De code gegeven in \cref{lst:tikzvoorbeeld2} produceert het blokdiagram dat in \cref{dsp2} is weergegeven.
+
+\floatlstinput[
+	style=lstyle,
+	rangebeginprefix= \%>,
+	rangeendprefix=\%<,
+	linerange={tikzvoorbeeld2-tikzvoorbeeld2},
+]{../chap02.tex}{tikzvoorbeeld2}{\LaTeX{}-code waarmee \cref{dsp2} gemaakt is.}
+
+%>tikzvoorbeeld2
+\hrtikzfigure[label=dsp2, caption=Herhaling van \cref{fig:dsp}.]{dsp}
+%<tikzvoorbeeld2
+
+Als je de Ti$k$Z-code liever in het document zelf opneemt, dan kun je het commando |\tikzinlinefiguur| gebruiken.
+Dit commando heeft vier parameters waarvan de eerste optioneel is.
+De eerste parameter bevat de \squote{placement} argumenten voor de |figure|-environment.
+De tweede parameter is de suffix van het label ({\lstllabel\code{fig:suffix}}).
+De derde parameter bevat de Ti$k$Z-code die in een |tikzpicture|-environment zal worden geplaatst. 
+De vierde en laatste parameter is de titel van het figuur.
+
+De code gegeven in \cref{lst:tikzvoorbeeld3} produceert het blokdiagram dat in \cref{fig:adc} is weergegeven.
+
+\floatlstinput[
+	style=lstyle,
+	rangebeginprefix= \%>,
+	rangeendprefix=\%<,
+	linerange={tikzvoorbeeld3-tikzvoorbeeld3},
+]{../chap02.tex}{tikzvoorbeeld3}{\LaTeX{}-code waarmee \cref{fig:adc} gemaakt is.}
+
+%>tikzvoorbeeld3
+\tikzinlinefiguur{adc}{
+	\tikzset{auto, thick, >={Stealth[scale=1.2, inset=0.6pt]}, shorten >=1pt, node distance=1.5cm}
+	\draw
+		node [coordinate] (input) {} 
+		node [draw, thick, rectangle, minimum height = 3em, minimum width = 3em, inner sep=1em, font=\sffamily\Large, right = of input] (adc) {ADC}
+		node [coordinate, right = of adc] (output) {}
+		(input) edge[->] node{$x(t)$} (adc)
+		(adc) edge[->] node{$x[n]$} (output);
+}{Een Analog to Digital Converter.}
+%<tikzvoorbeeld3
+
+In plaats van het commando |\tikzinlinefiguur| kun je ook het commando |\hrtikzinlinefigure| gebruiken.
+Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
+De tweede parameter bevat de Ti$k$Z-code die in een |tikzpicture|-environment zal worden geplaatst.
+
+De eerste parameter bestaat uit |name=value|-paren.
+Dezelfde |name|s als bij het commando |\hrtikzfiguur|, zie \cpageref{hrtikzfigure} kunnen gebruikt worden: |label|, |caption| en |placement|.
+
+De code gegeven in \cref{lst:tikzvoorbeeld4} produceert het blokdiagram dat in \cref{adc2} is weergegeven.
+
+\floatlstinput[
+	style=lstyle,
+	rangebeginprefix= \%>,
+	rangeendprefix=\%<,
+	linerange={tikzvoorbeeld4-tikzvoorbeeld4},
+]{../chap02.tex}{tikzvoorbeeld4}{\LaTeX{}-code waarmee \cref{adc2} gemaakt is.}
+
+%>tikzvoorbeeld4
+\hrtikzinlinefigure[label=adc2, caption=Nog een Analog to Digital Converter.]{
+	\tikzset{auto, thick, >={Stealth[scale=1.2, inset=0.6pt]}, shorten >=1pt, node distance=1.5cm}
+	\draw
+		node [coordinate] (input) {} 
+		node [draw, thick, rectangle, minimum height = 3em, minimum width = 3em, inner sep=1em, font=\sffamily\Large, right = of input] (adc) {ADC}
+		node [coordinate, right = of adc] (output) {}
+		(input) edge[->] node{$x(t)$} (adc)
+		(adc) edge[->] node{$x[n]$} (output);
+}
+%<tikzvoorbeeld4
+
+\subsection{Elektronische schema's tekenen in \LaTeX{} met \texorpdfstring{circuiTi\boldmath$k$Z}{circuiTikZ}}
+Elektronische schema's kunnen ook rechtstreeks in \LaTeX{} gemaakt worden met behulp van de package |circuitikz|\footnote{\url{https://www.ctan.org/pkg/circuitikz}} die in deze stijl is opgenomen.
+Deze package bouwt weer voort op Ti$k$Z.
+Door Daniël Versluis is het commando |\schakeling| gedefinieerd waarmee een elektronisch schema gedefinieerd kan worden.
+Dit commando heeft vier parameters waarvan de eerste optioneel is.
+De eerste parameter bevat de \squote{placement} argumenten voor de |figure|-environment.
+De tweede parameter bevat de circuitTi$k$Z-code die in een |circuitikz|-environment zal worden geplaatst. 
+De derde parameter is de titel van het figuur.
+De vierde en laatste parameter is de suffix van het label ({\lstllabel\code{sch:suffix}}).
+Dit zijn dezelfde parameters als het commando |\tikzinlinefiguur| alleen in een andere volgorde\footnote{%
+	Deze historische fout is nu niet meer te herstellen omdat er al te veel gebruik gemaakt is van deze commando's. 
+}.
+
+De code gegeven in \cref{lst:schakeling} produceert het schema dat in \cref{sch:RChigh} is weergegeven.
+
+\floatlstinput[
+	style=lstyle,
+	rangebeginprefix= \%>,
+	rangeendprefix=\%<,
+	linerange={schakeling-schakeling},
+]{../chap02.tex}{schakeling}{\LaTeX{}-code waarmee \cref{sch:RChigh} gemaakt is.}
+
+%>schakeling
+\schakeling{
+	\draw
+		(0,0) node[ground] (gnd){}
+		to[sV, l=$v_{in}$, *-] ++(0,2.5)
+		to[C, l=$C$] ++(3,0) coordinate(C)
+		to[R, l_=$R$, *-*] (C |- gnd)
+		to[short] (gnd)
+		(C) to[short] ++(2,0) coordinate(vout)
+		to[open, v^=$v_o$, o-o] (vout |- gnd)
+		to[short] (gnd);
+}{Een CR spanningsdeler}{RChigh}
+%<schakeling
+
+In plaats van het commando |\schakeling| kun je ook het commando |\hrschakeling| gebruiken.
+Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
+De tweede parameter bevat de circuitTi$k$Z-code-code die in een |circuitikz|-environment zal worden geplaatst.
+
+De eerste parameter bestaat uit |name=value|-paren.
+Dezelfde |name|s als bij het commando |\hrtikzfiguur|, zie \cpageref{hrtikzfigure} kunnen gebruikt worden: |label|, |caption| en |placement|.
+
+De code gegeven in \cref{lst:schakeling2} produceert het schema dat in \cref{RChigh} is weergegeven.
+
+\floatlstinput[
+	style=lstyle,
+	rangebeginprefix= \%>,
+	rangeendprefix=\%<,
+	linerange={schakeling2-schakeling2},
+]{../chap02.tex}{schakeling2}{\LaTeX{}-code waarmee \cref{RChigh} gemaakt is.}
+
+%>schakeling2
+\hrschakeling[label=RChigh, caption=Nog een RC-filter.]{
+	\draw
+		(0,0) node[ground] (gnd){}
+		to[sV, l=$v_{in}$, *-] ++(0,2.5)
+		to[C, l=$C$] ++(3,0) coordinate(C)
+		to[R, l_=$R$, *-*] (C |- gnd)
+		to[short] (gnd)
+		(C) to[short] ++(2,0) coordinate(vout)
+		to[open, v^=$v_o$, o-o] (vout |- gnd)
+		to[short] (gnd);
+}
+%<schakeling2
+
+Elektrische schema's kunnen in plaatst van met circuiTi$k$Z ook met behulp van de Circuit libraries\footnote{%
+	Zie hoofdstuk 47 van de pgfmanual: \url{http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf\#section.47}.
+} van Ti$k$Z getekend worden. 
+Deze Ti$k$Z-libraries zijn gebaseerd op circuiTi$k$Z.
+Het is mij niet duidelijk welke aanpak de voorkeur heeft.
+Lees paragraaf 1.4 van de circuiTi$k$Z documentatie\footnote{%
+	\url{http://ctan.cs.uu.nl/graphics/pgf/contrib/circuitikz/doc/circuitikzmanual.pdf\#4}.
+} als je beide wilt combineren.   
+
+\subsection{Gafieken tekenen in \LaTeX{} met \texorpdfstring{\code{PGFPLOTS}}{pgfplots}}
 Grafieken kunnen ook rechtstreeks in \LaTeX{} gemaakt worden met behulp van de package |pgfplots|\footnote{\url{https://www.ctan.org/pkg/pgfplots}}.
-Deze package bouwt weer voort op |tikz|.
+Deze package bouwt weer voort op Ti$k$Z.
 De package |pgfplots| is niet in de stijl opgenomen.
 Voorbeelden van het gebruik van |pgfplots| vind je op \url{http://pgfplots.sourceforge.net/gallery.html}.
 De code die gegeven is in \cref{lst:pgfplotsvoorbeeld} produceert de grafiek die in \cref{fig:frm} is weergegeven.
 
-\floatlstinput[
+Grafieken kunnen in plaatst van met |PGFPLOTS| ook met behulp van de Data Visualizations librarie\footnote{%
+	Zie hoofdstuk 75 van de pgfmanual: \url{http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf\#section.75}.
+} van Ti$k$Z getekend worden.
+Het is mij niet duidelijk welke aanpak de voorkeur heeft.
+
+%>pgfplotsvoorbeeld
+\begin{myFigure}
+	\centering%
+	\begin{tikzpicture}[>={Stealth[scale=1.2,inset=0.6pt]}, shorten >=1pt]
+	\begin{axis}[
+	width=0.9\textwidth, height=0.45\textwidth,
+	minor tick num=1, axis lines*=middle, 
+	xmin=0, xmax=15, ymin=-2.5, ymax=3.5,
+	xlabel style={at={(ticklabel* cs:1.05)}, anchor=near ticklabel, align=center},
+	xlabel={$\longrightarrow$ \\ $x$},
+	ylabel style={at={(ticklabel* cs:.9)}, anchor=near ticklabel, align=center},
+	ylabel={$e(x)$ \\ $\longrightarrow$ },
+	]
+	\addplot[thick, smooth, hrred, mark=*] table {data/data1.dat};
+	\addplot[const plot, fill=gray, fill opacity=0.5] table {data/data1.dat};
+	\addplot[ycomb, black, mark=none] table {data/data1.dat};
+	\addplot[thick, dashed, blue] coordinates {(15,0)(15,1)}
+	node[above, black] {t};
+	\addplot[thick, dashed, blue] coordinates {(1,0)(1,-1.3)};
+	\addplot[thick, dashed, blue] coordinates {(2,0)(2,-1.3)};
+	\addplot[thick, blue] coordinates {(2,-1)};
+	\node[coordinate] (a1) at (axis cs:1,-1) {};
+	\node[coordinate] (a2) at (axis cs:2,-1) {};
+	\draw[<->] (a1) -- (a2)
+	node[anchor=north] at (axis cs:1.5,-1.3) {$T_s$};
+	\end{axis}
+	\end{tikzpicture}
+	\caption{Numeriek integreren volgens de Forward Rectangular Method (FRM).} 
+	\label{fig:frm}
+\end{myFigure}
+%<pgfplotsvoorbeeld
+
+\iftoggle{ebook}{
+\clearpage
+\lstinput
+}{
+\floatlstinput
+}
+[
     style=lstyle, 
     rangebeginprefix= \%>,
     rangeendprefix=\%<,
     linerange={pgfplotsvoorbeeld-pgfplotsvoorbeeld},
 ]{../chap02.tex}{pgfplotsvoorbeeld}{\LaTeX{}-code waarmee \cref{fig:frm} gemaakt is.}
 
-%>pgfplotsvoorbeeld
-\begin{myFigure}
-    \centering%
-    \begin{tikzpicture}[>={Stealth[scale=1.5,inset=0.6pt]}, shorten >=1pt]
-        \begin{axis}[
-                width=0.9\textwidth, height=0.45\textwidth,
-                minor tick num=1, axis lines*=middle, 
-                xmin=0, xmax=15, ymin=-2.5, ymax=3.5,
-                xlabel style={at={(ticklabel* cs:1.05)}, anchor=near ticklabel, align=center},
-                xlabel={$\longrightarrow$ \\ $x$},
-                ylabel style={at={(ticklabel* cs:.9)}, anchor=near ticklabel, align=center},
-                ylabel={$e(x)$ \\ $\longrightarrow$ },
-            ]
-            \addplot[thick, smooth, red, mark=*] table {data/data1.dat};
-            \addplot[const plot, fill=gray, fill opacity=0.5] table {data/data1.dat};
-            \addplot[ycomb, black, mark=none] table {data/data1.dat};
-            \addplot[thick, dashed, blue] coordinates {(15,0)(15,1)}
-            node[above, black] {t};
-            \addplot[thick, dashed, blue] coordinates {(1,0)(1,-1.3)};
-            \addplot[thick, dashed, blue] coordinates {(2,0)(2,-1.3)};
-            \addplot[thick, blue] coordinates {(2,-1)};
-            \node[coordinate] (a1) at (axis cs:1,-1) {};
-            \node[coordinate] (a2) at (axis cs:2,-1) {};
-            \draw[<->] (a1) -- (a2)
-            node[anchor=north] at (axis cs:1.5,-1.3) {$T_s$};
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Numeriek integreren volgens de Forward Rectangular Method (FRM).} 
-    \label{fig:frm}
-\end{myFigure}
-%<pgfplotsvoorbeeld
-
 \section{Tabellen}
 \label{sec:tabellen}
 Voor tabellen wordt de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt met behulp van de in de stijl gedefinieerde commando's:
-|\tabel|, |\tabelmaxpaginabreedgeschaald| en \hcode{\\lan\\-ge\\-ta\\-bel}.
+|\tabel|, |\tabelmaxpaginabreedgeschaald| en {\lstlcs\hcode{\\lan\\-ge\\-ta\\-bel}}.
 
 % commando voor tabel
 % #1 OPTIONAL = placement argument voor table e.g. tb or H 
@@ -438,10 +604,10 @@ Voor tabellen wordt de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tab
 %      gebruik \\ om rijen te scheiden
 
 Het commando |\tabel| heeft zes parameters waarvan de eerste optioneel is.
-De eerste parameter bevat de \squote{placement} argumenten voor de |\table| environment.
+De eerste parameter bevat de \squote{placement} argumenten voor de |table|- environment.
 De default waarde is |!htbp|.
 De tweede parameter is de titel van de tabel.
-De derde parameter is een deel van het label, de labelnaam wordt |tab:derde-argument|.
+De derde parameter is de suffix van het label, de labelnaam wordt {\lstllabel\code{tab:derde-argument}}.
 De vierde parameter is de kolomdefinitie voor de |tabu| environment\footnote{\url{http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/tabu/tabu.pdf}}.
 De vijfde parameter is de eerste rij van de tabel (de kop van de tabel) en de laatste parameter is de inhoud van de tabel.
 Kolommen worden gescheiden door het |&|-teken en rijen worden gescheiden door |\\|, zoals gebruikelijk in \LaTeX{}.
@@ -467,7 +633,7 @@ De code die gegeven is in \cref{lst:tabelvoorbeeld} produceert  \cref{tab:zomaar
 %<tabelvoorbeeld
 
 Het commando |\tabelmaxpaginabreedgeschaald| heeft exact dezelfde parameters als het commando |\tabel|.
-Het enige verschil is dat het commando \hcode[style=lstyle]{\\tabel\\-max\\-pa\\-gina\\-breed\\-ge\\-schaald} de tabel zodanig schaalt dat hij de volledige tekstbreedte van de pagina benut.
+Het enige verschil is dat het commando {\lstlcs\hcode{\\tabel\\-max\\-pa\\-gina\\-breed\\-ge\\-schaald}} de tabel zodanig schaalt dat hij de volledige tekstbreedte van de pagina benut.
 Dit is vooral handig als de tabel bij het gebruik van het commando |\tabel| te breed is om op de pagina te passen.
 
 Het commando |\langetabel| moet gebruikt worden als een tabel langer is dan een pagina.
@@ -480,16 +646,71 @@ Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaat
 Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's.
 Gebruik het commando |\langetabel| dus alleen als een tabel die gemaakt is met het commando |\tabel| niet op een pagina past.
 
-Als de ruimte om een tabel je niet bevalt, dan kun je de |\vspace| commando's in het commando |\myTable| aanpassen.
+Als de ruimte om een tabel je niet bevalt, dan kun je de |\vspace| commando's in de environment |myTable| aanpassen.
+
+Ik heb gekozen voor het gebruik van de package |tabu| omdat deze package de kolomspecificatie |X| definieert. 
+Hiermee kun je kolommen \squote{uitvullen} zodat de tabel de gehele tekstbreedte van de pagina gebruikt.
+De optie |X[j]| zorgt er bijvoorbeeld voor dat de tekst in de kolom met rechte kantlijnen links en rechts uitgevuld en uitgelijnd wordt.
+De code die gegeven is in \cref{lst:tabelvoorbeeld2} produceert \cref{tab:gebruikX}.
+
+\floatlstinput[
+style=lstyle, 
+rangebeginprefix= \%>,
+rangeendprefix=\%<,
+linerange={tabelvoorbeeld2-tabelvoorbeeld2},
+]{../chap02.tex}{tabelvoorbeeld2}{\LaTeX{}-code waarmee \cref{tab:gebruikX} gemaakt is.}
+
+%>tabelvoorbeeld2
+\tabel{Zomaar een uitgevulde tabel}{gebruikX}{X[1j]X[2j]}{
+	Kolom 1 met specificatie \lcode{X[1j]} & Kolom2 met specificatie \lcode{X[2j]}
+}{        
+	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt.&
+	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+	Omdat voor de rechterkolom de specificatie \lcode{X[2j]} is gebruikt, is deze kolom twee keer zo breed als de eerste kolom die met de specificatie \lcode{X[1j]} is gedefinieerd.
+}
+%<tabelvoorbeeld2
+
+Met de kolomspecificatie |X[jm]| wordt de rijen in de kolom verticaal in het midden uitgelijnd.
+Deze optie geeft echter problemen sinds de 2018 versie van |array|. De auteur van |array| schrijft op 11 mei 2018: \dquote{ I have mailed the tabu author pointing out this incompatibility, so hopefully he'll update to match the latest \lcode{array}}. Op 14 juni 2018 voegt hij daaraan toe: \dquote{Don't hold your breath}\footnote{
+	\url{https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates}.
+}.
+
+Als je toch gebruik wilt maken van de rijen die in het midden uitgelijnd zijn, dan kun je dit doen door de package |tabularx| te gebruiken.
+De code die gegeven is in \cref{lst:tabelvoorbeeld3} produceert \cref{tabularx}.
+
+\floatlstinput[
+style=lstyle, 
+rangebeginprefix= \%>,
+rangeendprefix=\%<,
+linerange={tabelvoorbeeld3-tabelvoorbeeld3},
+]{../chap02.tex}{tabelvoorbeeld3}{\LaTeX{}-code waarmee \cref{tabularx} gemaakt is.}
+
+%>tabelvoorbeeld3
+\arrayrulecolor{hrred}
+\renewcommand{\arraystretch}{1.5}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\begin{myTable}
+	\centering%
+	\caption{Voorbeeldtabel met \code{tabularx}.}
+	\label{tabularx}
+	\begin{tabularx}{\textwidth} {|>{\centering\arraybackslash}m{.1\textwidth}X|}
+		\hline
+		\rowcolor{hrred} {\bfseries\color{white}{Engels}} & \centering\arraybackslash {\bfseries\color{white}Nederlands} \\\hline
+		biscuit & kaakje; kaakje is een benaming die in sommige Nederlandse dialecten gebruikt wordt voor een bepaald soort koekje, dat rond kan zijn, zoals het mariakaakje, of rechthoekig. Het gaat dan om een koekje dat knapperig is, licht van kleur, en droog. Bron: \url{https://nl.wikipedia.org/wiki/Kaakje}. 
+		\\
+		cake & cake \\\hline
+	\end{tabularx}
+\end{myTable}
+%<tabelvoorbeeld3
 
 \section{Verwijzingen en citaten}
 \label{sec:verwijzingen}
-De verwijzingen naar een tabel, figuur enz.\ maak ik met |\cref{label}|, de tekst tabel, figuur enz.\ wordt er dan vanzelf bijgezet en dit wordt ook onderdeel van de link.
-Bijvoorbeeld de code |\cref{tab:zomaar}| geeft: \cref{tab:zomaar}.
+De verwijzingen naar een tabel, figuur enz.\ maak ik met \lcode[emph=label, emphstyle=\lstllabel]{\\cref\{label\}}, de tekst tabel, figuur enz.\ wordt er dan vanzelf bijgezet en dit wordt ook onderdeel van de link.
+Bijvoorbeeld de code \lcode[alsoletter=:, emph=tab:zomaar, emphstyle=\lstllabel]{\\cref\{tab:zomaar\}} geeft: \cref{tab:zomaar}.
 Andere voorbeelden van verwijzingen: \cref{sec:inleiding,fig:zebra,fig:frm}.
 De \LaTeX{}-code van de vorige zin is:
 
-\begin{lstfragment}[style=lstyle]
+\begin{lstfragment}[style = lstyle, alsoletter = :, emph={sec:inleiding, fig:zebra, fig:frm}, emphstyle=\lstllabel]
 Andere voorbeelden van verwijzingen: \cref{sec:inleiding, fig:zebra, fig:frm}.
 \end{lstfragment}
 
@@ -497,12 +718,12 @@ Als een zin met een verwijzing begint, dan kun je |\Cref| gebruiken om de verwij
 \Cref{fig:zebra} staat op \cpageref{fig:zebra}.
 De voorgaande regel is als volgt gecodeerd:
 
-\begin{lstfragment}[style=lstyle]
+\begin{lstfragment}[style = lstyle, alsoletter = :, emph=fig:zebra, emphstyle=\lstllabel]
 \Cref{fig:zebra} staat op \cpageref{fig:zebra}.
 \end{lstfragment}
 
 Om te verwijzen naar een section of chapter is het commando |\csecref| in de stijl gedefinieerd dat, alleen in de printed versie, een verwijzing naar de betreffende pagina toevoegt.
-Bijvoorbeeld de code |\csecref{sec:inleiding}| geeft: \cref{sec:inleiding} in de ebook versie en \cref{sec:inleiding} (\cpageref{sec:inleiding}) in de papieren versie.
+Bijvoorbeeld de code \lcode[alsoletter=:, emph=sec:inleiding, emphstyle=\lstllabel]{\\csecref\{sec:inleiding\}} geeft: \cref{sec:inleiding} in de ebook versie en \cref{sec:inleiding} (\cpageref{sec:inleiding}) in de papieren versie.
 
 Als je naar een met \LaTeX{} gemaakt document verwijst, dan kun je een link opnemen naar een specifiek gedeelte van dit document met behulp van het in de stijl gedefinieerde
 commando |\pdfdeelref|.
@@ -548,7 +769,7 @@ http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp%
 Bovenstaande code geeft: Bla, bla namespaces,
 zie \cite[\pdfdeelref{section}{paragraaf~}{http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}]{Broeders2014}.
 
-Als de URL ook in de biblatex informatie is opgenomen dan is het eenvoudiger om het command |\citepdfdeel| gebruikt worden.
+Als de URL ook in de biblatex informatie is opgenomen dan is het eenvoudiger om het command |\citepdfdeel| te gebruiken.
 Dit commando heeft dezelfde parameters als het |\pdfdeelref| commando behalve dat als derde parameter de biblatex key in plaats van de URL wordt opgegeven.
 
 Dus de code:
@@ -596,7 +817,7 @@ De opdrachten worden automatisch genummerd.
 Als je in een |opdracht|\hyp{}environment een label gebruikt, dan kun je m.b.v.\ een |\cref|\hyp{}commando naar de betreffende opdracht verwijzen.
 
 %>opdrachtvoorbeeld
-\begin{opdracht}{De opdracht environment}
+\begin{opdracht}{De opdracht-environment}
     \label{opdr:opdracht}
     Dit is een voorbeeld van een opdracht die in een kader geplaats is door gebruik te maken van het in de stijl gedefinieerde |opdracht|\hyp{}environment.
     \begin{enumerate}[label=\alph*)]
@@ -607,7 +828,7 @@ Als je in een |opdracht|\hyp{}environment een label gebruikt, dan kun je m.b.v.\
 %<opdrachtvoorbeeld
 
 De code waarmee het bovenstaande opdrachtkader is gemaakt is gegeven in \cref{lst:opdrachtvoorbeeld}.
-Je kunt vanuit de tekst verwijzen naar deze opdracht met de code |\cref{opdr:opdracht}|.
+Je kunt vanuit de tekst verwijzen naar deze opdracht met de code \lcode[alsoletter=:, emph=opdr:opdracht, emphstyle=\lstllabel]{\\cref\{opdr:opdracht\}}.
 Deze code produceert de volgende tekst: \cref{opdr:opdracht}.
 
 \floatlstinput[
@@ -634,9 +855,9 @@ De code |\handtekening{}| levert het volgende kader:
 		innerrightmargin=1.5em,
 		innertopmargin=.8\baselineskip,
 		innerbottommargin=.6\baselineskip,
-		linecolor=red, 
+		linecolor=hrred, 
 		linewidth=.8pt, 
-		frametitlebackgroundcolor=red,
+		frametitlebackgroundcolor=hrred,
 		frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1:}
 		]
 		\vspace*{5\baselineskip}%
@@ -645,8 +866,8 @@ De code |\handtekening{}| levert het volgende kader:
 
 \temphandtekening{}
 
-Als een ebook wordt gemaakt (door het commando |\ebooktrue| in |args.tex| te plaatsen), dan levert de code \hcode{\\hand\\-te\\-ken\\-ing} geen kader op.
-De code \hcode{\\hand\\-te\\-ken\\-ing\{\}} levert in een ebook de volgende tekst op:
+Als een ebook wordt gemaakt (door het commando |\ebooktrue| in |args.tex| te plaatsen), dan levert de code {\lstlcs\hcode{\\hand\\-te\\-ken\\-ing\{\}}} geen kader op.
+De code {\lstlcs\hcode{\\hand\\-te\\-ken\\-ing\{\}}} levert in een ebook de volgende tekst op:
 \addtocounter{handtekening}{-1}%
 \handtekening{}
 
@@ -678,5 +899,3 @@ Als je het nummer van een handtekeningkader wil aanpassen dan kan dat met de cod
 \begin{lstfragment}[style=lstyle]
 \setcounter{handtekening}{13}
 \end{lstfragment}
-
-\end{llstShortInline}

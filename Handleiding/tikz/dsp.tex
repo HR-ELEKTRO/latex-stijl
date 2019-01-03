@@ -1,0 +1,17 @@
+\tikzset{%
+    block/.style = {draw, thick, rectangle, minimum height = 3em, minimum width = 3em, inner sep=1em, font=\sffamily\Large},
+}
+\begin{tikzpicture}[auto, thick, ->, >={Stealth[scale=1.2, inset=0.6pt]}, shorten >=1pt]
+    \draw
+        node (text) {$x(t)$} 
+        node [coordinate, node distance=.5cm, right of=text] (input) {} 
+        node [block, node distance=2cm, right of=input] (adc) {ADC}
+        node [block, node distance=3.5cm, right of=adc] (dsp) {DSP}
+        node [block, node distance=3.5cm, right of=dsp] (dac) {DAC}
+        node [coordinate, node distance=2cm, right of=dac] (output) {}
+        node [node distance=.5cm, right of=output] {$y(t)$}; 
+    \draw (input) -- (adc);
+    \draw (adc) -- node[pos=.4] {$x[n]$} (dsp);
+    \draw (dsp) -- node[pos=.4] {$y[n]$} (dac);
+    \draw (dac) -- (output);
+\end{tikzpicture}

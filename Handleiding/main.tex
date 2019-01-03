@@ -23,7 +23,7 @@
 \newcommand{\modulecode}{LHR01}
 \newcommand{\titel}{LaTeX-stijl HR}
 \newcommand{\documenttype}{Handleiding}
-\newcommand{\huidigeversie}{2.2}
+\newcommand{\huidigeversie}{2.3}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
     J.Z.M. Broeders
@@ -34,21 +34,14 @@
 %\bibliographystyle{apacite}
 \input{styleCode.tex}
 
+% nodig voor alternatieve tabel in hoofdstuk 2
+\usepackage{tabularx}
+
 %>progurl
-\newcommand{\progsurl}{%
+\newcommand{\progsurl}{
 	https://bitbucket.org/HR_ELEKTRO/latex-stijl/src/%
-	3ea0cb67be4b991ad1a8616b0a90d9cdccb5d574/%
-	Handleiding/progs}
+	master/Handleiding/progs}
 %<progurl
-
-% specific tikz libraries for shapes and arrows
-\usetikzlibrary{shapes, arrows, arrows.meta}
-
-% specifieke libraries:
-% http://ftp.snt.utwente.nl/pub/software/tex/graphics/pgf/contrib/pgfplots/doc/pgfplots.pdf
-% http://pgfplots.sourceforge.net/gallery.html
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.11}
 
 % gedeeltelijke compilation (gebruik dit om de compilatiesnelheid te vergroten als je werkt aan een specifiek .tex bestand)
 %\includeonly{chap05}
@@ -63,11 +56,14 @@
 \cleardoublepage
 
 \mainmatter
+% vanaf hier handige afkorting |bla| voor \lcode{bla} maar pas op: werkt niet in footnotes, captions etc
+\begin{llstShortInline}
 \include{chap01}
 \include{chap02}
 \include{chap03}
 \include{chap04}
 \include{chap05}
+\end{llstShortInline}
 
 \printbibliography[heading=bibintoc]{}
 \appendix

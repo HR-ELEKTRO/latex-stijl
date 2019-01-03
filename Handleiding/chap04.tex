@@ -1,25 +1,23 @@
 \chapter{Listings en code-fragmenten}
 \label{sec:listings}
-\begin{llstShortInline}
 De commando's die gebruikt kunnen worden voor listings en codefragmenten zijn in een apart bestand geplaatst: |styleCode.tex|.
 Er wordt gebruikt gemaakt van de package \hcode[style=lstyle]{list\\-ings}\footnote{\url{https://www.ctan.org/pkg/listings}}.
 
-Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| maakt de code op als \Cpp{}-code, |mstyle| maakt de code op als MATLAB-code en |astyle| maakt de code op als AVR-assembler-code.
- 
+Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| als \Cpp{}-code, |lstyle| als \LaTeX\hyp{}code, |pstyle| als Python\hyp{}code, |mstyle| als MATLAB-code, |astyle| AVR\hyp{}assembler\hyp{}code, |amstyle| als MSP430\hyp{}assembler\hyp{}code en |legstyle| als LEG\hyp{}assembler\hyp{}code.
 
 De commando's |\floatlstinput| en |\lstinput| lezen code uit (een deel van) een bestand.
 Deze commando's hebben vier parameters waarvan de eerste optioneel is.
-Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinputlisting| worden meegegeven, bijvoorbeeld: \hcode[style=lstyle]{style = cstyle, style = line\\-numbers, line\\-range=\{1-6, 13-27\}}.
+Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinputlisting| worden meegegeven, bijvoorbeeld: \hcode[style=lstyle]{style = cstyle, style = line\\-numbers, line\\-range = \{1-6, 13-27\}}.
 Als tweede argument wordt de filenaam opgegeven.
 Deze file moet in het directory |./progs| staan.
-De derde parameter is een deel van het label, de labelnaam wordt \hcode[style=lstyle]{lst:derde-ar\\-gu\\-ment}.
+De derde parameter is een deel van het label, de labelnaam wordt {\lstllabel\hcode{lst:derde-ar\\-gu\\-ment}}.
 De laatste parameter is de titel van de listing.
 Het commando |\floatlstinput| heeft de voorkeur omdat \LaTeX{} dan zelf kan bepalen waar de listing wordt geplaatst en de listing dan niet halverwege afgebroken wordt.
 
 De environments |floatlst| en |lst| kunnen gebruikt worden als de code niet uit een bestand moet worden gelezen maar in de environment zelf wordt opgenomen.
 Deze environments hebben drie parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstset| worden meegegeven, bijvoorbeeld: |style = cstyle, style = linenumbers|.
-De tweede parameter is een deel van het label, de labelnaam wordt \hcode[style=lstyle]{lst:tweede\\-argument}.
+De tweede parameter is een deel van het label, de labelnaam wordt {\lstllabel\hcode{lst:tweede\\-argument}}.
 De laatste parameter is de titel van de listing.
 De environment |floatlst| heeft de voorkeur omdat \LaTeX{} dan zelf kan bepalen waar de listing wordt geplaatst en de listing dan niet halverwege afgebroken wordt.
 
@@ -31,9 +29,9 @@ De environment |lstfragment| kan gebruikt worden als een codefragment niet uit e
 Het fragment wordt op de plaats van het commando ingevuld.
 Dit commando heeft één parameters die gelijk is aan de eerste parameter van de environment |floatlst|.
 
-Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\mcode| voor MATLAB-code of |\acode| voor AVR-assembler-code.
+Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\lcode| voor \LaTeX\hyp{}code, |\pycode| voor Python\hyp{}code, |\mcode| voor MATLAB\hyp{}code, |\acode| voor AVR\hyp{}assembler\hyp{}code, |\amcode| voor MSP430\hyp{}assembler\hyp{}code of |\legcode| voor LEG\hyp{}assembler\hyp{}code.
 Deze commando's hebben twee parameters waarvan de eerste optioneel is.
-Als eerste argument kunnen extra |key=value| paren voor het commando \code{\\lstinline} worden meegegeven.
+Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinline| worden meegegeven.
 De twee\-de parameter is de code die inline moet worden geplaatst.
 Het karakter \code{\@} in het verplichte argument van het commando |\code| moet voorafgegaan worden door een |\|.
 
@@ -42,19 +40,19 @@ In de inline code kunnen mogelijke afbreeklocaties worden aangegeven met de teke
 Dit is nodig als een stuk inline code erg lange identifiers bevat.
 Er zijn geen programmeertaal specifieke versies van gemaakt.
 Dus als je de identifier \hcode{dit\\-Is\\-Een\\-Lange\\-Functie\\-naam} wilt laten afbreken in inline C-code dan kan dit als volgt in \LaTeX{}-code worden geschreven:
-\begin{lstfragment}
+\begin{lstfragment}[style = lstyle]
 \hcode[style=cstyle]{return dit\\-Is\\-Een\\-Lange\\-Functie\\-naam();}
 \end{lstfragment}
-Deze code levert het volgende, netjes afgebroken, resultaat: \hcode[style=cstyle]{return dit\\-Is\\-Een\\-Lange\\-Func\\-tie\\-naam();}.
+Deze code levert het volgende, netjes afgebroken, resultaat: \hcode[style = cstyle]{return dit\\-Is\\-Een\\-Lange\\-Func\\-tie\\-naam();}.
 
-Code kan nog eenvoudiger in lopende tekst worden opgenomen in één van de environments: |clstShortInline|, |cpplstShortInline|, |mlstShortInline| of \hcode{alst\\-Short\\-In\\-line}.
+Code kan nog eenvoudiger in lopende tekst worden opgenomen in één van de environments: |clstShortInline|, |cpplstShortInline|, |llstShortInline|, {\lstlenvironment\hcode{py\\-lst\\-Short\\-In\\-line}}, |mlstShortInline|, |alstShortInline|, |amlstShortInline| of {\lstlenvironment\hcode{leg\\-lst\\-Short\\-In\\-line}}.
 Als in één van deze environments de de syntax \code{\|code\|} wordt gebruikt, dan wordt deze code inline geplaatst.
 Maar pas op: dit werkt niet in voetnoten, titels enz.
 
 De environment |coutput| kan gebruikt worden om console output weer te geven.
 Binnen deze environment kan het commando |\cinput| gebruikt worden om console input weer te geven.
 Console input wordt donkergroen en onderstreept weergegeven.
-Als voorbeeld kun je de console in- en output van een programma dat de som van twee integers bepaald als volgt in \LaTeX{} coderen:
+De console in- en output van een programma dat de som van twee integers bepaald, kun je bijvoorbeeld, als volgt in \LaTeX{} coderen:
 
 \lstinputfragment[
     style=lstyle,
@@ -88,7 +86,3 @@ In deze \MakeLowercase\documenttype{} is dat als volgt gedaan:
 ]{../main.tex}
 
 De code |\proglink{lpfbodelog.m}| levert nu de volgende link op: \proglink{lpfbodelog.m}.
-
-\end{llstShortInline}
-
-
