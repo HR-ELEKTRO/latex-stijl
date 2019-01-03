@@ -183,8 +183,7 @@
 
 % Zie: http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf
 \usepackage{tikz}
-\usetikzlibrary{fadings}
-\usetikzlibrary{shadows}
+\usetikzlibrary{shapes, arrows, arrows.meta, positioning, fadings, shadows}
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
 \usepackage[siunitx]{circuitikz}
@@ -297,15 +296,15 @@
 % Datum & Versie & Omschrijving & Auteur
 % Gebruik \\ \line om de rijen te scheiden.
 \newcommand{\versiehistoryheader}{%
-    \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{red} Datum & Versie & Omschrijving & Auteur
+    \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} Datum & Versie & Omschrijving & Auteur
     \\ \hline
 }
 \newcommand{\versiehistorie}[1]{
     \section*{Versiehistorie}
     % I used X[jm] before but this does not work anymore.
     % See: https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates
-	\begin{longtabu}{|ccX[j]c|}
-        \taburulecolor{red}
+	\begin{longtabu}{|ccX[l]c|}
+        \taburulecolor{hrred}
         \hline
         \versiehistoryheader
         \endfirsthead
@@ -318,6 +317,7 @@
         #1
     \end{longtabu}
     \addtocounter{table}{-1}
+    \vspace{-.6\baselineskip}
 }
 %<versiehistorie
 
@@ -328,50 +328,82 @@
 % environment voor itemize in tabu (B.v. versie tabel.)
 \newenvironment{itemizeintabu}{
     %Opties zijn nodig omdat \baslineskip wordt aangepast in \tabu
-    \vspace{.5\baselineskip}
+    \vspace{.4\baselineskip}
     \begin{itemize}[leftmargin=*, itemsep=1mm]
 }{
         \vspace*{-.7\baselineskip}
     \end{itemize}
 }
 
+%https://tex.stackexchange.com/questions/11336/macro-for-figure-position
 %>myFigure
 % iets meer ruimte boven en iets minder onder figuur:
 \makeatletter
-\newenvironment{myFigure}[1][!htbp]{
-    \begin{figure}[#1]
-    \vspace{.2\baselineskip}%
-    \def\end@fig@space{
-        \ifstrequal{#1}{H}{
-            \vspace{-.8\baselineskip}%
-        }{
-        	% Changed for LaTeX Live 2018
-            \vspace{0pt}%
-        }
-    }
-}{
+\newenvironment{myFigure}[1][!htbp]{%
+	\expandafter\figure\expandafter[#1]%
+    \expandafter\ifstrequal\expandafter{#1}{H}{%
+        \vspace{.2\baselineskip}%
+    }{%
+		\vspace{.3\baselineskip}%
+    }%
+	\def\end@fig@space{%
+        \expandafter\ifstrequal\expandafter{#1}{H}{%
+            \vspace{-.85\baselineskip}%
+        }{%
+            \vspace{-.2\baselineskip}%
+        }%
+    }%
+}{%
     \end@fig@space{}%
-    \end{figure}
+	\endfigure%
 }
 \makeatother
 %<myFigure
 
+%>myCircuit
+% iets meer ruimte boven en iets minder onder figuur:
+\makeatletter
+\newenvironment{myCircuit}[1][!htbp]{%
+	\expandafter\circuit\expandafter[#1]%
+    \expandafter\ifstrequal\expandafter{#1}{H}{%
+        \vspace{.2\baselineskip}%
+    }{%
+		\vspace{.3\baselineskip}%
+    }%
+	\def\end@fig@space{%
+        \expandafter\ifstrequal\expandafter{#1}{H}{%
+            \vspace{-.85\baselineskip}%
+        }{%
+            \vspace{-.2\baselineskip}%
+        }%
+    }%
+}{%
+    \end@fig@space{}%
+	\endcircuit%
+}
+\makeatother
+%<myCircuit
+
 %>myTable
 % iets meer ruimte boven en iets minder onder tabel:
 \makeatletter
-\newenvironment{myTable}[1][!htbp]{
-    \begin{table}[#1]
-    \vspace{.2\baselineskip}%
+\newenvironment{myTable}[1][!htbp]{%
+    \begin{table}[#1]%
+    \expandafter\ifstrequal\expandafter{#1}{H}{%
+	    \vspace{.1\baselineskip}%
+	}{%
+    	\vspace{.2\baselineskip}%
+	}%
     \def\end@table@space{%
-        \ifstrequal{#1}{H}{
+        \expandafter\ifstrequal\expandafter{#1}{H}{%
             \vspace{-.6\baselineskip}%
-        }{
-            \vspace{0pt}%
-        }
-    }
-}{
+        }{%
+            \vspace{.1\baselineskip}%
+        }%
+    }%
+}{%
     \end@table@space{}%
-    \end{table}
+    \end{table}%
 }
 \makeatother
 %<myTable
@@ -393,40 +425,140 @@
 }
 %<figuur
 
+%https://tex.stackexchange.com/questions/120036/pgfkeys-store-unknown-keys-in-a-command
+\makeatletter
+\def\pgfutil@gobble#1{}
+\pgfkeys{/handlers/.unknown to list/.code=%
+	\let#1\pgfutil@gobble
+	\pgfkeysalso{% or \pgfkeys{\pgfkeyscurrentpath/.cd,
+		.unknown/.code=% how to handle the difference between 'key' and 'key=value'?
+		\ifx\pgfkeyscurrentvalue\pgfkeysnovalue
+			\let\pgfkeys@temp\pgfkeyscurrentname
+		\else
+			\expandafter\expandafter\expandafter\def\expandafter\expandafter\expandafter\pgfkeys@temp\expandafter\expandafter\expandafter{\expandafter\pgfkeyscurrentname\expandafter=\expandafter{\pgfkeyscurrentvalue}}%
+		\fi
+		\expandafter\expandafter\expandafter\def\expandafter\expandafter\expandafter#1\expandafter\expandafter\expandafter{\expandafter#1\expandafter,\pgfkeys@temp},%
+		.@clear list/.code=\let#1\pgfutil@gobble%
+	}%
+}
+
+\newenvironment{hrincludegraphics}[1][]{%
+	\expandafter\includegraphics\expandafter[#1]%
+}{%
+	\endincludegraphics%
+}
+\makeatother
+
+\pgfkeys{
+	/hrfigure/.is family,% 
+	/hrfigure,%
+	label/.store in = \hrfigurelabel,%
+	caption/.store in = \hrfigurecaption,%
+	placement/.store in = \hrfigureplacement,%
+	.unknown to list=\hrfigureunkown%
+}
+
+%>hrfigure
+% alternatief commando voor figuur
+% figuren staan in directory ./figs
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = fig:#2)
+%		caption = ... (default = #2)
+% #2 = filenaam (zonder extensie); labelnaam=fig:filenaam
+\newcommand\hrfigure[2][scale=1]{%
+	\pgfkeys{/hrfigure, label=fig:#2, caption = #2., placement = !htbp, #1}%
+	\begin{myFigure}[\hrfigureplacement]%
+	 	\centering%
+	 	\hrincludegraphics[\hrfigureunkown]{figs/#2}%
+	 	\caption{\hrfigurecaption}%
+	 	\label{\hrfigurelabel}%
+	\end{myFigure}%
+	\pgfkeys{/hrfigure/.@clear list}%
+}
+%<hrfigure
+
 %>tikzfiguur
 % commando voor figuur getekend met tikz
 % figuren staan in directory ./tikz
 % #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
 % #2 = filenaam (zonder extensie); labelnaam=fig:filenaam
 % #3 = titel
-\newcommand{\tikzfiguur}[3][!htbp]{
-	\begin{myFigure}[#1]
+\newcommand{\tikzfiguur}[3][!htbp]{%
+	\begin{myFigure}[#1]%
 		\centering%
-		\input{tikz/#2}
-		\caption{#3}
-		\label{fig:#2}
-	\end{myFigure}
+		\input{tikz/#2}%
+		\caption{#3}%
+		\label{fig:#2}%
+	\end{myFigure}%
 }
 %<tikzfiguur
+
+\pgfkeys{
+	/hrtikzfigure/.is family,% 
+	/hrtikzfigure,%
+	label/.store in = \hrtikzfigurelabel,%
+	caption/.store in = \hrtikzfigurecaption,%
+	placement/.store in = \hrtikzfigureplacement
+}
+
+%>hrtikzfigure
+% alternatief commando voor tikzfiguur
+% figuren staan in directory ./tikz
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = fig:#2)
+%		caption = ... (default = #2)
+% #2 = filenaam (zonder extensie); labelnaam=fig:filenaam
+\newcommand\hrtikzfigure[2][]{%
+	\pgfkeys{/hrtikzfigure, label=fig:#2, caption = #2., placement = !htbp, #1}%
+	\begin{myFigure}[\hrtikzfigureplacement]%
+	 	\centering%
+		\input{tikz/#2}%
+	 	\caption{\hrtikzfigurecaption}%
+	 	\label{\hrtikzfigurelabel}%
+	\end{myFigure}
+}
+%<hrtikzfigure
 
 %>tikzinlinefiguur
 % commando voor figuur getekend met tikz
 % figuren staan inline
 % #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
 % #2 = label
-% #3 = tikz code
+% #3 = TikZ-code
 % #4 = titel
-\newcommand{\tikzinlinefiguur}[4][!htbp]{
-	\begin{myFigure}[#1]
+\newcommand{\tikzinlinefiguur}[4][H]{
+	\begin{myFigure}[#1]%
 		\centering%
-		\begin{tikzpicture}
-		#3
-		\end{tikzpicture}
-		\caption{#4}
-		\label{fig:#2}
+		\begin{tikzpicture}%
+		#3%
+		\end{tikzpicture}%
+		\caption{#4}%
+		\label{fig:#2}%
 	\end{myFigure}
 }
 %<tikzinlinefiguur
+
+%>hrtikzinlinefigure
+% alternatief commando voor tikzinlinefiguur
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = )
+%		caption = ... (default = )
+% #2 = TikZ-code
+\newcommand\hrtikzinlinefigure[2][]{%
+	\pgfkeys{/hrtikzfigure, label=, caption =, placement = !htbp, #1}%
+	\begin{myFigure}[\hrtikzfigureplacement]%
+	 	\centering%
+        \begin{tikzpicture}%
+		#2%
+		\end{tikzpicture}%
+	 	\caption{\hrtikzfigurecaption}%
+	 	\label{\hrtikzfigurelabel}%
+	\end{myFigure}%
+}
+%<hrtikzinlinefigure
 
 \usepackage{newfloat}
 %http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/caption/newfloat.pdf
@@ -437,30 +569,40 @@
 % #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
 % #2 = circuittikz code
 % #3 = titel
-% #4 = labelnaam=sch:filenaam
+% #4 = labelnaam=sch:#4
 % spacing voor en na schakeling consistent gemaakt met figuur
-\makeatletter
 \newcommand{\schakeling}[4][!htbp]{
-	\begin{circuit}[#1]
-        \vspace{.2\baselineskip}%
-        \def\end@figspace{
-            \ifstrequal{#1}{H}{
-                \vspace{-.8\baselineskip}%
-            }{
-                \vspace{-.2\baselineskip}%
-            }
-        }
-        \centering
-		\begin{circuitikz}
-			#2
-		\end{circuitikz}	
-		\caption{#3}
-		\label{sch:#4}
-        \end@figspace{}%
-	\end{circuit}
+	\begin{myCircuit}[#1]%
+        \centering%
+		\begin{circuitikz}%
+			#2%
+		\end{circuitikz}%	
+		\caption{#3}%
+		\label{sch:#4}%
+	\end{myCircuit}%
 }
 \makeatother
 %<schakeling
+
+%>hrschakeling
+% alternatief commando voor schakeling
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = )
+%		caption = ... (default = )
+% #2 = circuitTikZ-code
+\newcommand\hrschakeling[2][]{%
+	\pgfkeys{/hrtikzfigure, label=, caption =, placement = !htbp, #1}%
+	\begin{myCircuit}[\hrtikzfigureplacement]%
+	 	\centering%
+        \begin{circuitikz}%
+		#2%
+		\end{circuitikz}%
+	 	\caption{\hrtikzfigurecaption}%
+	 	\label{\hrtikzfigurelabel}%
+	\end{myCircuit}%
+}
+%<hrschakeling
 
 %>tabel
 % commando voor tabel
@@ -479,9 +621,9 @@
         \begin{tabu}{|#4|}
             \taburulecolor{hrred}
             \hline
-            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
+            \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
             #6\\ \hline
-        \end{tabu}
+        \end{tabu}%
     \end{myTable}
 }
 
@@ -496,10 +638,10 @@
             \begin{tabu}{|#4|}
                 \taburulecolor{hrred}
                 \hline
-                \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
+                \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
                 #6\\ \hline
             \end{tabu}%
-        \end{adjustbox}
+        \end{adjustbox}%
     \end{myTable}
 }
 
@@ -513,26 +655,25 @@
 %      gebruik \\ om rijen te scheiden
 % #7 = aantal kolommen
 \newcommand{\langetabel}[7][c]{
-    \begin{center}
-        \vspace*{.2\baselineskip}%
-        \begin{longtabu}[#1]{#4}
-            \caption{#2}\label{tab:#3} \\
+    {\centering%
+    \vspace*{.1\baselineskip}%
+    \begin{longtabu}[#1]{|#4|}
+        \caption{#2}\label{tab:#3} \\[-1ex]
             \taburulecolor{hrred}
             \hline
-            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
+            \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
             \endfirsthead
-            \caption[]{Vervolg. #2}\\
+        \caption[]{Vervolg. #2}\\[-1ex]
             \hline
-            \rowfont[c]{\rmfamily\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
+            \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
             \endhead
             \multicolumn{#7}{r}{\sffamily\small Wordt vervolgd op volgende pagina.}\\
             \endfoot
             \hline
             \endlastfoot
             #6 
-        \end{longtabu}
-        \vspace{.2\baselineskip}%
-    \end{center}
+    \end{longtabu}%
+	}\vspace{-.6\baselineskip}
 }
 %<tabel
 
@@ -594,7 +735,7 @@
 \newcounter{opdracht}
 \newenvironment{opdracht}[1]{
     \refstepcounter{opdracht}%
-    \vspace{.4\baselineskip}%
+    \vspace{.5\baselineskip}%
     \begin{mdframed}[
         innerleftmargin=1.5em,
         innerrightmargin=1.5em,
@@ -613,6 +754,7 @@
 %>conclusie
 % Nummer van de conclusie is hetzelfde als het nummer van de voorgaande opdracht 
 \newcommand{\conclusie}[1]{
+    \vspace{.5\baselineskip}%
 	\begin{mdframed}[
 		nobreak=true,
 		align=center,
@@ -640,7 +782,7 @@
 	\iftoggle{ebook}{%
 		Als alles correct werkt zal de docent opdracht \thehandtekening#1 aftekenen.  
 	}{%
-    \vspace{.4\baselineskip}%
+    \vspace{.5\baselineskip}%
     \begin{mdframed}[
         userdefinedwidth=.6\linewidth,
         nobreak=true,
@@ -669,9 +811,13 @@
     backref=true,
     backrefstyle=none, % neem paginanummer niet samen in de backref lijst dus 1,2,3 i.p.v. 1-3 (anders kun je niet op 2 klikken)
     sortcites=true,
-    doi = false % doi informatie wordt niet weergegeven
+    doi = false, % doi informatie wordt niet weergegeven
+    useprefix=false
 ]{biblatex}
 \addbibresource{bibliography.bib}
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+\makeatother
 \DefineBibliographyStrings{dutch}{
     backrefpage = {geciteerd op p.},
     backrefpages = {geciteerd op pp.},
@@ -764,8 +910,8 @@
 
 \newcommand{\rease@header}{\vspace{4pt}}
 
-\newcommand{\module@code@box}{\colorbox{red}{\makebox[\module@code@width][c]{\color{white}\textbf{\modulecode}}}}
-\newcommand{\page@number@box}{\colorbox{red}{\makebox[\page@number@width][c]{\color{white}\textbf{\thepage}}}}
+\newcommand{\module@code@box}{\colorbox{hrred}{\makebox[\module@code@width][c]{\color{white}\textbf{\modulecode}}}}
+\newcommand{\page@number@box}{\colorbox{hrred}{\makebox[\page@number@width][c]{\color{white}\textbf{\vphantom{2}\thepage}}}}
 
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/fancyhdr/fancyhdr.pdf
 \usepackage{fancyhdr}
@@ -777,20 +923,20 @@
 		\expandafter\ifstrequal\expandafter{\myClass}{article}{
         	\fancyhead[R]{\headerfont\nouppercase{\rightmark}\rease@header{}}
 		}{
-        	\fancyhead[R]{\headerfont\nouppercase{\leftmark}\rease@header{}} 
+        	\fancyhead[R]{\headerfont\nouppercase{\leftmark}\rease@header{}}
 		}
         \fancyfoot[L]{\headerfont{}Hogeschool Rotterdam}
-        \fancyfoot[R]{\headerfont\documenttype{} \titel{}\hspace{1em}\page@number@box{}}
+        \fancyfoot[R]{\headerfont\titel{}\hspace{1em}\page@number@box{}}
     }{
 		\expandafter\ifstrequal\expandafter{\myClass}{article}{
-	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}} 
-	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}         
+	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
+	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}        
 		}{
-        	\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}} 
-        	\fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}\rease@header{}}         
+        	\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
+        	\fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}\rease@header{}}
 		}
         \fancyfoot[OR]{\headerfont{}Hogeschool Rotterdam\hspace{1em}\page@number@box{}}
-        \fancyfoot[EL]{\headerfont\page@number@box{}\hspace{1em}\documenttype{} \titel{}}
+        \fancyfoot[EL]{\headerfont\page@number@box{}\hspace{1em}\titel{}}
     }
     \renewcommand{\headrulewidth}{0.4pt}
     \renewcommand{\footrulewidth}{0.4pt}
@@ -863,7 +1009,7 @@
     justification=RaggedRight,
     labelfont={color=hrred, bf},
     hypcap=true,
-    skip=.8\baselineskip
+    skip=.6\baselineskip
 ]{caption}
 
 %http://get-software.net/macros/latex/contrib/nowidow/nowidow.pdf
@@ -890,15 +1036,11 @@
 \setlist[enumerate,4]{label=\arabic*.}
 \setlist[enumerate,5]{label=\arabic*.}
 \renewlist{enumerate}{enumerate}{5}
-\setlist{topsep=-.1\baselineskip, itemsep=-.3\baselineskip}
+\setlist{topsep=-.2\baselineskip, itemsep=-.3\baselineskip}
 \setlist[itemize,1]{label=\textbullet}
 \setlist[itemize,2]{label=$\circ$}
 \setlist[itemize,3]{label=$\triangleright$}
 \setlist[itemize,4]{label=$\diamond$}
-
-\AtEndEnvironment{itemize}{\vspace{.2\baselineskip}}
-\AtEndEnvironment{enumerate}{\vspace{.2\baselineskip}}
-\AtEndEnvironment{description}{\vspace{.2\baselineskip}}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/footnotebackref/footnotebackref.pdf
 \usepackage{footnotebackref}
@@ -913,6 +1055,9 @@
     \BHFN@Old@footnotemark
 }
 \makeatother
+
+%http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/microtype/microtype.pdf
+\usepackage{microtype}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/hyperref/doc/manual.pdf
 \usepackage{hyperref}
@@ -948,6 +1093,9 @@
         %pdfstartview=FitH, % voor debuggen
     }
 }
+
+%http://ctan.triasinformatica.nl/systems/doc/pdftex/manual/pdftex-a.pdf#page=24
+\pdfsuppressptexinfo=1
 
 % http://ctan.cs.uu.nl/macros/latex/contrib/cleveref/cleveref.pdf
 \usepackage[dutch, noabbrev, nameinlink]{cleveref}
