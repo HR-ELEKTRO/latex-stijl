@@ -1,0 +1,851 @@
+% !TeX spellcheck = nl_NL
+% minimaal document met gebruik van HR-stijl
+\newcommand{\myClass}{article}
+\newcommand{\cursuscode}{HR-TABEL}
+\newcommand{\titel}{Tabellen in de HR-style}
+%\newcommand{\documenttype}{...}
+%\newcommand{\huidigeversie}{1.0}
+%\newcommand{\auteurs}
+%	Naam 1\\
+%   Naam 2
+%}
+\include{style_nl_NL}
+\include{styleCode}
+
+\newcommand{\listing}[1]{%
+	\floatlstinput[
+		style=lstyle, 
+		breakatwhitespace=false,
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={#1-#1},
+	]{../main.tex}{#1}{\LaTeX{}-code waarmee \cref{tab:#1} gemaakt is.}
+}
+
+\begin{document}
+\begin{llstShortInline}
+	\tableofcontents
+	
+	\section*{Inleiding}
+	Voor tabellen werd in eerdere versies van de HR-style de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt.
+	Deze optie geeft echter problemen sinds de 2018 versie van |array|. De auteur van |array| schrijft op 11 mei 2018: \dquote{I have mailed the tabu author pointing out this incompatibility, so hopefully he'll update to match the latest \lcode{array}}. Op 14 juni 2018 voegt iemand daaraan toe: \dquote{Don't hold your breath}\footnote{
+		\url{https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates}.
+	}.
+	
+	Inmiddels zijn de voorheen met |tabu| gedefinieerde commando's vervangen door commando's die gebruik maken van |\tabular|\footnote{\url{http://joshua.smcvt.edu/latex2e/tabular.html}} en |tabularx|\footnote{\url{https://www.ctan.org/pkg/tabularx}}.
+	
+	\section{Commando's}
+	Voor normale tabellen die gebruik maken van |tabular| kunnen de (aangepaste versies van de) al bestaande commando's:
+	|\tabel|, |\tabelmaxpaginabreedgeschaald| en |\langetabel| gebruikt worden.
+	
+	In de oude tabel-commando's kon je kolommen uitvullen door de kolomspecificatie |X| te gebruiken.
+	Als je de kolomspecificatie |X| gebruikt bij het nieuwe commando |\tabel|, dan krijg je de volgende foutmelding: Kolomspecificatie X wordt niet langer ondersteund door het commando |\tabel| gebruik |\tabelX|.
+	Het commando's |\langetabel| geeft een soortgelijke foutmelding.
+		
+	Als je tabellen wilt maken waarbij de tekst in een kolom uitgevuld wordt, dan moet je gebruik maken van nieuwe commando's die gebaseerd zijn op |tabularx|. 
+	Dit zijn de commando's:
+	|\tabelX| en |\langetabelX|.
+
+	Bij het gebruik van |\tabelX| en |\langetabelX| worden de regels verticaal aan de top van de regel uitgelijnd.
+	Als je de regels verticaal uitgelijnd wilt hebben op het midden van de regel, dan moet je een van de commando's |\tabelXm| of |\langetabelXm| gebruiken.
+	
+	In een tabel moet je het de environment |itemizeintabel| gebruikten voor een opsomming in plaats van |itemize|.
+	Als na de opsomming nog tekst volgt, dan moet je na de opsomming het commando |\vspace*{1.2\baselineskip}| gebruiken.
+		
+	\subsection{\texorpdfstring{\lcode{\\tabel}}{\textbackslash{}tabel}}
+	Het commando |\tabel| heeft zes parameters waarvan de eerste optioneel is.
+	De eerste parameter bevat de \squote{placement} argumenten voor de |table|-environment.
+	De default waarde is |!htbp|.
+	De tweede parameter is de titel van de tabel.
+	De derde parameter is de suffix van het label, de labelnaam wordt {\lstllabel\code{tab:derde-argument}}.
+	De vierde parameter is de kolomdefinitie voor de |tabular|- environment zoals gedefinieerd in de package |array|\footnote{\url{https://www.ctan.org/pkg/array}}.
+	De vijfde parameter is de eerste rij van de tabel (de kop van de tabel) en de laatste parameter is de inhoud van de tabel.
+	Kolommen worden gescheiden door het |&|-teken en rijen worden gescheiden door |\\|, zoals gebruikelijk in \LaTeX{}.
+	Als je een regel wilt afbreken in een tabel, dan kun je het commando |\newline| gebruiken.
+	
+	De code die gegeven is in \cref{lst:tabelvoorbeeld1} produceert \cref{tab:tabelvoorbeeld1}.
+	
+	%\clearpage
+	\listing{tabelvoorbeeld1}
+		
+	%>tabelvoorbeeld1
+	\tabel{Zomaar een tabel.}{tabelvoorbeeld1}{lrr}{
+		Getal & Decimaal & Hexadecimaal
+	}{        
+		een & 1 & 1 \\ 
+		tien & 10 & A \\ 
+		twintig & 20 & 14 \\ 
+		tweehonderdvijfenvijftig & 255 & FF
+	}
+	%<tabelvoorbeeld1
+	
+	\subsection{\texorpdfstring{\lcode{\\tabelmaxpaginabreedgeschaald}}{\textbackslash{}tabelmaxpaginabreedgeschaald}}
+	Het commando |\tabelmaxpaginabreedgeschaald| heeft exact dezelfde parameters als het commando |\tabel|.
+	Het enige verschil is dat het commando |\|{\lstlcs\hcode{tabel\\-max\\-pa\\-gina\\-breed\\-ge\\-schaald}} de tabel zodanig schaalt dat hij de volledige tekstbreedte van de pagina benut.
+	Dit is vooral handig als de tabel bij het gebruik van het commando |\tabel| te breed is om op de pagina te passen.
+	
+	\subsection{\texorpdfstring{\lcode{\\langetabel}}{\textbackslash{}langetabel}}
+	Het commando |\langetabel| moet gebruikt worden als een tabel langer is dan een pagina.
+	Dit commando zorgt ervoor dat de tabel netjes wordt verdeeld over meerdere pagina's.
+	De parameters zijn bijna gelijk aan die van het commando |\tabel|.
+	De eerste (optionele) parameter ontbreekt en er is een extra parameter waaraan het aantal kolommen moet worden meegegeven.
+	Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaats waar hij gedefinieerd is neergezet.
+	Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's.
+	Gebruik het commando |\langetabel| dus alleen als een tabel die gemaakt is met het commando |\tabel| niet op een pagina past.
+	
+	\subsection{\texorpdfstring{\lcode{\\tabelX}}{\textbackslash{}tabelX}}
+	Dit commando gebruikt normaal gesproken de volledige tekstbreedte.
+	Je kunt als eerste optionele parameter ook de gewenste breedte opgeven.
+	Bij dit commando kun je gebruik maken van de kolomspecificatie |X|. 
+	Hiermee kun je kolommen \squote{uitvullen} zodat de tabel de gehele tekstbreedte van de pagina gebruikt.
+	De kolomspecificatie |X| zorgt er bijvoorbeeld voor dat de tekst in de kolom met rechte kantlijnen links en rechts uitgevuld en uitgelijnd wordt.
+	De code die gegeven is in \cref{lst:tabelvoorbeeld2} produceert \cref{tab:tabelvoorbeeld2}.
+	
+%	% #1 = (optional) extra key=value paren voor lstset b.v.
+%	%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%	%      style = linenumbers
+%	% #2 = label=lst:#2
+%	% #3 = titel
+%	\begin{floatlst}[
+%		style=lstyle, 
+%	]{tabelvoorbeeld2}{{\LaTeX{}-code waarmee \cref{tab:tabelvoorbeeld2} gemaakt is.}}
+%	\tabelX{Zomaar een uitgevulde tabel.}{tabelvoorbeeld2}{XX}{
+%		Kolom 1 & Kolom2
+%	}{        
+%		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. &
+%		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. De rechterkolom zal net zo breed zijn als de linker.
+%	}
+%	\end{floatlst}	
+
+	\listing{tabelvoorbeeld2}
+	
+	%>tabelvoorbeeld2
+	\tabelX{Zomaar een uitgevulde tabel.}{tabelvoorbeeld2}{XX}{
+		Kolom 1 & Kolom2
+	}{        
+		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt.&
+		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+		De rechterkolom zal net zo breed zijn als de linker.
+	}
+	%<tabelvoorbeeld2
+	
+	Het is ook mogelijk om de kolommen die uitgevuld worden niet even breed te maken.
+	De code die gegeven is in \cref{lst:tabelvoorbeeld3} produceert \cref{tab:tabelvoorbeeld3}.
+	Hierbij is de verhouding tussen de linker- en rechterkolom $0.67:1.33$ oftewel $1:2$.
+	Het totaal van deze verhoudingsgetallen moet gelijk zijn aan het aantal |X|-kolommen.
+	In dit geval $0.67 + 1.33 = 2$.   
+	
+	\listing{tabelvoorbeeld3}
+	
+	%>tabelvoorbeeld3
+	\tabelX{Zomaar een uitgevulde tabel met kolommen van ongelijke breedte.}{tabelvoorbeeld3}{>{\hsize=0.67\hsize\linewidth=\hsize}X>{\hsize=1.33\hsize\linewidth=\hsize}X}{
+		Kolom 1 & Kolom2
+	}{        
+		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. &
+		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+		De rechterkolom zal twee keer zo breed zijn als de linker.
+	}
+	%<tabelvoorbeeld3
+	
+	Als je de |X|-kolom alleen links, alleen rechts of helemaal niet uitgevuld wilt hebben, dan kan dat door een prefix toe te voegen aan de |X|-kolomspecificatie, zie \cref{tab:xspecs}.
+	
+	\tabel{Verschillende prefixen van de \lcode{X}-kolomspecificatie.}{xspecs}{lp{6cm}}{
+		uitlijning & \lcode{X}-kolomspecificatie met prefix
+	}{
+		niet & \lcode{>\{\\centering\\arraybackslash\}X} \\
+		rechts & \lcode{>\{\\raggedleft\\arraybackslash\}X} \\
+		links & \lcode{>\{\\raggedright\\arraybackslash\}X} \\
+		links en rechts & \lcode{X}
+	}
+	
+	Het commando |\arraybackslash| is alleen maar nodig in de prefix als in de tabel zelf het commando |\newline| gebruikt wordt.
+	De code die gegeven is in \cref{lst:tabelvoorbeeld4} produceert \cref{tab:tabelvoorbeeld4}.
+	
+	\listing{tabelvoorbeeld4}
+	
+	%>tabelvoorbeeld4
+	\tabelX{Tabel met X kolommen.}{tabelvoorbeeld4}{>{\centering}X>{\raggedleft}X>{\raggedright}XX}{
+		\texttt{>\{\textbackslash{}centering\}X} & 
+		\texttt{>\{\textbackslash{}raggedleft\}X} & 
+		\texttt{>\{\textbackslash{}raggedright\}X} & 
+		\texttt{X}
+	}{
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+	}
+	%<tabelvoorbeeld4
+
+	\subsection{\texorpdfstring{\lcode{\\langetabelX}}{\textbackslash{}langetabelX}}
+	Het commando |\langetabelX| moet gebruikt worden als een tabel langer is dan een pagina.
+	Dit commando zorgt ervoor dat de tabel netjes wordt verdeeld over meerdere pagina's.
+	De parameters zijn bijna gelijk aan die van het commando |\tabelX|.
+	De eerste (optionele) parameter ontbreekt en er is een extra parameter waaraan het aantal kolommen moet worden meegegeven.
+	Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaats waar hij gedefinieerd is neergezet.
+	Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's.
+	Gebruik het commando |\langetabelX| dus alleen als een tabel die gemaakt is met het commando |\tabelX| niet op een pagina past.
+	
+	\subsection{\texorpdfstring{\lcode{\\tabelXm}}{\textbackslash{}tabelXm}}
+	Zoals je in \cref{tab:tabelvoorbeeld3} kunt zien worden de regels verticaal aan de top van de regel uitgelijnd.
+	Als je de regels verticaal uitgelijnd wilt hebben op het midden van de regel, dan moet je het commando |\tabelXm| gebruiken.
+	
+	De code die gegeven is in \cref{lst:tabelvoorbeeld5} produceert \cref{tab:tabelvoorbeeld5}.
+	
+	\listing{tabelvoorbeeld5}
+	
+	%>tabelvoorbeeld5
+	\tabelXm{Zomaar een uitgevulde tabel waarbij de regels verticaal in het midden uitgelijnd worden}{tabelvoorbeeld5}{XX}{
+		Kolom 1 & Kolom2
+	}{        
+		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt.&
+		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+		De rechterkolom zal net zo breed zijn als de linker.\\
+		Tweede regel & 	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+		De rechterkolom zal net zo breed zijn als de linker.
+	}
+	%<tabelvoorbeeld5
+		
+	\subsection{\texorpdfstring{\lcode{\\langetabelXm}}{\textbackslash{}langetabelXm}}
+	Het commando |\langetabelXm| moet gebruikt worden als een tabel langer is dan een pagina.
+	Dit commando zorgt ervoor dat de tabel netjes wordt verdeeld over meerdere pagina's.
+	De parameters zijn bijna gelijk aan die van het commando |\tabelXm|.
+	De eerste (optionele) parameter ontbreekt en er is een extra parameter waaraan het aantal kolommen moet worden meegegeven.
+	Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaats waar hij gedefinieerd is neergezet.
+	Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's.
+	Gebruik het commando |\langetabelXm| dus alleen als een tabel die gemaakt is met het commando |\tabelXm| niet op een pagina past.
+	
+	\clearpage	
+	\section{Voorbeelden}
+	In dit hoofdstuk vind je voorbeelden van het gebruik van de verschillende commando's om tabellen te maken in de HR-stijl.
+	\subsection{\texorpdfstring{\lcode{\\tabel}}{\textbackslash{}tabel}}
+	\Cref{tab:vb1} is gemaakt met het nieuwe commando |\tabel|, zie \cref{lst:vb1}.
+	
+	\listing{vb1}
+
+	Deze tekst wordt boven de tabel afgedrukt.
+
+	% commando voor tabel
+	% #1 OPTIONEEL = placement argument voor table e.g. tb or H 
+	% #2 = titel
+	% #3 = labelnaam=tab:#3
+	% #4 = tabu kolom definities
+	% #5 = kop tabel (eerste regel)
+	% #6 = inhoud tabel (rest van de regels)
+	%      gebruik \\ om rijen te scheiden
+	%>vb1
+	\tabel{Eenvoudige tabel.}{vb1}{clr}{
+		\# & artikel & aantal
+	}{
+		1 & weerstanden & 10 \\
+		2 & condensatoren & 200 \\
+		3 & spoelen & 3
+	}
+	%<vb1
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\Cref{tab:vb2} is gebruikt het placement argument |H|, zie \cref{lst:vb2}.
+	
+	\listing{vb2}
+	
+	Deze tekst wordt boven de tabel afgedrukt.
+
+	%>vb2
+	\tabel[H]{Eenvoudige tabel.}{vb2}{clr}{
+		\# & artikel & aantal
+	}{
+		1 & weerstanden & 10 \\
+		2 & condensatoren & 200 \\
+		3 & spoelen & 3
+	}
+	%<vb2
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+	
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\langetabel}}{\textbackslash{}langetabel}}
+	\Cref{tab:vb3} is gemaakt met het nieuwe commando |\langetabel|. De ingekorte \LaTeX{}-code is gegeven in \cref{lst:vb3}.
+
+	\lstinput[
+		style=lstyle,
+		breakatwhitespace=false, 
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={vb31-vb31,vb32-vb32},
+	]{../main.tex}{vb3}{Ingekorte \LaTeX{}-code waarmee \cref{tab:vb3} gemaakt is.}
+	
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%Workaround om vreemde foutmelding (Extra }, or forgotten \endgroup) te vermijden.
+%>vb31
+	\langetabel{Eenvoudige maar lange tabel.}{vb3}{clr}{
+		\# & artikel & aantal
+	}{
+		1 & weerstanden & 10 \\
+		2 & condensatoren & 200 \\
+		3 & spoelen & 3 \\
+		4 & weerstanden & 10 \\
+		5 & condensatoren & 200 \\
+%<vb31
+		6 & spoelen & 3 \\
+		7 & weerstanden & 10 \\
+		8 & condensatoren & 200 \\
+		9 & spoelen & 3 \\
+		10 & weerstanden & 10 \\
+		11 & condensatoren & 200 \\
+		12 & spoelen & 3 \\
+		13 & weerstanden & 10 \\
+		14 & condensatoren & 200 \\
+		15 & spoelen & 3 \\
+		16 & weerstanden & 10 \\
+		17 & condensatoren & 200 \\
+		18 & spoelen & 3 \\
+		19 & weerstanden & 10 \\
+		20 & condensatoren & 200 \\
+		21 & spoelen & 3 \\
+		22 & weerstanden & 10 \\
+		23 & condensatoren & 200 \\
+		24 & spoelen & 3 \\
+		25 & weerstanden & 10 \\
+		26 & condensatoren & 200 \\
+		27 & spoelen & 3 \\
+		28 & weerstanden & 10 \\
+		29 & condensatoren & 200 \\
+		30 & spoelen & 3 \\
+		31 & weerstanden & 10 \\
+		32 & condensatoren & 200 \\
+		33 & spoelen & 3 \\
+		34 & weerstanden & 10 \\
+		35 & condensatoren & 200 \\
+		36 & spoelen & 3 \\
+		37 & weerstanden & 10 \\
+		38 & condensatoren & 200 \\
+		39 & spoelen & 3 \\
+		40 & weerstanden & 10 \\
+		41 & condensatoren & 200 \\
+		42 & spoelen & 3 \\
+		43 & weerstanden & 10 \\
+		44 & condensatoren & 200 \\
+		45 & spoelen & 3 \\
+%>vb32
+		46 & weerstanden & 10 \\
+		47 & condensatoren & 200 \\
+		48 & spoelen & 3 \\
+		49 & weerstanden & 10 \\
+		50 & condensatoren & 200 
+	}{3}
+%<vb32
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+	
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\tabelX}}{\textbackslash{}tabelX}}
+	\Cref{tab:vb4} is gemaakt met het nieuwe commando |\tabelX|, zie \cref{lst:vb4}.
+	
+	\listing{vb4}
+
+	\clearpage	
+	Deze tekst wordt boven de tabel afgedrukt.
+
+	%>vb4
+	\tabelX{Tabel met X kolommen.}{vb4}{>{\centering}X>{\raggedleft}X>{\raggedright}XX}{
+		\texttt{>\{\textbackslash{}centering\}X} & 
+		\texttt{>\{\textbackslash{}raggedleft\}X} & 
+		\texttt{>\{\textbackslash{}raggedright\}X} & 
+		\texttt{X}
+	}{
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+	}
+	%<vb4
+
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\Cref{tab:vb5} is gemaakt met het nieuwe commando |\tabelX|, zie \cref{lst:vb5}. De optionele parameters zijn niet gebruikt, zie \cref{lst:vb5}.
+
+	\listing{vb5}
+
+	Deze tekst wordt boven de tabel afgedrukt.
+
+	%>vb5
+	\tabelX{Tabel met ongelijke X kolommen.}{vb5}{>{\hsize=1.33\hsize\linewidth=\hsize}X>{\hsize=0.67\hsize\linewidth=\hsize}X}{
+		kolom 1 & 
+		kolom 2
+	}{
+		Deze iets langere tekst komt te staan in kolom 1 en zou uitgevuld moeten zijn.
+		Kolom 1 moet twee keer zo breed zijn als kolom 2. &
+		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
+		Kolom 2 moet maar half zo breed zijn als kolom 1. 
+	}
+	%<vb5
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\Cref{tab:vb6} is gemaakt met het nieuwe commando |\tabelX| met een tweede optionele parameter |H|, zie \cref{lst:vb6}.
+
+	\listing{vb6}
+
+	Deze tekst wordt boven de tabel afgedrukt.
+
+	%>vb6	
+	\tabelX[\textwidth][H]{Tabel met ongelijke X kolommen.}{vb6}{>{\hsize=1.33\hsize\linewidth=\hsize}X>{\hsize=0.67\hsize\linewidth=\hsize}X}{
+		kolom 1 & 
+		kolom 2
+	}{
+		Deze iets langere tekst komt te staan in kolom 1 en zou uitgevuld moeten zijn.
+		Kolom 1 moet twee keer zo breed zijn als kolom 2. &
+		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
+		Kolom 2 moet maar half zo breed zijn als kolom 1. 
+	}
+	%<vb6
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+	
+	\clearpage
+	\Cref{tab:vb7} is gemaakt met het nieuwe commando |\tabelX| met een eerste optionele parameter |.8\textwidth|, zie \cref{lst:vb7}.
+	
+	\listing{vb7}	
+	
+	Deze tekst wordt boven de tabel afgedrukt.
+
+	%>vb7
+	\tabelX[.8\textwidth]{Tabel met ongelijke X kolommen.}{vb7}{>{\hsize=1.33\hsize\linewidth=\hsize}X>{\hsize=0.67\hsize\linewidth=\hsize}X}{
+		kolom 1 & 
+		kolom 2
+	}{
+		Deze iets langere tekst komt te staan in kolom 1 en zou uitgevuld moeten zijn.
+		Kolom 1 moet twee keer zo breed zijn als kolom 2. &
+		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
+		Kolom 2 moet maar half zo breed zijn als kolom 1. 
+	}
+	%<vb7
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\langetabelX}}{\textbackslash{}langetabelX}}
+	
+	\Cref{tab:vb8} is gemaakt met het nieuwe commando |\langetabelX|. De ingekorte \LaTeX{}-code is gegeven in \cref{lst:vb8}.
+	
+	\lstinput[
+		style=lstyle,
+		breakatwhitespace=false, 
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={vb81-vb81,vb82-vb82},
+	]{../main.tex}{vb8}{Ingekorte \LaTeX{}-code waarmee \cref{tab:vb8} gemaakt is.}
+	
+	\clearpage
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%>vb81
+	\langetabelX{Lange tabel met X kolommen.}{vb8}{>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedright\arraybackslash}XX}{
+		\texttt{>\{\textbackslash{}centering\}X} & 
+		\texttt{>\{\textbackslash{}raggedleft\}X} & 
+		\texttt{>\{\textbackslash{}raggedright\}X} & 
+		\texttt{X}
+	}{
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
+	%<vb81
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+		3 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+		4 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+	%>vb82
+		5 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+	}{4}
+	%<vb82
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\tabelXm}}{\textbackslash{}tabelXm}}
+	Als je de tekst in de kolommen verticaal in het midden uitgelijnd wilt hebben dan kun je het commando |\tabelXm| gebruiken.
+	
+	\Cref{tab:vb9} is gemaakt met het nieuwe commando |\tabelXm|, zie \cref{lst:vb9}.
+	
+	\listing{vb9}
+	
+	\clearpage	
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%>vb9
+	\tabelXm{Tabel met X kolommen die verticaal in het midden uitgelijnd zijn.}{vb9}{>{\centering}X>{\raggedleft}X >{\raggedright}X X}{
+		\texttt{>\{\textbackslash{}centering\}X} & 
+		\texttt{>\{\textbackslash{}raggedleft\}X} & 
+		\texttt{>\{\textbackslash{}raggedright\}X} & 
+		\texttt{X}
+	}{
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+	}
+	%<vb9
+
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\Cref{tab:vb10} is gemaakt met het nieuwe commando |\tabelXm| met een eerste optionele parameter |.8\textwidth|, zie \cref{lst:vb10}.
+	
+	\listing{vb10}
+	
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%>vb10
+	\tabelXm[.8\textwidth]{Tabel met ongelijke X kolommen.}{vb10}{>{\hsize=1.33\hsize\linewidth=\hsize}X >{\hsize=0.67\hsize\linewidth=\hsize}X}{
+		kolom 1 & 
+		kolom 2
+	}{
+		Deze iets langere tekst komt te staan in kolom 1 en zou uitgevuld moeten zijn.
+		Kolom 1 moet twee keer zo breed zijn als kolom 2. &
+		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
+		Kolom 2 moet maar half zo breed zijn als kolom 1. 
+	}
+	%<vb10
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\langetabelXm}}{\textbackslash{}langetabelXm}}
+	Als je de tekst in de kolommen van een lange tabel verticaal in het midden uitgelijnd wilt hebben dan kun je het commando |\langetabelXm| gebruiken.
+
+	\Cref{tab:vb11} is gemaakt met het nieuwe commando |\langetabelXm|, zie \cref{lst:vb11}.
+	
+	\listing{vb11}
+
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%>vb11
+	\langetabelXm{Lange tabel met X kolommen.}{vb11}{>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedright\arraybackslash}XX}{
+		\texttt{>\{\textbackslash{}centering\}X} & 
+		\texttt{>\{\textbackslash{}raggedleft\}X} & 
+		\texttt{>\{\textbackslash{}raggedright\}X} & 
+		\texttt{X}
+	}{
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+		3 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+	}{4}
+	%<vb11
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+	
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\tabelmaxpaginabreedgeschaald}}{\textbackslash{}tabelmaxpaginabreedgeschaald}}
+	\Cref{tab:vb12} is gemaakt met het nieuwe commando |\tabel| maar is te breed om netjes op de pagina te passen, zie \cref{lst:vb12}.
+	
+	\listing{vb12}
+	
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%>vb12
+	\tabel{Tabel die te breed is.}{vb12}{cccccccc}{
+		kolom 1 & kolom 2 & kolom 3 & kolom 4 & kolom 5 & kolom 6 & kolom 7	& kolom 8	
+	}{
+		bla & bla & bla & bla & bla & bla & bla	& bla
+	}
+	%<vb12
+
+	Deze tekst wordt onder de tabel afgedrukt.
+	
+	Door in plaats van |\tabel| het commando |\tabelmaxpaginabreedgeschaald| te gebruiken wordt de tabel geschaald zodat die netjes op de pagina past, zie \cref{lst:vb12}.
+
+	\listing{vb13}
+	
+	\clearpage
+	Deze tekst wordt boven de tabel afgedrukt.
+	
+	%>vb13
+	\tabelmaxpaginabreedgeschaald{\Cref{tab:vb12} die eigenlijk te breed is, is nu geschaald.}{vb13}{cccccccc}{
+		kolom 1 & kolom 2 & kolom 3 & kolom 4 & kolom 5 & kolom 6 & kolom 7	& kolom 8	
+	}{
+		bla & bla & bla & bla & bla & bla & bla	& bla
+	}
+	%<vb13
+	
+	Deze tekst wordt onder de tabel afgedrukt.
+	
+	\clearpage
+	\subsection{\texorpdfstring{\lcode{\\versiehistorie}}{\textbackslash{}versiehistory}}
+	Het commando |\versiehistorie| kan gebruikt worden om een versietabel af te drukken.
+	Dit commando heeft een nieuwe implementatie gekregen.
+	
+	Voorbeeld van een opsomming buiten een tabel:
+	\begin{itemize}
+		\item Eerste item.
+		\item Tweede item.
+		\item Derde item.		
+	\end{itemize}
+	Tekst achter de opsomming.
+	
+	In een tabel moet je het de environment |itemizeintabel| gebruikten voor een opsomming in plaats van |itemize|.
+	Als na de opsomming nog tekst volgt, dan moet je na de opsomming het commando |\vspace*{1.2\baselineskip}| gebruiken.
+	De code van onderstaande versietabel is gegeven in \cref{lst:versiehistorie}
+	
+	\floatlstinput[
+		style=lstyle, 
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={versiehistorie-versiehistorie},
+	]{../main.tex}{versiehistorie}{\LaTeX{}-code waarmee de onderstaande versiehistorie gemaakt is.}
+	
+	%>versiehistorie
+	\versiehistorie{
+		Datum & 3 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. Voorbeeld van een opsomming:
+		\begin{itemizeintabel}
+			\item Eerste item.
+			\item Tweede item.
+			\item Derde item.		
+		\end{itemizeintabel}
+		\vspace*{1.2\baselineskip}
+		Tekst achter de opsomming.
+		& \mailafko{BroJZ} \\
+		Datum & 2 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. Voorbeeld van een opsomming:
+		\begin{itemizeintabel}
+			\item Eerste item.
+			\item Tweede item.
+			\item Derde item.		
+		\end{itemizeintabel} 
+		& \mailafko{BroJZ} \\
+		Datum & 1 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. & \mailafko{BroJZ} \\
+	}
+	%<versiehistorie
+	
+	\clearpage
+	\section{Tips bij conversie}
+	Bij het omzetten van documenten die tabellen bevatten in de HR-stijl die gedefinieerd zijn met het commando |\tabel| kun je gebruik maken van de volgende tips:
+	\begin{itemize}
+		\item 
+		Tabellen waarbij geen gebruik gemaakt is van de kolomspecificatie |X| worden automatisch op de juiste manier omgezet.
+		\item 
+		Tabellen die gebruik maken van de kolomspecificatie |X| waarbij alle kolommen even breed zijn kunnen gebruik maken van het commando |\tabelX|. In \cref{tab:xcrlvertalen} is aangegeven hoe de oude (tabu) kolomspecificaties vertaald moeten worden naar de nieuwe (tabularx) kolomspecificaties.
+		Het commando |\arraybackslash| is alleen maar nodig in de kolomspecificatue als in de tabel zelf het commando |\newline| gebruikt wordt.
+		\item 
+		Tabellen die gebruik maken van de kolomspecificatie waarbij de kolommen niet even breed zijn kunnen ook gebruik maken van het commando |\tabelX| daarbij moet de verhouding gelijk blijven, maar moet de som gelijk worden aan het aantal kolommen met kolomspecificatie |X|. 
+		Zie \cref{tab:xvertalen}.
+		\item 
+		Tabellen die gebruik maken van de kolomspecificatie |X[m]| kunnen gebruik maken van het |\tabelXm| commando. 
+	\end{itemize} 
+	
+	\tabel{Verschillende vertalingen van de \lcode{X}-kolomspecificatie.}{xcrlvertalen}{lp{6cm}}{
+		oud & nieuw
+	}{
+		\lcode{X[c]} & \lcode{>\{\\centering\\arraybackslash\}X} \\
+		\lcode{X[r]} & \lcode{>\{\\raggedleft\\arraybackslash\}X} \\
+		\lcode{X[l]} & \lcode{>\{\\raggedright\\arraybackslash\}X} \\
+		\lcode{X} & \lcode{X}
+	}
+	
+	\tabel{Verschillende vertalingen van de \lcode{X}-kolomspecificatie.}{xvertalen}{lp{7.5cm}}{
+	oud & nieuw
+	}{
+		\lcode{X[1]X[2]} & \lcode{>\{\\hsize=0.67\\hsize\\linewidth=\\hsize\}X} \newline \lcode{>\{\\hsize=1.33\\hsize\\linewidth=\\hsize\}X}\\
+		\lcode{X[1]X[2]X[3]} & \lcode{>\{\\hsize=0.5\\hsize\\linewidth=\\hsize\}X} \newline \lcode{>\{\\hsize=1\\hsize\\linewidth=\\hsize\}X} \newline
+		\lcode{>\{\\hsize=1.5\\hsize\\linewidth=\\hsize\}X}
+	}
+	
+	Tabellen die gedefinieerd zijn met het commando |\tabelmaxpaginabreedgeschaald| kunnen op soortgelijke wijze worden omgezet.
+	Voor lange tabellen die gedefinieerd zijn met het commando |\langetabel| geldt hetzelfde. 
+	
+	\section{Implementatie}
+	De |tabu|-package\footnote{%
+		\url{http://mirror.koddos.net/CTAN/macros/latex/contrib/tabu/tabu.pdf}.
+	} geeft problemen sinds TeX Live 2019. 
+	Er waren al eerder problemen met |m|-kolommen\footnote{%
+		\url{https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates}.
+	}.
+	Er zijn pogingen\footnote{%
+		\url{https://github.com/tabu-fixed/tabu}.
+	} gedaan om e.a.\ te repareren maar die zijn niet erg succesvol.
+	
+	Er moet dus een nieuwe implementatie gemaakt worden van het commando |\tabel| zonder gebruik te maken van de |tabu|-package.
+	
+	Eerst wordt gekeken hoe tabellen gecodeerd kunnen worden en daarna zal m.b.v.\ \LaTeX3\footnote{%
+		\url{https://ctan.org/pkg/l3kernel} en \url{https://ctan.org/pkg/l3packages}.	
+	} geprobeerd worden om e.e.a.\ te automatiseren.
+	
+	Een eenvoudig voorbeeld van het gebruik van het commando |\tabel| is gegeven in \cref{lst:vb14}.
+	Het resultaat is gegeven in \cref{tab:vb14}.
+	
+	\listing{vb14}
+	
+	%>vb14
+	% commando voor tabel
+	% #1 OPTIONEEL = placement argument voor table e.g. tb or H 
+	% #2 = titel
+	% #3 = labelnaam=tab:#3
+	% #4 = kolom definities
+	% #5 = kop tabel (eerste regel)
+	% #6 = inhoud tabel (rest van de regels)
+	%      gebruik \\ om rijen te scheiden
+	\tabel[H]{Eenvoudige tabel}{vb14}{clr}{
+		\# & artikel & aantal
+	}{
+		1 & weerstanden & 10 \\
+		2 & condensatoren & 200 \\
+		3 & spoelen & 3
+	}
+	%<vb14
+	
+	Zonder gebruik te maken van |tabu| kan deze tabel ook gecodeerd worden zoals gegeven in \cref{lst:vb15}. 
+	Het resultaat is gegeven in \cref{tab:vb15}.
+	
+	\listing{vb15}
+	
+	%>vb15
+	\begin{myTable}[H]
+		\renewcommand{\arraystretch}{1.24}%
+		\centering%
+		\caption{Eenvoudige tabel}
+		\label{tab:vb15}
+		\begin{tabular}{|clr|}
+			\arrayrulecolor{hrred}\hline
+			\rowcolor{hrred} 
+			\multicolumn{1}{c}{\textcolor{white}{\textbf{\#}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{artikel}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{aantal}}} \\ \hline
+			1 & weerstanden & 10 \\
+			2 & condensatoren & 200 \\
+			3 & spoelen & 3 \\ \hline
+		\end{tabular}%
+	\end{myTable}
+	%<vb15
+	
+	Om de regels in \cref{tab:vb15} dezelfde hoogte te geven als bij gebruik van de |tabu|-environment moet het commando |arraystretch| geherdefinieerd worden. 
+	
+	De tabelkolomspecificaties die tot nu toe veel gebruikt zijn in documenten zijn: |c|, |l|, |r|, |X|, |X[c]|.
+	
+	Een voorbeeld van het gebruik van de kolomspecificatie |X| is in tabu is |X[1c]X[1l]X[2]|.
+
+	Zonder gebruik te maken van |tabu| kan zo'n tabel ook gecodeerd worden zoals gegeven in \cref{lst:vb16}. 
+	Het resultaat is gegeven in \cref{tab:vb16}.
+	
+	\listing{vb16}
+	
+	%>vb16
+	\begin{myTable}[H]
+		\renewcommand{\arraystretch}{1.24}%
+		\centering%
+		\caption{Tabel met X kolommen}
+		\label{tab:vb16}
+		\begin{tabularx}{\linewidth}{|>{\centering\arraybackslash\hsize=.75\hsize\linewidth=\hsize}X>{\centering\raggedright\hsize=.75\hsize\linewidth=\hsize}X>{\hsize=1.5\hsize\linewidth=\hsize}X|}
+			\arrayrulecolor{hrred}\hline
+			\rowcolor{hrred} 
+			\multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[1c]}}} & \multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[1l]}}} & \multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[2]}}} \\ \hline
+			1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn.\\
+			2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. \\\hline
+		\end{tabularx}%
+	\end{myTable}
+	%<vb16
+	
+	Een vertaaltabel voor de verschillende parameters van de |X|-kolomspecificaties is gegeven in \cref{tab:xspecificaties}.
+	
+	\tabel[H]{Verschillende parameters van de \lcode{X}-kolomspecificaties}{xspecificaties}{lp{8cm}}{
+		tabu & tabularx
+	}{
+		\lcode{X} & \lcode{X} \\
+		\lcode{X[r]} & \lcode{>\{\\raggedleft\\arraybackslash\}X} \\
+		\lcode{X[l]} & \lcode{>\{\\raggedright\\arraybackslash\}X} \\
+		\lcode{X[c]} & \lcode{>\{\\centering\\arraybackslash\}X} \\
+		\lcode{X[1]X[2]} & \lcode{>\{\\hsize=.67\\hsize\\linewidth=\\hsize\}X} \newline
+		\lcode{>\{\\hsize=1.33\\hsize\\linewidth=\\hsize\}X}
+	}
+
+	Ik heb geprobeerd om het oude commando |\tabel| automatisch te vertalen naar de bovenstaande code die gebruik maakt van |tabular| of |tabularx|.
+	Dat bleek echter te ingewikkeld te zijn.
+	In overleg met Daniël Versluis heb ik vervolgens besloten om twee commando's te definiëren om het oude commando |\tabel| te vervangen namelijk |\tabel| en |\tabelX|.
+	Tabellen zonder kolomspecificatie |X| kunnen dan automatisch omgezet worden.
+	Tabellen met kolomspecificatie |X| moeten dan handmatig omgezet worden m.b.v. van het nieuwe commando|\tabelX|.
+	
+	Een probleem bij het gebruik van de kolomspecificatie |X| is dat dit niet zonder meer werkt met |longtable|. Er zijn diverse oplossingen:
+	\begin{itemize}
+		\item Package |ltxtable|\footnote{%
+			\url{http://ctan.triasinformatica.nl/macros/latex/contrib/carlisle/ltxtable.pdf}.
+		}. Het gebruik van deze package is niet handig omdat de code voor de tabel in een aparte file moet worden geplaatst.
+		\item Package |ltablex|\footnote{%
+			\url{http://ctan.cs.uu.nl/macros/latex/contrib/ltablex/ltablex.pdf}.
+		}. Deze package is verouderd en functioneert niet goed.\footnote{%
+			\url{https://texfaq.org/FAQ-longtab}.
+		}.
+		\item Package |xltab|\footnote{%
+			\url{http://mirror.koddos.net/CTAN/macros/latex/contrib/xtab/xtab.pdf}.
+		}. |xtab| is een uitbreiding van |supertabular|\footnote{%
+			\url{https://ctan.org/pkg/supertabular}.
+		}. |supertabular| was de voorloper van |longtable|.
+		\item Package |xltabular|\footnote{%
+			\url{http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/xltabular/xltabular-doc.pdf}.
+		}. Dit is een recentelijk verschenen package.
+		\item Package |longtablex|\footnote{%
+			\url{http://www.dekkerdocumenten.nl/latex/doc/longtablex.pdf}.
+		}. Dit is geen \squote{standaard} package.
+	\end{itemize}
+	
+	Uiteindelijk is gekozen om voor lange tabellen de package |xltabular| te gebruiken.
+	
+	Als voorbeeld nemen we de versiehistorie tabel. Deze kan met het commando |\|{\lstlcs\hcode{versie\\-hi\\-sto\\-rie}} worden weergegeven.
+	
+	\lstinput[
+		style=lstyle, 
+		breakatwhitespace=false, 
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={vb17-vb17},
+	]{../main.tex}{vb17}{Eenvoudige voorbeeld van een versiehistorie.}
+	
+	\needspace{4cm}
+	%>vb17
+	\versiehistorie{
+		Datum & Versie & Omschrijving & Auteur
+	}
+	%<vb17
+	
+	Hieronder volgt een versiehistorie tabel met meerdere regels.
+	
+	\versiehistorie{
+		Datum & 10 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 9 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 8 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 7 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 6 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 5 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 4 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 3 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 2 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ} \\
+		Datum & 1 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. & \mailafko{BroJZ}
+	}
+	
+	De nieuwe commando's zijn geschreven in \LaTeX3\footnote{%
+		\url{https://ctan.org/pkg/l3kernel} en \url{https://ctan.org/pkg/l3packages}.	
+	}.
+	De implementatie van alle tabel-commando's is gegeven in \cref{lst:codetabel}.
+	
+	\lstinput[
+		style=lstyle,
+		breakatwhitespace=false, 
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={tabel-tabel},
+	]{../style_nl_NL.tex}{codetabel}{\LaTeX{}-code waarmee de tabel-commando's geïmplementeerd zijn.}
+	
+	De code voor een versiehistorie tabel zonder gebruik van |longtabu| is gegeven in \cref{lst:codeversiehistorie}.
+
+	\lstinput[
+		style=lstyle, 
+		breakatwhitespace=false, 
+		rangebeginprefix= \%>,
+		rangeendprefix=\%<,
+		linerange={versiehistorie-versiehistorie},
+	]{../style_nl_NL.tex}{codeversiehistorie}{\LaTeX{}-code waarmee het commando \lcode{\\versiehistorie} geïmplementeerd is.}
+
+\end{llstShortInline}
+\end{document}

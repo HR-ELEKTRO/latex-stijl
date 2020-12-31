@@ -186,7 +186,8 @@
 \usetikzlibrary{shapes, arrows, arrows.meta, positioning, fadings, shadows}
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
-\usepackage[siunitx]{circuitikz}
+% 21-12-2020 parameter nooldvoltagedirection toegevoegd om warning in texlive2020 te voorkomen
+\usepackage[american, european resistors, cute inductor, siunitx, nooldvoltagedirection]{circuitikz}
 
 %>titelpagina
 % \titelpagina definieert de titlepage
@@ -290,34 +291,34 @@
 %<titelpagina
 
 %>versiehistorie
-% commando voor versiehistory tabel
+% commando voor versiehistorie tabel
 % #1 = tabel inhoud
 % tabel heeft 4 kolommen:
 % Datum & Versie & Omschrijving & Auteur
 % Gebruik \\ \line om de rijen te scheiden.
-\newcommand{\versiehistoryheader}{%
-    \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} Datum & Versie & Omschrijving & Auteur
-    \\ \hline
+\newcommand{\versiehistorieheader}{%
+	\arrayrulecolor{hrred}\hline
+	\rowcolor{hrred} 
+	\multicolumn{1}{c}{\textcolor{white}{\textbf{Datum}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Versie}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Omschrijving}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Auteur}}}
+	\\ \hline
 }
 \newcommand{\versiehistorie}[1]{
-    \section*{Versiehistorie}
-    % I used X[jm] before but this does not work anymore.
-    % See: https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates
-	\begin{longtabu}{|ccX[l]c|}
-        \taburulecolor{hrred}
-        \hline
-        \versiehistoryheader
-        \endfirsthead
-        \versiehistoryheader
-        \endhead
-        \multicolumn{4}{r}{\sffamily\small Wordt vervolgd op de volgende pagina.}\\
-        \endfoot
-        \hline
-        \endlastfoot
-        #1
-    \end{longtabu}
-    \addtocounter{table}{-1}
-    \vspace{-.6\baselineskip}
+	\section*{Versiehistorie}
+	{\renewcommand{\arraystretch}{1.24}%
+	\vspace*{.1\baselineskip}%
+	\begin{xltabular}{\textwidth}{|cc>{\raggedright\arraybackslash}Xc|}
+		\versiehistorieheader
+		\endfirsthead
+		\versiehistorieheader
+		\endhead
+		\multicolumn{4}{r}{\sffamily\small Wordt~vervolgd~op~de~volgende~pagina.}\\
+		\endfoot
+		\hline
+		\endlastfoot
+		#1
+	\end{xltabular}
+	\addtocounter{table}{-1}%
+	}\vspace{-.45\baselineskip}%
 }
 %<versiehistorie
 
@@ -325,14 +326,23 @@
     \href{mailto:#1@hr.nl}{#1}%
 }
 
-% environment voor itemize in tabu (B.v. versie tabel.)
-\newenvironment{itemizeintabu}{
-    %Opties zijn nodig omdat \baslineskip wordt aangepast in \tabu
-    \vspace{.4\baselineskip}
+% environment voor itemize in tabel (B.v. versie tabel.)
+\newenvironment{itemizeintabel}{
+	
+    %Opties zijn nodig omdat \baslineskip wordt aangepast in \tabularx
+    \vspace{.3\baselineskip}
     \begin{itemize}[leftmargin=*, itemsep=1mm]
 }{
         \vspace*{-.7\baselineskip}
     \end{itemize}
+}
+
+% backward compatibility
+\newenvironment{itemizeintabu}{
+	\ClassWarning{LaTeX-stijl HR}{Het gebruik van \noexpand\itemizeintabu wordt afgeraden voor nieuwe documenten. Gebruik \noexpand\itemizeintabel}%
+	\begin{itemizeintabel}
+	}{
+	\end{itemizeintabel}
 }
 
 %https://tex.stackexchange.com/questions/11336/macro-for-figure-position
@@ -604,82 +614,197 @@
 }
 %<hrschakeling
 
+%>tabularx
+\usepackage{tabularx}
+%<tabularx
+
+%>xltabular
+\usepackage{xltabular}
+%<xltabular
+
 %>tabel
+\usepackage{expl3}
+
+\ExplSyntaxOn
+
+\cs_new_protected:Nn \hr_kopstijl:n 
+{
+	\seq_put_right:Nn \l_tmpb_seq {\multicolumn{1}{c}{\textcolor{white}{\textbf{#1}}}}
+}
+
+\cs_new_protected:Nn \hr_tabelkop:n
+{
+	\seq_set_split:Nnn \l_tmpa_seq {&} {#1}
+	\seq_map_function:NN \l_tmpa_seq \hr_kopstijl:n
+}
+
 % commando voor tabel
-% #1 OPTIONEEL = placement argument voor table e.g. tb or H 
+% #1 OPTIONEEL = placement argument voor table e.g. tb or H (default = !htbp)
 % #2 = titel
 % #3 = labelnaam=tab:#3
-% #4 = tabu kolom definities
+% #4 = array kolom definities
 % #5 = kop tabel (eerste regel)
 % #6 = inhoud tabel (rest van de regels)
 %      gebruik \\ om rijen te scheiden
-\newcommand{\tabel}[6][!htbp]{
-    \begin{myTable}[#1]
-        \centering%
-        \caption{#2}
-        \label{tab:#3}
-        \begin{tabu}{|#4|}
-            \taburulecolor{hrred}
-            \hline
-            \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
-            #6\\ \hline
-        \end{tabu}%
-    \end{myTable}
+\NewDocumentCommand \tabel {O{!htbp}mmmmm} 
+{
+	\IfSubStr{#4}{X}{\errmessage{Kolomspecificatie~X~wordt~niet~langer~ondersteund~door~het~commando~\noexpand\tabel~gebruik~\noexpand\tabelX}}{}%	
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkop:n{#5}
+		\begin{tabular}{|#4|}
+			\arrayrulecolor{hrred} \hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\
+			#6 \\\hline
+		\end{tabular}%
+	\end{myTable}
 }
 
 % variant voor brede tabel
 % tabel wordt geschaald zodat hij past op tekstbreedte pagina
-\newcommand{\tabelmaxpaginabreedgeschaald}[6][!htbp]{
-    \begin{myTable}[#1]
-        \centering%
-        \caption{#2}
-        \label{tab:#3}
-        \begin{adjustbox}{max width=\textwidth}%
-            \begin{tabu}{|#4|}
-                \taburulecolor{hrred}
-                \hline
-                \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
-                #6\\ \hline
-            \end{tabu}%
-        \end{adjustbox}%
-    \end{myTable}
+\NewDocumentCommand \tabelmaxpaginabreedgeschaald {O{!htbp}mmmmm}
+{ 
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkop:n{#5}
+		\begin{adjustbox}{max~width=\textwidth}%
+			\begin{tabular}{|#4|}
+				\arrayrulecolor{hrred} \hline
+				\rowcolor{hrred}
+				\seq_use:Nn \l_tmpb_seq {&} \\
+				#6 \\\hline
+			\end{tabular}%
+		\end{adjustbox}%
+	\end{myTable}
 }
 
 % variant voor lange tabel
-% #1 = OPTIONEEL position argument for longtabu: c, l of r, default is c 
+% #1 = titel
+% #2 = labelnaam=tab:#3
+% #3 = longtabel kolom definities
+% #4 = kop tabel (eerste regel)
+% #5 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+% #6 = aantal kolommen
+\NewDocumentCommand \langetabel {mmmmmm} 
+{
+	\IfSubStr{#3}{X}{\errmessage{Kolomspecificatie~X~wordt~niet~langer~ondersteund~door~het~commando~\noexpand\langetabel~gebruik~\noexpand\langetabelX}}{}%
+	{\centering%
+		\renewcommand{\arraystretch}{1.24}%
+		\vspace*{.1\baselineskip}%
+		\hr_tabelkop:n{#4}
+		\begin{longtable}{|#3|}
+			\caption{#1}\label{tab:#2} \\
+			\arrayrulecolor{hrred} \hline
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endfirsthead
+			\caption[]{(Vervolg)~#1} \\
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endhead
+			\multicolumn{#6}{r}{\sffamily\small Deze~tabel~wordt~vervolgd~op~de~volgende~pagina.}\\
+			\endfoot
+			\hline
+			\endlastfoot
+			#5 
+		\end{longtable}%
+	}\vspace{-.45\baselineskip}%
+}
+
+% commando voor tabelX
+% #1 OPTIONEEL = width voor tablularx (default = \textwidth)
+% #2 OPTIONEEL = placement argument voor table e.g. tb or H (default = !htbp)
+% #3 = titel
+% #4 = labelnaam=tab:#3
+% #5 = tabularx kolom definities
+% #6 = kop tabel (eerste regel)
+% #7 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+\NewDocumentCommand \tabelX {O{\textwidth}O{!htbp}mmmmm} 
+{
+	\begin{myTable}[#2]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#3}
+		\label{tab:#4}
+		\hr_tabelkop:n{#6}
+		\begin{tabularx}{#1}{|#5|}
+			\arrayrulecolor{hrred} \hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\
+			#7 \\\hline
+		\end{tabularx}%
+	\end{myTable}
+}
+
+% variant waarbij de X kolommen verticaal in het midden uitgelijnd zijn.
+\NewDocumentCommand \tabelXm {O{\textwidth}O{!htbp}mmmmm} 
+{
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+	\tabelX[#1][#2]{#3}{#4}{#5}{#6}{#7}%
+	}%
+}
+
+% variant voor lange tabel
+% #1 OPTIONEEL = width voor tablularx (default = \textwidth)
 % #2 = titel
 % #3 = labelnaam=tab:#3
-% #4 = tabu kolom definities
+% #4 = longtabel kolom definities
 % #5 = kop tabel (eerste regel)
 % #6 = inhoud tabel (rest van de regels)
 %      gebruik \\ om rijen te scheiden
 % #7 = aantal kolommen
-\newcommand{\langetabel}[7][c]{
-    {\centering%
-    \vspace*{.1\baselineskip}%
-    \begin{longtabu}[#1]{|#4|}
-        \caption{#2}\label{tab:#3} \\[-1ex]
-            \taburulecolor{hrred}
-            \hline
-            \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
-            \endfirsthead
-        \caption[]{Vervolg. #2}\\[-1ex]
-            \hline
-            \rowfont[c]{\bfseries\color{white}}\rowcolor{hrred} #5\\ \hline
-            \endhead
-            \multicolumn{#7}{r}{\sffamily\small Wordt vervolgd op volgende pagina.}\\
-            \endfoot
-            \hline
-            \endlastfoot
-            #6 
-    \end{longtabu}%
-	}\vspace{-.6\baselineskip}
+\NewDocumentCommand \langetabelX {O{\textwidth}mmmmmm} 
+{
+	{\centering%
+		\renewcommand{\arraystretch}{1.24}%
+		\vspace*{.1\baselineskip}%
+		\hr_tabelkop:n{#5}
+		\begin{xltabular}{#1}{|#4|}
+			\caption{#2}\label{tab:#3} \\
+			\arrayrulecolor{hrred} \hline
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endfirsthead
+			\caption[]{(Vervolg)~#2} \\
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endhead
+			\multicolumn{#7}{r}{\sffamily\small Deze~tabel~wordt~vervolgd~op~de~volgende~pagina.}\\
+			\endfoot
+			\hline
+			\endlastfoot
+			#6
+		\end{xltabular}%
+	}\vspace{-.45\baselineskip}%
 }
+
+% variant waarbij de X kolommen verticaal in het midden uitgelijnd zijn.
+\NewDocumentCommand \langetabelXm {O{\textwidth}mmmmmm} 
+{
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+		\langetabelX[#1]{#2}{#3}{#4}{#5}{#6}{#7}%
+	}%
+}
+
+\ExplSyntaxOff
 %<tabel
 
 %>USE
-% command om USenglish woorden te markeren zodat ze correct worden afgebroken  
-\newcommand{\USE}[1]{\foreignlanguage{USenglish}{#1}}
+% command om usenglish woorden te markeren zodat ze correct worden afgebroken  
+\newcommand{\USE}[1]{\foreignlanguage{usenglish}{#1}}
 %<USE
 
 % Woorden met een - zoals data-elementen worden in LaTeX alleen afgebroken bij -
@@ -776,6 +901,7 @@
 %>handtekening
 \newcounter{handtekening}
 \newcommand{\handtekening}[1][]{%
+	\ClassWarning{LaTeX-stijl HR}{Het gebruik van \noexpand\handtekening wordt afgeraden voor nieuwe documenten.}
     \ifstrequal{#1}{}{\stepcounter{handtekening}}{}%
     \ifstrequal{#1}{a}{\stepcounter{handtekening}}{}%
 	%frame voor handtekening alleen in printed versie
@@ -803,7 +929,7 @@
 %<handtekening
 
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/babel/base/babel.pdf
-\usepackage[USenglish, dutch]{babel}
+\usepackage[usenglish, dutch]{babel}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/biblatex/doc/biblatex.pdf
 \usepackage[
@@ -871,10 +997,22 @@
 \titleformat{\section}{\sectionfont\Large}{\thesection}{1em}{}
 \titleformat{\subsection}{\sectionfont\large}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\sectionfont\large}{\thesubsubsection}{1em}{}
-% Changed for LaTeX Live 2018 
-%\titlespacing{\section}{0pt}{.8\baselineskip}{0.2\baselineskip}
-%\titlespacing{\subsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
-%\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+
+%https://tex.stackexchange.com/questions/96570/automatically-determine-which-texlive-version-is-being-used
+\makeatletter
+\begingroup
+\edef\get@@version{\def\noexpand\get@version##1\detokenize{TeX Live}##220##3##4##5)##6\noexpand\@nil}
+\get@@version{\gdef\TeXLiveVersion{20#3#4}}
+\expandafter\get@version\pdftexbanner\@nil
+\endgroup
+\makeatother
+
+% changed for Latex TexLive 2020
+\IfStrEq{\TeXLiveVersion}{2018}{%
+\titlespacing{\section}{0pt}{.8\baselineskip}{0.2\baselineskip}
+\titlespacing{\subsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+}{}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/footmisc/footmisc.pdf
 % ruimte onder aan de pagina tussen tekst en voetnoot niet na voetnoot
@@ -966,12 +1104,6 @@
 \usepackage{array}
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/tools/longtable.pdf
 \usepackage{longtable}
-% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/tabu/tabu.pdf
-% tabu is handiger voor het maken van tabellen dan array en tabular (beide gedefinieerd in package array)
-% Zie http://tex.stackexchange.com/questions/12672/which-tabular-packages-do-which-tasks-and-which-packages-conflict voor een overzicht van packages voor het maken van tabellen.
-\usepackage{tabu}
-% extra ruimte in tabelregel zowel boven als onder
-\tabulinesep=1ex
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/multirow/doc/multirow.pdf
 % multirow is nodig om meerdere rijcellen binnen 1 kolom samen te nemen tot 1 cel 
 \usepackage{multirow}
@@ -980,7 +1112,7 @@
 % adjustbox is handig om een tabel te schalen.
 \usepackage{adjustbox}
 % http://ctan.cs.uu.nl/macros/latex/contrib/float/float.pdf
-% float definieert de H placement specifier om figuren op vast plaats te zetten
+% float definieert de H placement specificatie om figuren op vast plaats te zetten
 \usepackage{float}
 % pas regels voor plaatsen floats aan
 % Zie http://tex.stackexchange.com/questions/39017/how-to-influence-the-position-of-float-environments-like-figure-and-table-in-lat
@@ -996,7 +1128,7 @@
     binary-units = true,
     range-units = single,
 % dutch localisation
-    range-phrase = { tot },
+    range-phrase = { tot en met },
     output-decimal-marker = {,},
     list-final-separator = { en },
     list-pair-separator  = { en },
@@ -1115,3 +1247,4 @@
 \Crefname{appendix}{Bijlage}{Bijlagen}
 \crefname{circuit}{schakeling}{schakelingen}
 \Crefname{circuit}{Schakeling}{Schakelingen}
+\newcommand{\crefrangeconjunction}{ tot en met }
