@@ -66,6 +66,7 @@
     breakindent=0.1em,
     numberbychapter=true,
     captionpos=b,
+    keepspaces=true,
 }
 
 \lstdefinestyle{linenumbers}{
@@ -83,7 +84,7 @@
 \newcommand{\lstccomment}{\color{lstturquoisegreen}}
 \lstdefinestyle{cstyle}{
     language=C,
-    morekeywords={__interrupt, __asm, interrupt, asm, __attribute__},
+    morekeywords={__interrupt, __asm, interrupt, asm, __attribute__,true,false},
     morekeywords=[2]{<assert.h>,<complex.h>,<ctype.h>,<errno.h>,<fenv.h>,<float.h>,<inttypes.h>,<iso646.h>,<limits.h>,<locale.h>,<math.h>,<setjmp.h>,<signal.h>,<stdalign.h>,<stdarg.h>,<stdatomic.h>,<stdbool.h>,<stddef.h>,<stdint.h>,<stdio.h>,<stdlib.h>,<stdnoreturn.h>,<string.h>,<tgmath.h>,<threads.h>,<time.h>,<uchar.h>,<wchar.h>,<wctype.h>},
     stringstyle=\lstcstring,
     keywordstyle=\lstckeyword,
@@ -123,9 +124,9 @@
 	language={[LaTeX]TeX},
 	moretexcs={%
 		% Alle latexcommando's is onbegonnen werk. Alle commando's die in style_NL_nl zijn gebruikt zijn hier opgenomen.
-        iftoggle,cref,Cref,crefname,Crefname,cpageref,Cpageref,href,url,frontmatter,mainmatter,backmatter,longtabu,baslineskip,tabu,noclub,nowidow,includegraphics,texorpdfstring,usetikzlibrary,tikz,draw,path,fill,filldraw,cllip,shade,shadedraw,foreach,node,coordinate,graph,matrix,calender,addplot,enquote,lstinputlisting,lstset,lstinline,arrayrulecolor,tabularxcolumn,textcite,si,SI,num
+        iftoggle,cref,Cref,crefname,Crefname,cpageref,Cpageref,href,url,frontmatter,mainmatter,backmatter,baslineskip,noclub,nowidow,includegraphics,texorpdfstring,usetikzlibrary,tikz,draw,path,fill,filldraw,cllip,shade,shadedraw,foreach,node,coordinate,graph,matrix,calender,addplot,enquote,lstinputlisting,lstset,lstinline,arrayrulecolor,tabularxcolumn,textcite,si,SI,num,arraybackslash,
 		% style_nl_NL
-        myClass,modulecode,cursuscode,huidigeversie,titel,auteurs,documenttype,sectionfont,headerfont,footerfont,captionfont,titelpagina,versiehistorie,mailafko,figuur,hrfigure,tikzfiguur,hrtikzfigure,tikzinlinefiguur,hrtikzinlinefigure,schakeling,tabel,tabelmaxpaginabreedgeschaald,langetabel,USE,hyp,csecref,Csecref,pdfpagref,pdfdeelref,conclusie,handtekening,citepdfpag,citepdfdeel,dquote,squote,ebookfalse,ebooktrue,chartertrue,opensanstrue,timestrue,progurl,
+        myClass,modulecode,cursuscode,huidigeversie,titel,auteurs,documenttype,sectionfont,headerfont,footerfont,captionfont,titelpagina,versiehistorie,mailafko,figuur,hrfigure,tikzfiguur,hrtikzfigure,tikzinlinefiguur,hrtikzinlinefigure,schakeling,tabel,tabelmaxpaginabreedgeschaald,langetabel,tabelX,langetabelX,tabelXm,langetabelXm,USE,hyp,csecref,Csecref,pdfpagref,pdfdeelref,conclusie,handtekening,citepdfpag,citepdfdeel,dquote,squote,ebookfalse,ebooktrue,chartertrue,opensanstrue,timestrue,progurl,
 		% styleCode
 		Cpp,floatlstinput,lstinput,lstinputfragment,code,ccode,cppcode,lcode,pycode,mcode,acode,amcode,legcode,hcode,cinput,proglink	
 	},
@@ -136,10 +137,12 @@
 	morekeywords=[3]{%
         % standard environments
 		array,center,description,document,enumerate,eqnarray,equation,figure,flushleft,flushright,itemize,list,minipage,picture,quotation,quote,tabbing,table,tabular,thebiblipgraphy,theorem,titlepage,verbatim,verse,
+		%longtabu, tabu, // deprecated
 		% Alle latexenvironments is onbegonnen werk. Alle environments die in style_NL_nl zijn gebruikt zijn hier opgenomen.
         tikzpicture,circuittikz,scope,axis,mdframed,tabularx,
         % style_nl_NL
-		itemizeintabu,myFigure,myTable,opdracht,
+		%itemizeintabu, // deprecated
+		itemizeintabel,myFigure,myTable,opdracht,
 		% styleCode
 		floatlst,lst,lstfragment,clstShortInline,cpplstShortInline,llstShortInline,pylstShortInline,mlstShortInline,alstShortInline,amlstShortInline,leglstShortInline,coutput
 	},

@@ -1,3 +1,4 @@
+% !TeX spellcheck = nl_NL
 \chapter{Listings en code-fragmenten}
 \label{sec:listings}
 De commando's die gebruikt kunnen worden voor listings en codefragmenten zijn in een apart bestand geplaatst: |styleCode.tex|.
@@ -5,6 +6,7 @@ Er wordt gebruikt gemaakt van de package \hcode[style=lstyle]{list\\-ings}\footn
 
 Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| als \Cpp{}-code, |lstyle| als \LaTeX\hyp{}code, |pstyle| als Python\hyp{}code, |mstyle| als MATLAB-code, |astyle| AVR\hyp{}assembler\hyp{}code, |amstyle| als MSP430\hyp{}assembler\hyp{}code en |legstyle| als LEG\hyp{}assembler\hyp{}code.
 
+\section{Listings}
 De commando's |\floatlstinput| en |\lstinput| lezen code uit (een deel van) een bestand.
 Deze commando's hebben vier parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinputlisting| worden meegegeven, bijvoorbeeld: \hcode[style=lstyle]{style = cstyle, style = line\\-numbers, line\\-range = \{1-6, 13-27\}}.
@@ -29,6 +31,30 @@ De environment |lstfragment| kan gebruikt worden als een codefragment niet uit e
 Het fragment wordt op de plaats van het commando ingevuld.
 Dit commando heeft één parameters die gelijk is aan de eerste parameter van de environment |floatlst|.
 
+\section{\LaTeX-code in listings}
+In een listing kun je ook \LaTeX-commando's gebruiken. Deze moeten dan wel omringd zijn door zogenoemde escape-karakters. Je moet zelf definiëren welke escape-karakters gebruikt worden m.b.v. de optie:\\ |escapeinside={BEGIN-ESCAPE-KARAKTERS}{END-ESCAPE-KARAKTERS}|.
+
+Je kunt op deze manier tekst in een bepaalde stijl afdrukken of een voetnoot in je listing gebruiken, zie \cref{lst:latexincode}. 
+\begin{lst}[style=lstyle]{latexincode}{Een voorbeeld van het gebruik van \LaTeX-code in een listing.}
+\begin{lstfragment}[style=cstyle,escapeinside={(*}{*)}]{
+	// Dit is een (*\textcolor{hrred}{belangrijk}*) voorbeeld.
+	int main() {
+		return 0(*\footnotemark*);
+	}
+\end{lstfragment}
+\footnotetext{Sinds C99 mag dit \ccode{return}-statement ook weggelaten worden. De functie \ccode{main} geeft dan toch \ccode{0} terug.}
+\end{lst}
+
+Dit levert de volgende output:
+\begin{lstfragment}[style=cstyle,escapeinside={(*}{*)}]
+// Dit is een (*\textcolor{hrred}{belangrijk}*) voorbeeld.
+int main() {
+	return 0(*\footnotemark*);
+}
+\end{lstfragment}
+\footnotetext{Sinds C99 mag dit \ccode{return}-statement ook weggelaten worden. De functie \ccode{main} geeft dan toch \ccode{0} terug.}
+
+\section{Code-segmenten}
 Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\lcode| voor \LaTeX\hyp{}code, |\pycode| voor Python\hyp{}code, |\mcode| voor MATLAB\hyp{}code, |\acode| voor AVR\hyp{}assembler\hyp{}code, |\amcode| voor MSP430\hyp{}assembler\hyp{}code of |\legcode| voor LEG\hyp{}assembler\hyp{}code.
 Deze commando's hebben twee parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinline| worden meegegeven.
@@ -49,6 +75,7 @@ Code kan nog eenvoudiger in lopende tekst worden opgenomen in één van de envir
 Als in één van deze environments de de syntax \code{\|code\|} wordt gebruikt, dan wordt deze code inline geplaatst.
 Maar pas op: dit werkt niet in voetnoten, titels enz.
 
+\section{Console in- en output}
 De environment |coutput| kan gebruikt worden om console output weer te geven.
 Binnen deze environment kan het commando |\cinput| gebruikt worden om console input weer te geven.
 Console input wordt donkergroen en onderstreept weergegeven.
@@ -70,6 +97,7 @@ Geef nog een geheel getal: \cinput{7}
 \end{coutput}
 %<consolevoorbeeld
 
+\section{Overige commando's die handig zijn bij documenten met programmeercode}
 Het commando |\Cpp| kan gebruikt worden om de naam van de programmeertaal \Cpp{} netjes af te drukken.
 Vergelijk C++ met \Cpp{}.
 De \LaTeX{}-code van de vorige zin is: |Vergelijk C++ met \Cpp{}.|
@@ -86,3 +114,5 @@ In deze \MakeLowercase\documenttype{} is dat als volgt gedaan:
 ]{../main.tex}
 
 De code |\proglink{lpfbodelog.m}| levert nu de volgende link op: \proglink{lpfbodelog.m}.
+
+

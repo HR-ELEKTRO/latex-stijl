@@ -1,3 +1,4 @@
+% !TeX spellcheck = nl_NL
 % \titelpagina definieert de titlepage
 % 1 = Naam van het plaatje in directory ./fig. 
 %     Neem een hoog resolutie plaatje.
@@ -12,9 +13,19 @@
 %      Gebruik \\ \line om de rijen te scheiden.
 %>versiehistorie
 \versiehistorie{
-    28-12-2018 & \huidigeversie\footnotemark{} & 
+	31-12-2020 & \huidigeversie\footnotemark{} & 
 	Belangrijkste aanpassingen:
-    \begin{itemizeintabu}
+	\begin{itemizeintabel}
+		%TODO: nog invullen
+		\item Tabel commando's werken nu zonder gebruik van package |tabu|.
+		\item Nieuwe commando's \lcode{\\tabelX}, \lcode{\\tabelXm}, \lcode{\\langetabelX} en \lcode{\\langetabelXm}.
+		\item Enkele tips toegevoegd. 
+	\end{itemizeintabel}
+	& \mailafko{BroJZ}
+	\\ \hline
+    28-12-2018 & 2.3 & 
+	Belangrijkste aanpassingen:
+    \begin{itemizeintabel}
         \item Lege ruimte rond floats en regelafstand aangepast.
         \item Kleur \code{red} vervangen door \code{hrred}.
         \item \lcode{\\hrfigure}\hyp{}commando als alternatief voor \lcode{\\figuur}\hyp{}commando.
@@ -22,7 +33,7 @@
         \item Commando's \lcode{\\tikzinlinefiguur} en \lcode{\\hrtikzinlinefigure}.
 		\item Commando's \lcode{\\schakeling} en \lcode{\\hrschakeling}.
 		\item Gekleurde opmaak van \LaTeX{}-code gebaseerd op TeXstudio. 
-    \end{itemizeintabu}
+    \end{itemizeintabel}
 	& \mailafko{BroJZ}
 	\\ \hline
     23-02-2016 & 2.2 & 

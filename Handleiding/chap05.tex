@@ -1,3 +1,4 @@
+% !TeX spellcheck = nl_NL
 \chapter{Algemene \LaTeX{}-tips en -trucs}
 Nog enkele algemene \LaTeX{}-tips en -trucs:
 \begin{itemize}
@@ -87,6 +88,8 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
     \item Het eerste woord in een zin wordt nooit afgebroken, dat kan wel eens problemen geven in een smalle kolom in een tabel.
         Zet er |\hspace{0pt}| voor om het toch af te laten breken.
     \item Gebruik een |\mbox| om ongewenst afbreken te voorkomen.
+    \item Bij het maken van een toets met behulp van de class exam kun je een |\solution| op een nieuwe regel beginnen met |\ifprintanswers\\\fi|.
+    \item Soms wordt een extra lege regel toegevoegd aan het einde van een paragraaf als de laatste regel van de paragraaf exact past binnen de tekstbreedte. Dit kun je oplossen door \vskip 0pt achter de laatste regel van de paragraaf te plaatsen.
     \item \#, \$, \%, \textasciitilde, \_, \textasciicircum, \textbackslash, \{ en \} zijn speciale karakters en moeten als volgt ingevoerd worden: 
     |\#|, |\$|, |\%|, |\textasciitilde|, |\_|, |\textasciicircum|, |\textbackslash|, |\{| en |\}|.
     \item In lopende tekst kun je het commando |\textcite| gebruiken om de naam van de auteur met de verwijzing te genereren. De code |\textcite{latex} beweert \ldots{}| levert de volgende tekst op: \textcite{latex} beweert \ldots{}.
@@ -101,6 +104,7 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
     	Je moet wel inzoemen om het verschil te kunnen zien. In selfish zit de f vast aan de i en bij het selecteren van tekst is de fi één letter. In self\makebox{}ish zit een beetje ruimte tussen de f en de i en bij het selecteren van tekst zijn het twee aparte letters.  
 	}.
     Hetzelfde geldt voor woorden zoals off\makebox{}line enzovoorts.
+    \item Gebruik de package |upgreek| voor rechtopstaande griekse letters.
 \end{itemize}
 
 Nog enkele tips voor het gebruik van \LaTeX{} in combinatie met git:

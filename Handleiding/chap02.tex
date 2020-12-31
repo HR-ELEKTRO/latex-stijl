@@ -1,35 +1,43 @@
+% !TeX spellcheck = nl_NL
 \chapter[Gebuik \LaTeX{}-stijl Hogeschool Rotterdam]{Gebuik \LaTeX{}-stijl \\ Hogeschool Rotterdam}
 % verwijzingen naar specifiek deel van \cite{lshort}
-% #1 OPTIONEEL = naam van deel, b.v. chapter, section, subsection, enz (default = "section") 
-% #2 = nummer van deel, bijvoorbeeld 6.2
+% #1 = nummer van deel, bijvoorbeeld 6.2
+% #2 = deel van de link achter # (nameddest=#1.#2 werkt niet meer)
 \makeatletter
-\newcommand{\lshortdeel}[2][section]{%
+\newcommand{\lshortdeel}[2]{%
     \@saveurlcite{lshort}%
-    \edef\@savedurldeel{\@savedurl\#nameddest=#1.#2}%
-    \href{\@savedurldeel}{#2}%
+    \edef\@savedurldeel{\@savedurl\##2}%
+    \href{\@savedurldeel}{#1}%
+}
+% #1 = naam van het deel b.v. hoofdstuk
+% #2 = nummer van deel, bijvoorbeeld 6.2
+% #3 = deel van de link achter # (nameddest=#1.#2 werkt niet meer)
+\newcommand{\lshortcitedeel}[3]{%
+	\@saveurlcite{lshort}%
+	\edef\@savedurldeel{\@savedurl\##3}%
+	\cite[\href{\@savedurldeel}{#1~#2}]{lshort}%
 }
 \makeatother
 
-\newcommand{\lshortcitechapter}[1]{\citepdfdeel{chapter}{hoofdstuk~}{lshort}{#1}}
-\newcommand{\lshortcitesection}[1]{\citepdfdeel{section}{paragraaf~}{lshort}{#1}}
-\newcommand{\lshortcitesubsection}[1]{\citepdfdeel{subsection}{paragraaf~}{lshort}{#1}}
+\newcommand{\lshortcitechapter}[2]{\lshortcitedeel{hoofdstuk}{#1}{#2}}
+\newcommand{\lshortcitesection}[2]{\lshortcitedeel{paragraaf}{#1}{#2}}
 
 In dit hoofdstuk wordt het gebruik van de \LaTeX{}-stijl |style_nl_NL| toegelicht.
 Ik ga er daarbij vanuit dat je al goed bekend bent met \LaTeXe{}.
 Als je een opfrisser nodig hebt dan kan ik de, online beschikbare, introductie \citetitle{lshort} \cite{lshort} van harte aanbevelen.
-Als je haast hebt, kun je volstaan met het lezen van paragrafen \lshortdeel{1.3}, \lshortdeel{1.8}, \lshortdeel{2.1}, \lshortdeel{2.6}, \lshortdeel{2.7}, \lshortdeel{2.9},
-\lshortdeel{2.10}, \lshortdeel[subsection]{2.11.1} en \lshortdeel[subsection]{2.11.3}.
+Als je haast hebt, kun je volstaan met het lezen van paragrafen \lshortdeel{1.3}{a}, \lshortdeel{1.8}{16}, \lshortdeel{2.1}{18}, \lshortdeel{2.6}{29}, \lshortdeel{2.7}{2a}, \lshortdeel{2.9}{2c},
+\lshortdeel{2.10}{2d}, \lshortdeel{2.11.1}{2f} en \lshortdeel{2.11.3}{31}.
 
 Let er wel op dat sommige paragrafen in \cite{lshort} niet relevant zijn als je de in deze \MakeLowercase\documenttype{} beschreven stijl gebruikt.
-Bijvoorbeeld: \lshortcitesubsection{2.4.1} kan worden vervangen door \cref{sec:aanhalingstekens},
-\lshortcitesubsection{2.4.9} is overbodig vanwege de in deze stijl gebruikte karakter encoding,
-zie \csecref{sec:karakterencoding}, \lshortcitesection{2.8} wordt \squote{overruled} door \csecref{sec:verwijzingen},
-\lshortcitesubsection{2.11.5} wordt vervangen door \csecref{sec:listings}, \lshortcitesubsection{2.11.6} wordt vervangen door \csecref{sec:tabellen} en
-\lshortcitesection{2.12} wordt vervangen door \csecref{sec:figuren,sec:tabellen}.
+Bijvoorbeeld: \lshortcitesection{2.4.1}{1e} kan worden vervangen door \cref{sec:aanhalingstekens},
+\lshortcitesection{2.4.9}{26} is overbodig vanwege de in deze stijl gebruikte karakter encoding,
+zie \csecref{sec:karakterencoding}, \lshortcitesection{2.8}{2b} wordt \squote{overruled} door \csecref{sec:verwijzingen},
+\lshortcitesection{2.11.5}{33} wordt vervangen door \csecref{sec:listings}, \lshortcitesection{2.11.6}{34} wordt vervangen door \csecref{sec:tabellen} en
+\lshortcitesection{2.12}{35} wordt vervangen door \csecref{sec:figuren,sec:tabellen}.
 
-Als je een document gaat maken waar wiskundige formules in voorkomen dan raad ik je aan om ook \lshortcitechapter{3} te lezen.
+Als je een document gaat maken waar wiskundige formules in voorkomen dan raad ik je aan om ook \lshortcitechapter{3}{37} te lezen.
 De package |asmmath| die beschreven wordt in dit hoofdstuk wordt ook in deze \MakeLowercase\documenttype{} beschreven stijl gebruikt.
-De in paragrafen~\lshortdeel[subsection]{3.5.2} en \lshortdeel[subsection]{3.5.3} van \cite{lshort} beschreven package |IEEEtrantools| moet je,
+De in paragrafen~\lshortdeel{3.5.2}{3f} en \lshortdeel{3.5.3}{40} van \cite{lshort} beschreven package |IEEEtrantools| moet je,
 als je deze wilt gebruiken, zelf opnemen in je document.
 
 Tot slot van deze paragraaf, wil ik iedereen met voldoende tijd en historisch besef aanraden om het originele \LaTeX{}-boek \citetitle{latex} van \citeauthor{latex} \cite{latex} te lezen.
@@ -95,7 +103,7 @@ In een book begint elk hoofdstuk op een nieuwe pagina, in een article niet.
 De class article kun je gebruiken voor eenvoudige documenten zoals bijvoorbeeld een korte instructie%
 \footnote{%
 	Zie: \href{https://bitbucket.org/HR_ELEKTRO/tds02/wiki/Report\%20Requirements/Report_Requirements_TDS02.pdf}{Report\_Requirements\_TDS02.pdf} en 
-	\href{https://bitbucket.org/HR_ELEKTRO/tds02/wiki/Report\%20Requirements/Report_Requirements_TDS02_ebook.pdf}{Report\_RequirementsModulewijzer\_TDS02\_ebook.pdf}.
+	\href{https://bitbucket.org/HR_ELEKTRO/tds02/wiki/Report\%20Requirements/Report_Requirements_TDS02_ebook.pdf}{Report\_Requirements\_TDS02\_ebook.pdf}.
 	De sourcecode vind je hier: \url{https://bitbucket.org/HR_ELEKTRO/tds02/}.%
 }.
 
@@ -126,7 +134,7 @@ Dit commando heeft één argument: de filenaam van het plaatje (zonder extensie)
 Neem een vectorplaatje of een rasterplaatje met een hoge resolutie (minstens 1024 pixels breed).
 De hoogte moet ongeveer $\frac{1}{2}\times$ de breedte zijn.
 
-Dit commando maakt gebruik van de commando's |\modulecode|, |\titel|, {\lstlcs\hcode{\\docu\\-ment\\-type}}, |\huidigeversie| en |\auteurs|.
+Dit commando maakt gebruik van de commando's |\modulecode|, |\titel|, |\|{\lstlcs\hcode{docu\\-ment\\-type}}, |\huidigeversie| en |\auteurs|.
 Het logo (\hcode{./figs/\\-logo\\-HR.pdf}) en vervagende logo \hcode{./figs/\\-logo\\-HR\\-fade\\-top.png}) zijn hard gecodeerd in de stijl maar kunnen daar natuurlijk wel aangepast worden.
 Deze bestanden moeten aanwezig zijn in het |./figs| directory.
 
@@ -280,7 +288,7 @@ De volgende |name|s kunnen gebruikt worden:
 	\item |caption| kan gebruikt worden om de ondertitel op te geven. De default waarde is |filename|.  
 	\item |placement| kan gebruikt worden om de \squote{placement} argumenten voor de |\figure| environment te specificeren.
 	De default waarde is |!htbp|.
-	\item |...| alle overige |name=value|-paren worden doorgegeven aan het {\lstlcs\hcode{\\include\\-graphics}} commando.
+	\item |...| alle overige |name=value|-paren worden doorgegeven aan het |\|{\lstlcs\hcode{include\\-graphics}} commando.
 \end{itemize} 
 
 De code: |\hrfigure[width=2cm, label=kleinezebra, caption=Een kleine zebra.]{zebra}| produceert \cref{kleinezebra}.
@@ -490,7 +498,7 @@ De code gegeven in \cref{lst:schakeling} produceert het schema dat in \cref{sch:
 		(C) to[short] ++(2,0) coordinate(vout)
 		to[open, v^=$v_o$, o-o] (vout |- gnd)
 		to[short] (gnd);
-}{Een CR spanningsdeler}{RChigh}
+}{Een CR spanningsdeler.}{RChigh}
 %<schakeling
 
 In plaats van het commando |\schakeling| kun je ook het commando |\hrschakeling| gebruiken.
@@ -591,28 +599,36 @@ Het is mij niet duidelijk welke aanpak de voorkeur heeft.
 
 \section{Tabellen}
 \label{sec:tabellen}
-Voor tabellen wordt de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt met behulp van de in de stijl gedefinieerde commando's:
-|\tabel|, |\tabelmaxpaginabreedgeschaald| en {\lstlcs\hcode{\\lan\\-ge\\-ta\\-bel}}.
+Voor tabellen werd in eerdere versies van deze style de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt.
+Deze optie geeft echter problemen sinds de 2018 versie van |array|. De auteur van |array| schrijft op 11 mei 2018: \dquote{I have mailed the tabu author pointing out this incompatibility, so hopefully he'll update to match the latest \lcode{array}}. Op 14 juni 2018 voegt iemand daaraan toe: \dquote{Don't hold your breath}\footnote{
+	\url{https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates}.
+}.
+
+Inmiddels zijn de voorheen met |tabu| gedefinieerde commando's vervangen door commando's die gebruik maken van |\tabular|\footnote{\url{http://joshua.smcvt.edu/latex2e/tabular.html}} en |tabularx|\footnote{\url{https://www.ctan.org/pkg/tabularx}}.
+
+Voor normale tabellen die gebruik maken van |tabular| kunnen de commando's:
+|\tabel|, |\tabelmaxpaginabreedgeschaald| en |\langetabel| gebruikt worden.
 
 % commando voor tabel
 % #1 OPTIONAL = placement argument voor table e.g. tb or H 
 % #2 = titel
 % #3 = labelnaam=tab:#3
-% #4 = tabu kolom definities
+% #4 = array kolom definities
 % #5 = kop tabel (eerste regel)
 % #6 = inhoud tabel (rest van de regels)
 %      gebruik \\ om rijen te scheiden
 
 Het commando |\tabel| heeft zes parameters waarvan de eerste optioneel is.
-De eerste parameter bevat de \squote{placement} argumenten voor de |table|- environment.
+De eerste parameter bevat de \squote{placement} argumenten voor de |table|-environment.
 De default waarde is |!htbp|.
 De tweede parameter is de titel van de tabel.
 De derde parameter is de suffix van het label, de labelnaam wordt {\lstllabel\code{tab:derde-argument}}.
-De vierde parameter is de kolomdefinitie voor de |tabu| environment\footnote{\url{http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/tabu/tabu.pdf}}.
+De vierde parameter is de kolomdefinitie voor de |tabular|- environment zoals gedefinieerd in de package |array|\footnote{\url{https://www.ctan.org/pkg/array}}.
 De vijfde parameter is de eerste rij van de tabel (de kop van de tabel) en de laatste parameter is de inhoud van de tabel.
 Kolommen worden gescheiden door het |&|-teken en rijen worden gescheiden door |\\|, zoals gebruikelijk in \LaTeX{}.
+Als je een regel wilt afbreken in een tabel, dan kun je het commando |\newline| gebruiken.
 
-De code die gegeven is in \cref{lst:tabelvoorbeeld} produceert  \cref{tab:zomaar}.
+De code die gegeven is in \cref{lst:tabelvoorbeeld} produceert \cref{tab:zomaar}.
 
 \floatlstinput[
     style=lstyle, 
@@ -622,7 +638,7 @@ De code die gegeven is in \cref{lst:tabelvoorbeeld} produceert  \cref{tab:zomaar
 ]{../chap02.tex}{tabelvoorbeeld}{\LaTeX{}-code waarmee \cref{tab:zomaar} gemaakt is.}
 
 %>tabelvoorbeeld
-\tabel{Zomaar een tabel}{zomaar}{lrr}{
+\tabel{Zomaar een tabel.}{zomaar}{lrr}{
     Getal & Decimaal & Hexadecimaal
 }{        
     een & 1 & 1 \\ 
@@ -633,24 +649,28 @@ De code die gegeven is in \cref{lst:tabelvoorbeeld} produceert  \cref{tab:zomaar
 %<tabelvoorbeeld
 
 Het commando |\tabelmaxpaginabreedgeschaald| heeft exact dezelfde parameters als het commando |\tabel|.
-Het enige verschil is dat het commando {\lstlcs\hcode{\\tabel\\-max\\-pa\\-gina\\-breed\\-ge\\-schaald}} de tabel zodanig schaalt dat hij de volledige tekstbreedte van de pagina benut.
+Het enige verschil is dat het commando |\|{\lstlcs\hcode{tabel\\-max\\-pa\\-gina\\-breed\\-ge\\-schaald}} de tabel zodanig schaalt dat hij de volledige tekstbreedte van de pagina benut.
 Dit is vooral handig als de tabel bij het gebruik van het commando |\tabel| te breed is om op de pagina te passen.
 
 Het commando |\langetabel| moet gebruikt worden als een tabel langer is dan een pagina.
 Dit commando zorgt ervoor dat de tabel netjes wordt verdeeld over meerdere pagina's.
 De parameters zijn bijna gelijk aan die van het commando |\tabel|.
-Er is een extra, zevende, parameter waaraan het aantal kolommen moet worden meegegeven en de eerste (optionele) parameter bevat het \squote{position} argument
-voor de |longtabu| environment: |c|, |l| of |r|, default wordt |c| gebruikt.
-Met deze parameter kun je de lange tabel horizontaal uitlijnen: |c| = centreren, |l| = links en |r| = rechts.
+De eerste (optionele) parameter ontbreekt en er is een extra parameter waaraan het aantal kolommen moet worden meegegeven.
 Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaats waar hij gedefinieerd is neergezet.
 Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's.
 Gebruik het commando |\langetabel| dus alleen als een tabel die gemaakt is met het commando |\tabel| niet op een pagina past.
 
 Als de ruimte om een tabel je niet bevalt, dan kun je de |\vspace| commando's in de environment |myTable| aanpassen.
 
-Ik heb gekozen voor het gebruik van de package |tabu| omdat deze package de kolomspecificatie |X| definieert. 
+Als je tabellen wilt maken waarbij de tekst in een kolom uitgevuld wordt, dan moet je gebruik maken van commando's die gebaseerd zijn op |tabularx|. 
+Dit zijn de commando's:
+|\tabelX| en |\langetabelX|.
+
+Deze commando's gebruiken normaal gesproken de volledige tekstbreedte.
+Je kunt als eerste optionele parameter ook de gewenste breedte opgeven.
+Bij deze commando's kun je gebruik maken van de kolomspecificatie |X|. 
 Hiermee kun je kolommen \squote{uitvullen} zodat de tabel de gehele tekstbreedte van de pagina gebruikt.
-De optie |X[j]| zorgt er bijvoorbeeld voor dat de tekst in de kolom met rechte kantlijnen links en rechts uitgevuld en uitgelijnd wordt.
+De kolomspecificatie |X| zorgt er bijvoorbeeld voor dat de tekst in de kolom met rechte kantlijnen links en rechts uitgevuld en uitgelijnd wordt.
 De code die gegeven is in \cref{lst:tabelvoorbeeld2} produceert \cref{tab:gebruikX}.
 
 \floatlstinput[
@@ -661,47 +681,94 @@ linerange={tabelvoorbeeld2-tabelvoorbeeld2},
 ]{../chap02.tex}{tabelvoorbeeld2}{\LaTeX{}-code waarmee \cref{tab:gebruikX} gemaakt is.}
 
 %>tabelvoorbeeld2
-\tabel{Zomaar een uitgevulde tabel}{gebruikX}{X[1j]X[2j]}{
-	Kolom 1 met specificatie \lcode{X[1j]} & Kolom2 met specificatie \lcode{X[2j]}
+\tabelX{Zomaar een uitgevulde tabel.}{gebruikX}{XX}{
+	Kolom 1 & Kolom2
 }{        
 	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt.&
 	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
-	Omdat voor de rechterkolom de specificatie \lcode{X[2j]} is gebruikt, is deze kolom twee keer zo breed als de eerste kolom die met de specificatie \lcode{X[1j]} is gedefinieerd.
+	De rechterkolom zal net zo breed zijn als de linker.
 }
 %<tabelvoorbeeld2
 
-Met de kolomspecificatie |X[jm]| wordt de rijen in de kolom verticaal in het midden uitgelijnd.
-Deze optie geeft echter problemen sinds de 2018 versie van |array|. De auteur van |array| schrijft op 11 mei 2018: \dquote{ I have mailed the tabu author pointing out this incompatibility, so hopefully he'll update to match the latest \lcode{array}}. Op 14 juni 2018 voegt hij daaraan toe: \dquote{Don't hold your breath}\footnote{
-	\url{https://tex.stackexchange.com/questions/430973/tabu-m-column-vertical-alignment-not-working-after-package-updates}.
-}.
-
-Als je toch gebruik wilt maken van de rijen die in het midden uitgelijnd zijn, dan kun je dit doen door de package |tabularx| te gebruiken.
-De code die gegeven is in \cref{lst:tabelvoorbeeld3} produceert \cref{tabularx}.
+Het is ook mogelijk om de kolommen die uitgevuld worden niet even breed te maken.
+De code die gegeven is in \cref{lst:tabelvoorbeeld3} produceert \cref{tab:gebruikXongelijk}.
+Hierbij is de verhouding tussen de linker- en rechterkolom $0.67:1.33$ oftewel $1:2$.
+Het totaal van deze verhoudingsgetallen moet gelijk zijn aan het aantal |X|-kolommen.
+In dit geval $0.67 + 1.33 = 2$.   
 
 \floatlstinput[
 style=lstyle, 
 rangebeginprefix= \%>,
 rangeendprefix=\%<,
 linerange={tabelvoorbeeld3-tabelvoorbeeld3},
-]{../chap02.tex}{tabelvoorbeeld3}{\LaTeX{}-code waarmee \cref{tabularx} gemaakt is.}
+]{../chap02.tex}{tabelvoorbeeld3}{\LaTeX{}-code waarmee \cref{tab:gebruikXongelijk} gemaakt is.}
 
 %>tabelvoorbeeld3
-\arrayrulecolor{hrred}
-\renewcommand{\arraystretch}{1.5}
-\renewcommand{\tabularxcolumn}[1]{m{#1}}
-\begin{myTable}
-	\centering%
-	\caption{Voorbeeldtabel met \code{tabularx}.}
-	\label{tabularx}
-	\begin{tabularx}{\textwidth} {|>{\centering\arraybackslash}m{.1\textwidth}X|}
-		\hline
-		\rowcolor{hrred} {\bfseries\color{white}{Engels}} & \centering\arraybackslash {\bfseries\color{white}Nederlands} \\\hline
-		biscuit & kaakje; kaakje is een benaming die in sommige Nederlandse dialecten gebruikt wordt voor een bepaald soort koekje, dat rond kan zijn, zoals het mariakaakje, of rechthoekig. Het gaat dan om een koekje dat knapperig is, licht van kleur, en droog. Bron: \url{https://nl.wikipedia.org/wiki/Kaakje}. 
-		\\
-		cake & cake \\\hline
-	\end{tabularx}
-\end{myTable}
+\tabelX{Zomaar een uitgevulde tabel met kolommen van ongelijke breedte.}{gebruikXongelijk}{ >{\hsize=0.67\hsize\linewidth=\hsize}X >{\hsize=1.33\hsize\linewidth=\hsize}X}{
+	Kolom 1 & Kolom2
+}{        
+	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt.&
+	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+	De rechterkolom zal twee keer zo breed zijn als de linker.
+}
 %<tabelvoorbeeld3
+
+Als je de |X|-kolom alleen links, alleen rechts of helemaal niet uitgevuld wilt hebben, dan kan dat door een prefix toe te voegen aan de |X|-kolomspecificatie, zie \cref{tab:xspecs}.
+
+\tabel{Verschillende prefixen van de \lcode{X}-kolomspecifier.}{xspecs}{lp{6cm}}{
+	uitlijning & \lcode{X}-kolomspecificatie met prefix
+}{
+	niet & \lcode{>\{\\centering\\arraybackslash\}X} \\
+	rechts & \lcode{>\{\\raggedleft\\arraybackslash\}X} \\
+	links & \lcode{>\{\\raggedright\\arraybackslash\}X} \\
+	links en rechts & \lcode{X}
+}
+
+Het commando |\arraybackslash| is alleen maar nodig in de prefix als in de tabel zelf het commando |\newline| gebruikt wordt.
+De code die gegeven is in \cref{lst:tabelvoorbeeld4} produceert \cref{tab:gebruikXspecs}.
+
+\floatlstinput[
+style=lstyle, 
+rangebeginprefix= \%>,
+rangeendprefix=\%<,
+linerange={tabelvoorbeeld4-tabelvoorbeeld4},
+]{../chap02.tex}{tabelvoorbeeld4}{\LaTeX{}-code waarmee \cref{tab:gebruikXspecs} gemaakt is.}
+
+%>tabelvoorbeeld4
+\tabelX{Tabel met X kolommen.}{gebruikXspecs}{>{\centering}X >{\raggedleft}X >{\raggedright}XX}{
+	\texttt{>\{\textbackslash{}centering\}X} & 
+	\texttt{>\{\textbackslash{}raggedleft\}X} & 
+	\texttt{>\{\textbackslash{}raggedright\}X} & 
+	\texttt{X}
+}{
+	Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+	Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+}
+%<tabelvoorbeeld4
+
+Zoals je in \cref{tab:gebruikX} kunt zien worden de regels verticaal aan de top van de regel uitgelijnd.
+Als je de regels verticaal uitgelijnd wilt hebben op het midden van de regel, dan moet je een van de commando's |\tabelXm| of |\langetabelXm| gebruiken.
+
+De code die gegeven is in \cref{lst:tabelvoorbeeld5} produceert \cref{tab:gebruikXm}.
+
+\floatlstinput[
+style=lstyle, 
+rangebeginprefix= \%>,
+rangeendprefix=\%<,
+linerange={tabelvoorbeeld5-tabelvoorbeeld5},
+]{../chap02.tex}{tabelvoorbeeld5}{\LaTeX{}-code waarmee \cref{tab:gebruikXm} gemaakt is.}
+
+%>tabelvoorbeeld5
+\tabelXm{Zomaar een uitgevulde tabel waarbij de regels verticaal in het midden uitgelijnd worden}{gebruikXm}{XX}{
+	Kolom 1 & Kolom2
+}{        
+	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt.&
+	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+	De rechterkolom zal net zo breed zijn als de linker.\\
+	Tweede regel & 	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
+	De rechterkolom zal net zo breed zijn als de linker.
+}
+%<tabelvoorbeeld5
 
 \section{Verwijzingen en citaten}
 \label{sec:verwijzingen}
@@ -729,13 +796,13 @@ Als je naar een met \LaTeX{} gemaakt document verwijst, dan kun je een link opne
 commando |\pdfdeelref|.
 
 Zo verwijst deze link:
-\pdfdeelref{section}{paragraaf~}{http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}
+\pdfdeelref{section}{paragraaf~}{https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}
 naar paragraaf 6.2 van mijn \Cpp{}-dictaat.
 De voorgaande link is als volgt gecodeerd:
 
 \begin{lstfragment}[style=lstyle]
 \pdfdeelref{section}{paragraaf~}{%
-http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp%
+https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp%
 \iftoggle{ebook}{_ebook}{}.pdf}{6.2}
 \end{lstfragment}
 
@@ -750,24 +817,24 @@ naar de \squote{papieren} versie van het dictaat.
 De code:
 \begin{lstfragment}[style=lstyle]
 Bla, bla, zie \pdfdeelref{chapter}{hoofdstuk~}{%
-http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS%
-\iftoggle{ebook}{_ebook}{}.pdf}{7} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+https://bytebucket.org/HR_ELEKTRO/dis10/wiki/Dictaat/ Dictaat_DIS10%
+\iftoggle{ebook}{_ebook}{}.pdf}{4} van het DIS10 dictaat.
 \end{lstfragment}
 Levert de volgende uitvoer:
 Bla, bla, zie
-\pdfdeelref{chapter}{hoofdstuk~}{http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS\iftoggle{ebook}{_ebook}{}.pdf}{7}
-van mijn dictaat \emph{Algoritmen en Datastructuren}.
+\pdfdeelref{chapter}{hoofdstuk~}{https://bytebucket.org/HR_ELEKTRO/dis10/wiki/Dictaat/Dictaat_DIS10\iftoggle{ebook}{_ebook}{}.pdf}{4}
+van het DIS10 dictaat.
 
 Dit commando kan ook handig gebruikt worden als optioneel argument van het |\cite| command:
 
 \begin{lstfragment}[style=lstyle]
 Bla, bla namespaces, zie \cite[\pdfdeelref{section}{paragraaf~}{%
-http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp%
-\iftoggle{ebook}{_ebook}{}.pdf}{6.2}]{Broeders2014}.
+https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp%
+\iftoggle{ebook}{_ebook}{}.pdf}{15.4}]{Broeders2019}.
 \end{lstfragment}
 
 Bovenstaande code geeft: Bla, bla namespaces,
-zie \cite[\pdfdeelref{section}{paragraaf~}{http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}]{Broeders2014}.
+zie \cite[\pdfdeelref{section}{paragraaf~}{https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp\iftoggle{ebook}{_ebook}{}.pdf}{15.4}]{Broeders2019}.
 
 Als de URL ook in de biblatex informatie is opgenomen dan is het eenvoudiger om het command |\citepdfdeel| te gebruiken.
 Dit commando heeft dezelfde parameters als het |\pdfdeelref| commando behalve dat als derde parameter de biblatex key in plaats van de URL wordt opgegeven.
@@ -775,31 +842,31 @@ Dit commando heeft dezelfde parameters als het |\pdfdeelref| commando behalve da
 Dus de code:
 
 \begin{lstfragment}[style=lstyle]
-Bla, bla namespaces, zie \citepdfdeel{section}{paragraaf~}{Broeders2014}{6.2}.
+Bla, bla namespaces, zie \citepdfdeel{section}{paragraaf~}{Broeders2019}{15.4}.
 \end{lstfragment}
 
 Levert de volgende uitvoer%
 \footnote{Als het compileren van deze code fouten oplevert, dan moet je eerst het commando bibber uitvoeren.}: 
-Bla, bla namespaces, zie \citepdfdeel{section}{paragraaf~}{Broeders2014}{6.2}.
+Bla, bla namespaces, zie \citepdfdeel{section}{paragraaf~}{Broeders2019}{15.4}.
 
 Het commando |\pdfpagref| is vergelijkbaar met |\pdfdeelref| maar verwijst naar een pagina.
 
 De code:
 \begin{lstfragment}[style=lstyle]
-Bla, bla, zie \pdfpagref[6]{%
-http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS.pdf}%
-{14} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+Bla, bla, zie \pdfpagref[14]{%
+https://ftp.snt.utwente.nl/pub/software/tex/info/lshort/ english/lshort.pdf}%
+{85} van \emph{The Not So Short Introduction to \LaTeXe}.
 \end{lstfragment}
 Levert de volgende uitvoer:
-Bla, bla, zie \pdfpagref[6]{%
-http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS.pdf}%
-{14} van mijn dictaat \emph{Algoritmen en Datastructuren}.
+Bla, bla, zie \pdfpagref[14]{%
+https://ftp.snt.utwente.nl/pub/software/tex/info/lshort/english/lshort.pdf}%
+{85} van \emph{The Not So Short Introduction to \LaTeXe}.
 
 Als eerste (optionele) argument kan het verschil tussen het paginanummer dat wordt weergegeven in de pdf-viewer en het paginanummer weergegeven op de pagina zelf, worden opgegeven.
 Dit is nodig omdat bij veel documenten de paginanummering niet op de eerste pagina begint.
 Als tweede argument wordt de URL van het betreffende pdf-document opgegeven en als derde argument wordt het nummer dat wordt weergegeven op de pagina zelf opgegeven.
-In de bovenstaande code wordt verwezen de pagina met paginanummer 14 maar dat is in werkelijkheid de $20^{\text{ste}}$ pagina in het document
-vandaar dat als eerste parameter $20-14=6$ wordt meegegeven.
+In de bovenstaande code wordt verwezen de pagina met paginanummer 85 maar dat is in werkelijkheid de $99^{\text{ste}}$ pagina in het document
+vandaar dat als eerste parameter $99-85=14$ wordt meegegeven.
 
 Het commando |\citepdfpag| is vergelijkbaar met |\citepdfdeel| maar verwijst naar een pagina.
 Het commando |\citepdfpag| heeft dezelfde parameters als |\pdfpagref|, behalve dat als tweede parameter de biblatex key in plaats van de URL wordt opgegeven.
@@ -838,64 +905,4 @@ Deze code produceert de volgende tekst: \cref{opdr:opdracht}.
     linerange={opdrachtvoorbeeld-opdrachtvoorbeeld},
 ]{../chap02.tex}{opdrachtvoorbeeld}{\LaTeX{}-code waarmee \cref{opdr:opdracht} gemaakt is.}
 
-Soms, bijvoorbeeld in een practicumhandleiding, is het handig om de opdrachten in de handleiding zelf af te kunnen tekenen.
-Het commando |\handtekening| produceert een kader waarin de docent de opdracht kan aftekenen.
-De code |\handtekening{}| levert het volgende kader:
-
-%temphandtekening vervangt handtekening zodat frame altijd geprint wordt
-\newcommand{\temphandtekening}[1][]{%
-	\ifstrequal{#1}{}{\stepcounter{handtekening}}{}%
-	\ifstrequal{#1}{a}{\stepcounter{handtekening}}{}%
-	\vspace{.4\baselineskip}%
-	\begin{mdframed}[
-		userdefinedwidth=.65\linewidth,
-		nobreak=true,
-		align=center,
-		innerleftmargin=1.5em,
-		innerrightmargin=1.5em,
-		innertopmargin=.8\baselineskip,
-		innerbottommargin=.6\baselineskip,
-		linecolor=hrred, 
-		linewidth=.8pt, 
-		frametitlebackgroundcolor=hrred,
-		frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1:}
-		]
-		\vspace*{5\baselineskip}%
-	\end{mdframed}%
-}%
-
-\temphandtekening{}
-
-Als een ebook wordt gemaakt (door het commando |\ebooktrue| in |args.tex| te plaatsen), dan levert de code {\lstlcs\hcode{\\hand\\-te\\-ken\\-ing\{\}}} geen kader op.
-De code {\lstlcs\hcode{\\hand\\-te\\-ken\\-ing\{\}}} levert in een ebook de volgende tekst op:
-\addtocounter{handtekening}{-1}%
-\handtekening{}
-
-Deze kaders worden automatisch genummerd.
-Het commando |\handtekening{}| heeft een optioneel argument waarmee je een deelopdracht kunt aanduiden.
-Als je dit gebruikt, dan wordt het nummer van het betreffende kader niet verhoogd (behalve bij deelopdracht a).
-
-Bijvoorbeeld voor \cref{opdr:onzin} is aleen een kader gemaakt om de deelopdrachten a en c af te laten tekenen.
-
-\begin{opdracht}{Een onzinnige opdracht}
-    \label{opdr:onzin}
-    \begin{enumerate}[label=\alph*)]
-        \item Maak \cref{opdr:onzin}b.
-        \item Maak \cref{opdr:onzin}c.
-        \item Laat \cref{opdr:onzin}a en c aftekenen door de docent.
-    \end{enumerate}
-\end{opdracht}
-
-\temphandtekening[a]
-\temphandtekening[c]
-
-De bovenstaande kaders zijn gemaakt met de \LaTeX\hyp{}code:
-\begin{lstfragment}[style=lstyle]
-\handtekening[a]
-\handtekening[c]
-\end{lstfragment}
-
-Als je het nummer van een handtekeningkader wil aanpassen dan kan dat met de code:
-\begin{lstfragment}[style=lstyle]
-\setcounter{handtekening}{13}
-\end{lstfragment}
+%Verie 2.4: Documentatatie voor \handtekening verwijderd.

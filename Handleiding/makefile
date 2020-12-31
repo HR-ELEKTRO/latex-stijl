@@ -14,7 +14,7 @@ FONT         = "\chartertrue"
 PDFLATEXOPT  = -shell-escape -interaction=batchmode -file-line-error
 BIBEROPT  = --quiet
 
-LATEXBINDIR  = C:/texlive/2018/bin/win32
+LATEXBINDIR  = C:/texlive/2020/bin/win32
 UTILSBINDIR  = C:/gnuwin32/bin
 PDFLATEX     = $(LATEXBINDIR)/pdflatex.exe
 BIBER        = $(LATEXBINDIR)/biber.exe
