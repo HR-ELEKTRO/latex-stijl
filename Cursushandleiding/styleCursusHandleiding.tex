@@ -1,0 +1,153 @@
+% De bijbehorende makefile genereert zowel de printed als de ebook versie
+
+% In de makefile kunnen argumenten worden meegegeven:
+% Keuze lettertypes
+%   FONT = \chartertrue voor Charter met Berasans fonts
+%   FONT = \timestrue voor Times met Helvet fonts
+%   FONT = \opensanstrue voor Open Sans fonts
+%   (default) standaard LaTeX fonts (Computer Modern)
+
+% \myClass, \title en \author moeten gedefinieerd zijn voordat style.tex ingelezen wordt
+% Keuze book of article
+% Een book heeft chapters die op een nieuwe pagina beginnen (een oneven pagina in de printed versie).
+% Een article heeft alleen sections (en subsections).
+
+% Parameters voor style_nl_NL
+\newcommand{\myClass}{article}
+\newcommand{\documenttype}{Cursushandleiding}
+\input{style_nl_NL.tex}
+
+% Hack to show text in header instead of section name
+\renewcommand{\rightmark}{\cursusnaam}
+% Raggedbottom gives a better looking result due to the many tables 
+\raggedbottom
+
+% koptabel
+\newcommand{\koptabel}{
+	\section*{\cursusnaam{}}
+	\begin{myTable}
+		\renewcommand{\arraystretch}{1.36}%
+		% rechts uitlijnen wijkt af van Word template
+		\begin{tabularx}{\textwidth}{|X>{\raggedleft\arraybackslash}X|}
+			\arrayrulecolor{hrred} \hline
+			Code: \cursuscode{} & Kwartaal \kwartaal{}, Jaar \studiejaar{}\\
+			& Aantal studiepunten: \ects{}\\ 
+			\hline
+		\end{tabularx}
+	\end{myTable}
+}
+
+% In alle tabellen worden de rijen verticaal in het midden uitgelijnd.
+
+\ExplSyntaxOn
+% commando voor tabel zonder titel en label
+% #1 = array kolom definities
+% #2 = kop tabel (eerste regel)
+% #3 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+\NewDocumentCommand \tabelzonder {mmm} 
+{
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+	\begin{myTable}[H]
+		\renewcommand{\arraystretch}{1.24}%
+		\ifstrempty{#2}{}{%
+			\hr_tabelkop:n{#2}
+		}
+		\begin{tabularx}{\linewidth}{|#1|}
+			\arrayrulecolor{hrred} \hline
+			\ifstrempty{#2}{}{%
+				\rowcolor{hrred}
+				\seq_use:Nn \l_tmpb_seq {&} \\
+			}%
+			#3 \\\hline
+		\end{tabularx}%
+	\end{myTable}
+	}%
+}
+
+% alternatieve vorm voor lange tabel zonder titel en label
+% #1 = longtabel kolom definities
+% #2 = kop tabel (eerste regel)
+% #3 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+% #4 = aantal kolommen
+\NewDocumentCommand \langetabelzonder {mmmm}
+{
+	\vspace{.1\baselineskip}%
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+	\renewcommand{\arraystretch}{1.24}%
+	\vspace*{.1\baselineskip}%
+	\hr_tabelkop:n{#2}
+	\begin{xltabular}{\textwidth}{|#1|}
+		\arrayrulecolor{hrred} \hline
+		\rowcolor{hrred}
+		\seq_use:Nn \l_tmpb_seq {&} \\\hline
+		\endfirsthead
+		\multicolumn{#4}{l}{\hspace*{-.5em}\footnotesize\color{darkgray}Vervolg~van~de~vorige~pagina.}\vspace{-.2ex}\\ \hline
+		\rowcolor{hrred}
+		\seq_use:Nn \l_tmpb_seq {&} \\\hline
+		\endhead
+		\multicolumn{#4}{r}{\sffamily\small Deze~tabel~wordt~vervolgd~op~de~volgende~pagina.\hspace*{-.5em}}\\
+		\endfoot
+		\hline
+		\endlastfoot
+		#3
+	\end{xltabular}%
+	}\vspace{-.45\baselineskip}%
+}
+
+%leerdoelentabel
+\newcounter{LeerdoelCounter}%
+\setcounter{LeerdoelCounter}{1}%
+% Wijkt af van Word template \# in plaats van Leerdoel
+\newcommand{\leerdoelentabel}[1]{
+	\setcounter{LeerdoelCounter}{0}%
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+	\renewcommand{\arraystretch}{1.24}%
+	\vspace*{.1\baselineskip}%
+	\hr_tabelkop:n{\# & Niveau & Weging & De~student~is~in~staat~om~\dots{}}
+	\begin{xltabular}{\textwidth}{|cccX|}
+		\arrayrulecolor{hrred} \hline
+		\rowcolor{hrred}
+		\seq_use:Nn \l_tmpb_seq {&} \\\hline
+		\endfirsthead
+		\multicolumn{4}{l}{\hspace*{-.5em}\footnotesize\color{darkgray}Vervolg~van~de~vorige~pagina.}\vspace{-.2ex}\\ \hline
+		\rowcolor{hrred}
+		\seq_use:Nn \l_tmpb_seq {&} \\\hline
+		\endhead
+		\multicolumn{4}{r}{\footnotesize\color{darkgray}Wordt~vervolgd~op~de~volgende~pagina.\hspace*{-.5em}}\\
+		\endfoot
+		\hline
+		\endlastfoot
+		#1
+	\end{xltabular}
+	}\vspace{-3ex}%
+	{\footnotesize\color{darkgray}%
+		De~beheersingsniveaus~van~de~verschillende~leerdoelen~zijn~afkomstig~van~de~taxonomie~van~Bloom~(met~een~bewerking~van~Anderson).~
+		A~=~Kennis,~onthouden,~B~=~Inzien,~begrijpen,~C~=~Toepassen,~gebruiken,~D~=~Problemen~oplossen,~analyseren,~synthetiseren.\par
+	}%
+	\vspace{-.45\baselineskip}%
+}
+
+\ExplSyntaxOff
+
+\newcommand{\leerdoel}[3]{
+	\stepcounter{LeerdoelCounter}
+	\theLeerdoelCounter & #1 & {#2}\,\si{\percent} & \dots{}#3
+	\\ \hline
+}
+
+\newcommand{\mail}[1]{%
+	\href{mailto:#1@hr.nl}{#1@hr.nl}%
+}
+
+% Geen hoofdstukken maar paragrafen.
+\expandafter\ifstrequal\expandafter{\myClass}{article}{
+	\crefname{section}{paragraaf}{paragrafen}
+	\Crefname{section}{Paragraaf}{Paragrafen}
+}{}
+
+% Om bestaande documenten niet aan te hoeven passen:
+\newcommand{\mcell}[1]{%
+	#1%
+}

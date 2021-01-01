@@ -1,0 +1,195 @@
+% !TeX spellcheck = nl_NL
+% Parameters voor Cursushandleiding:
+\newcommand{\cursusnaam}{Cursusnaam 1}
+\newcommand{\cursuscode}{ELEXXX10} % inclusief ELE en versienummer
+\newcommand{\ects}{7}
+\newcommand{\studiejaar}{1}
+\newcommand{\kwartaal}{1}
+\newcommand{\deadline}{zondag 23.59 uur}
+%https://onzetaal.nl/taaladvies/tijden-noteren/
+\newcommand{\huidigeversie}{1.0}
+
+\input{styleCursusHandleiding.tex}
+\input{styleCode.tex}
+
+\newcommand{\herhaal}[2]{%
+	\foreach \n in {1,...,#1}{#2 }%
+	\unskip%
+}
+
+\begin{document}
+\koptabel
+
+\section{Inleiding}
+Bla \herhaal{50}{bladiebla}.
+
+Deze inleidende tekst is extra lang zodat je kunt zien hoe de leerdoelentabel automatisch afgebroken wordt.
+
+Bla \herhaal{50}{bladiebla}.
+
+\section{Werkvorm}
+\label{sec:werkvorm}
+Bla \herhaal{50}{bladiebla}.
+
+Deze tekst is extra lang zodat je kunt zien hoe de leerdoelentabel automatisch afgebroken wordt.
+
+Bla \herhaal{50}{bladiebla}.
+
+Bla \herhaal{45}{bladiebla}.
+
+De verschillende werkvormen zijn weergegeven in de onderstaande tabel.
+
+\tabelzonder{>{\hsize=.5\hsize\linewidth=\hsize}X>{\hsize=1.5\hsize\linewidth=\hsize}Xrl}{}{
+	Lessen & Theorie volgen en begin maken met de labopdrachten. & 5 & klokuur/week\\ \hline
+	Zelfstudie & Bestuderen van het studiemateriaal. Uitwerken van alle labopdrachten. & 11 & klokuur/week
+}
+
+\iftoggle{ebook}{\needspace{5cm}}{}
+\section{Competenties}
+Deze cursus draagt bij aan het ontwikkelen van de competentie:
+\begin{itemize}
+	\item \textbf{analyseren} door bla bla (LD1\footnote{%
+		LD = leerdoel, zie \cref{sec:leerdoelen}.
+	});
+	\item \textbf{ontwerpen} door bla bla (LD2); 
+	\item \textbf{realiseren} door bla bla (LD3);
+	\item \textbf{beheren} door bla bla (LD4);
+	\item \textbf{managen} door bla bla (LD5);
+	\item \textbf{adviseren} door bla bla (LD6);
+	\item \textbf{onderzoeken} door bla bla (LD7);
+	\item \textbf{professionaliseren} door bla bla (LD8).
+\end{itemize}
+
+\section{Leerdoelen}
+De leerdoelen staan weergegeven in de onderstaande tabel.
+
+\label{sec:leerdoelen}
+\leerdoelentabel{
+	%De student is in staat om	
+	\leerdoel{C}{50}{
+		te blaten als een schaap zodanig dat \herhaal{25}{bladiebla}. 
+	}
+	\leerdoel{C}{50}{
+		gebakken lucht te verkopen zodanig dat \herhaal{15}{bladiebla}.
+	}
+	\leerdoel{A}{0}{
+		bla zodanig dat \herhaal{15}{bladiebla}.
+	}
+	\leerdoel{B}{0}{
+		bla zodanig dat \herhaal{15}{bladiebla}.
+	}
+	\leerdoel{C}{0}{
+		bla zodanig dat \herhaal{15}{bladiebla}.
+	}
+}
+
+\section{Toetsing en beoordeling}
+\label{sec:toetsing}
+Deze cursus bevat twee deeltoetsen waarbij de leerdoelen 1 en 2 summatief worden getoetst.
+Bij deze twee deeltoetsen kun je in totaal maximaal 100 punten behalen.
+Het praktische deel wordt getoetst door middel van een opdracht.
+Bij deze deeltoets kun je maximaal 50 punten behalen en moet je minimaal 23 punten behalen.
+Het theoriedeel wordt getoetst door middel van een schriftelijke toets.
+Bij deze toets mag je alleen het bij deze cursus \hyperref[sec:verplichteliteratuur]{verplichte boek} gebruiken.
+Dit boek mag \emph{geen} aantekeningen bevatten.
+Bij deze deeltoets kun je maximaal 50 punten behalen en moet je minimaal 23 punten behalen.
+
+\tabelzonder{lccc>{\centering\arraybackslash}X}{Toets & Leerdoelen & Weging & Duur & Deadline}{
+	Opdracht & 1 & 50\,\% & & Lesweek 8, \deadline{}
+	\\ \hline
+	Tentamen & 2 & 50\,\% & 120\,min & 
+}
+
+
+Zijn bij de theorietoets of bij de opdracht minder dan 23 punten behaald en in totaal 55 of meer punten behaald, dan is het eindcijfer een O (Onvoldoende).
+In alle overige gevallen is het eindresultaat gelijk aan het totaal aantal behaalde punten gedeeld door tien.
+
+De opdracht en de theorietoets kunnen, indien onvoldoende, apart worden herkanst.
+De theorietoets kan herkanst worden in HT1.
+Als de praktische opdracht met een onvoldoende is beoordeeld, dan mag je een \emph{andere} eindopdracht maken. De deadline voor deze opdracht is week 2.8 \deadline{}.
+De geldigheid van de deelresultaten is beperkt tot het studiejaar waarin deze zijn behaald.
+
+\section{Voorkennis}
+Bla \herhaal{15}{bladiebla}.
+
+\section{Aansluiting op verdere studie}
+\label{sec:aansluiting}
+Deze cursus biedt veel handige tools om tijdens je minor of het afstuderen te kunnen gebruiken.
+
+\section{Verplichte literatuur}
+\label{sec:verplichteliteratuur}
+\fullcite{Broeders2020}. Dit dictaat wordt gebruikt bij de introductie in C++.\\
+In de lessen heb je een MSP-EXP430G2 ontwikkelbord en een breadboard nodig. Beide zijn verkrijgbaar in het magazijn op het Academieplein.
+
+\needspace{3cm}
+\section{Docentenbereikbaarheid}
+\tabelzonder{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X}{Docent & E-mail & Kamer & Telefoonnummer}{
+    R. Bakker & \mail{BaRoy} & AP.D00.036 & 010 794 6703\\ \hline
+    J.Z.M. Broeders & \mail{BroJZ} & AP.D00.036 & 010 794 5057 \\ \hline
+	R. Verhagen & \mail{VeRon} & AP.D00.036 & 010 794 5800\\ \hline
+	D. Versluis & \mail{VersD} & AP.D00.036 & 010 794 5061
+}
+
+\section{Deadlines en speciale activiteiten}
+De deadlines voor het inleveren van de opdrachten zijn gegeven in \cref{sec:toetsing}.
+
+\section{Planning}
+In deze paragraaf wordt de gedetailleerde planning gegeven. De planning kan gedurende het semester nog worden aangepast. Als dit nodig is, dan zal een aangepaste planning worden gepubliceerd.
+
+\newcommand{\bigred}[1]{\textcolor{hrred}{\Huge\textbf{#1}}}
+% Wijkt af van Word template Week i.p.v. Lesweek
+% Wijkt ook af omdat in Word template alleen de contacturen staan.
+\iftoggle{ebook}{\begin{small}}{}
+\langetabelzonder{c>{\raggedright\arraybackslash\hsize=0.5\hsize\linewidth=\hsize}Xr>{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X}{
+	Week & Werkvorm & Tijd & Beschrijving
+}{
+	\multirow{2}{*}{\bigred{1.1}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm} \\
+	\hline
+	\multirow{2}{*}{\bigred{1.2}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm} \\
+	\hline
+	\multirow{2}{*}{\bigred{1.3}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm} \\
+	\hline
+	\multirow{2}{*}{\bigred{1.4}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm}\\
+	\hline
+	\multirow{2}{*}{\bigred{1.5}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm} \\
+	\hline
+	\multirow{2}{*}{\bigred{1.6}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm} \\
+	\hline
+	\multirow{2}{*}{\bigred{1.7}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm} \\
+	\hline
+	\multirow{3}{*}{\bigred{1.8}} & 
+	Les & 5\,uur & Bla bla.\\
+	& Zelfstudie & 11\,uur & Zie \cref{sec:werkvorm}  \\
+	& \textcolor{hrred}{\textbf{Opdracht}} & & Deadline \deadline{}\\
+	\hline
+	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{T4}} & 
+	\textcolor{hrred}{\textbf{Tentamen}} & 120 min &  \\[1ex]
+	\hline
+	\multirow{1}{*}{\bigred{2.8}} & 
+	\textcolor{hrred}{\textbf{Herkansing opdracht}} & & Deadline \deadline{}\\
+	\hline
+	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{HT4}} & 
+	\textcolor{hrred}{\textbf{Hertentamen}} & 120 min &  \\[1ex]
+}{4}
+\iftoggle{ebook}{\end{small}}{}
+	
+\needspace{4cm}
+\versiehistorie{
+	12-2020 & 1.0 & Eerste versie. & \mailafko{BroJZ} \\
+}
+
+\end{document}

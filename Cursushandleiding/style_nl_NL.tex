@@ -1,0 +1,1250 @@
+\newif\ifebook
+% define \ebooktrue voor ebook versie of \ebookfalse voor papieren versie in args.tex
+% wordt automatisch gedaan in makefile: echo "\ebooktrue">args.tex 
+\newif\ifcharter
+% define FONT = "\chartertrue" in makefile of \chartertrue in args.tex voor charter met berasans fonts 
+\newif\iftimes
+% define FONT = "\timestrue" in makefile of \timestrue in args.tex voor Times Roman met Helvetica fonts
+\newif\ifopensans
+% define FONT = "\opensanstrue" in makefile of \opensanstrue in args.tex voor Open Sans fonts
+
+\IfFileExists{args.tex}{
+    \input{args}
+}{
+    \ebookfalse
+    \chartertrue
+}
+
+\ifebook 
+    \documentclass[
+        11pt,
+        oneside,
+        titlepage,
+        final,
+        fleqn,
+    ]{\myClass}
+\else
+    \documentclass[
+        12pt,
+        twoside,
+        titlepage,
+        final,
+        fleqn,
+    ]{\myClass}
+\fi
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/etoolbox/etoolbox.pdf
+\usepackage{etoolbox}
+
+% gebruik iftoggle i.p.v. if om problemen te voorkomen zie documentatie van etoolbox
+\newtoggle{ebook}
+\ifebook \toggletrue{ebook} \else \togglefalse{ebook} \fi
+\newtoggle{charter}
+\ifcharter \toggletrue{charter} \else \togglefalse{charter} \fi
+\newtoggle{times}
+\iftimes \toggletrue{times} \else \togglefalse{times} \fi
+\newtoggle{opensans}
+\ifopensans \toggletrue{opensans} \else \togglefalse{opensans} \fi
+\newtoggle{onesided}
+\ifdef{\forceOneSided}{\toggletrue{onesided}}{\togglefalse{onesided}}
+
+% cursuscode is een alias voor modulecode (sinds 2017)
+\ifdef{\cursuscode}{\newcommand{\modulecode}{\cursuscode}}{}
+% defieer commando's die nodig zijn in deze style als leeg
+\ifdef{\modulecode}{}{\newcommand{\modulecode}{HR}}
+\ifdef{\titel}{}{\newcommand{\titel}{}}
+\ifdef{\auteurs}{}{\newcommand{\auteurs}{}}
+\ifdef{\documenttype}{}{\newcommand{\documenttype}{}}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/geometry/geometry.pdf
+% iPad screen size 147mm x 197mm.
+\iftoggle{ebook} {
+    \usepackage[
+        papersize={150mm,200mm},
+        top=14mm,
+        head=10mm,
+        headsep=5mm,
+        bottom=15mm,
+        footskip=11.7mm,
+        left=10mm,
+        right=10mm,
+        twoside=false
+    ]{geometry}
+}{
+    \usepackage[
+        a4paper, %= 210 by 297 mm
+        top=2cm,
+        head=1cm,
+        headsep=.75cm,
+        bottom=2cm,
+        footskip=1.25cm,
+        inner=2.2cm,
+        outer=2.2cm,
+        bindingoffset=.6cm,
+        twoside=\iftoggle{onesided}{false}{true}
+    ]{geometry}
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% setspace definieert de spacing environment waarmee regelafstand aangepast kan worden
+\usepackage{setspace}
+
+% http://users.skynet.be/denkendehanden/latbeg4.pdf zegt:
+% Het standaardlettertype van LaTeX is Computer Modern. Dit was een goede keuze voor inktjetprinters. De letters worden echter te fijn bij een afdruk met een laserprinter. Een betere keuze is dan het lettertype Times.
+% Het lettertype Helvetica uit het pakket helvet levert een stijlvoller (minder breed) schreefloos lettertype dan het standaard schreefloos lettertype van LaTeX. Omdat Helvetica iets groter lijkt dan Computer Modern, het standaardlettertype van LaTeX, wordt het best verkleind tot 92%.
+\iftoggle{times}{
+    % times roman voor tekst en math
+    \usepackage{mathptmx}
+    % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/psnfss/psnfss2e.pdf
+    \usepackage[scaled=.92]{helvet}
+}{}
+
+% http://practicaltypography.com/charter.html zegt:
+% Charter was designed by Matthew Carter in 1987 as a body text font that would hold up well on low-resolution output devices of the day - fax machines and 300 dpi laser printers. While 300 dpi printing is long gone, most of today's computer displays operate far below 300 dpi. Charter, unsurprisingly, holds up admirably well as a screen font.
+\iftoggle{charter}{
+    % charter voor tekst en math
+    \usepackage{charter}
+    \usepackage[charter]{mathdesign}
+    \usepackage[scaled]{berasans}
+    % some extra space between lines
+    \setstretch{1.1}
+}{}
+
+% Standaard font HR
+\iftoggle{opensans}{
+	\usepackage{cmbright}
+	% Open Sans voor tekst
+	\usepackage[default,scale=0.95]{opensans}
+	%\usepackage{arev}
+	% some extra space between lines
+	\setstretch{1.1}
+}{}
+
+% http://ftp.snt.utwente.nl/pub/software/tex/fonts/inconsolata/doc/inconsolata-doc.pdf
+% Gebruik inconsolata voor monospace tekst (lijkt op consolas)
+\usepackage[varqu]{zi4}
+
+\newcommand{\sectionfont}{\sffamily\bfseries}
+\newcommand{\headerfont}{\sffamily\small}
+\newcommand{\footerfont}{\sffamily\small}
+% Voor caption package
+% lastige keuze captions in roman of in sans-serif (kies zelf maar):
+%\newcommand{\captionfont}{rm,small}
+\newcommand{\captionfont}{sf,small}
+
+% http://ctan.cs.uu.nl/macros/latex/contrib/url/url.pdf
+% zorgt voor afbreken binnen url
+\usepackage[hyphens]{url}
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/amslatex/math/amsldoc.pdf
+\usepackage{amsmath}
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/mathtools/mathtools.pdf
+\usepackage{mathtools}
+\setlength{\jot}{\baselineskip}
+%>extramathcommands
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\est}[1]{\widehat{#1}}
+\newcommand{\trans}[1]{{#1}^\mathrm{T}}
+%<extramathcommands
+
+\makeatletter
+\expandafter\ifstrequal\expandafter{\myClass}{book}{
+    \let\old@frontmatter\frontmatter
+    \renewcommand{\frontmatter}{
+        \old@frontmatter
+        \iftoggle{ebook}{
+            \pagenumbering{arabic}
+        }{
+            \pagenumbering{roman}
+        }
+    }
+    \let\old@mainmatter\mainmatter
+    \renewcommand{\mainmatter}{
+        \iftoggle{ebook}{
+            \newcounter{dit@PaginaNummer}
+            \setcounter{dit@PaginaNummer}{\value{page}}
+            \old@mainmatter
+            \setcounter{page}{\value{dit@PaginaNummer}}
+        }{
+            \old@mainmatter
+        }
+    }
+}{}
+\makeatother
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/xcolor/xcolor.pdf
+% xcolor is nodig om tabellen te kunnen kleuren
+\usepackage[table]{xcolor}
+% alle rood moet Rotterdam's rood zijn ;-)
+\definecolor{hrred}{HTML}{cc0033}
+
+% Zie: http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, arrows.meta, positioning, fadings, shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+% 21-12-2020 parameter nooldvoltagedirection toegevoegd om warning in texlive2020 te voorkomen
+\usepackage[american, european resistors, cute inductor, siunitx, nooldvoltagedirection]{circuitikz}
+
+%>titelpagina
+% \titelpagina definieert de titlepage
+% 1 = Naam van het plaatje in directory ./fig. 
+%     Neem een hoog resolutie plaatje.
+%     De hoogte moet ongeveer 0,5 x de breedte zijn. 
+\tikzfading[name=fade left, left color=transparent!0, right color=transparent!40]
+\tikzfading[name=fade down, top color=transparent!0, bottom color=transparent!100]
+\makeatletter
+\newcommand{\titelpagina}[1]{
+    \newlength{\y@recttop}
+    \newlength{\y@rectbottom}
+    \newlength{\y@logo}
+    \newlength{\y@logospiegel}
+    \newlength{\x@logo}
+    \newlength{\height@logo}
+    \newlength{\y@modcode}
+    \newlength{\y@modtitel}
+    \newlength{\x@modcode}
+    \iftoggle{ebook}{
+        \setlength{\y@recttop}{5.712cm} % = 8 * 150 / 210
+        \setlength{\y@rectbottom}{2.856cm}
+        \setlength{\y@logo}{3.07cm}
+        \setlength{\y@logospiegel}{2.642cm}
+        \setlength{\x@logo}{1.428cm}
+        \setlength{\height@logo}{2.428cm}
+        \setlength{\y@modcode}{4.284cm}
+        \setlength{\y@modtitel}{3.213cm}
+        \setlength{\x@modcode}{4.998cm}
+    }{
+        \setlength{\y@recttop}{8cm}
+        \setlength{\y@rectbottom}{4cm}
+        \setlength{\y@logo}{4.3cm}
+        \setlength{\y@logospiegel}{3.7cm}
+        \setlength{\x@logo}{2cm}
+        \setlength{\height@logo}{3.4cm}
+        \setlength{\y@modcode}{6cm}
+        \setlength{\y@modtitel}{4.5cm}
+        \setlength{\x@modcode}{7cm}
+    }
+    \begin{titlepage}
+        \centering
+        \makebox[\textwidth]{%
+            \checkoddpage
+            \ifoddpage
+                \hspace*{\dimexpr\evensidemargin-\oddsidemargin}
+            \else
+                \hspace*{-\dimexpr\evensidemargin-\oddsidemargin}
+            \fi
+            \begin{tikzpicture}[      
+                every node/.style={anchor=south west, inner sep=0pt},
+            ]   
+            \iftoggle{ebook}{
+                \node[general shadow={fill=black, shadow yshift=-1.071, path fading=fade down}] at (0,0) {
+                    \includegraphics[width=\paperwidth]{figs/#1}
+                };
+            }{
+                \node[general shadow={fill=black, shadow yshift=-1.5, path fading=fade down}] at (0,0) {
+                    \includegraphics[width=\paperwidth]{figs/#1}
+                };
+            }
+            \draw [fill=white, path fading=fade left] (0,\y@recttop) rectangle (\paperwidth,\y@rectbottom);
+            \draw [line width=3pt] (0,\y@rectbottom) -- (\paperwidth,\y@rectbottom)
+                                   (0,\y@recttop) -- (\paperwidth,\y@recttop);
+            \node at (\x@logo,\y@logo) {
+                \includegraphics[height=\height@logo]{figs/logoHR}
+            };
+            \node[yscale=-1, opacity=0.6] at (\x@logo,\y@logospiegel) {
+                \includegraphics[height=\height@logo]{figs/logoHRfadetop}
+            };
+            \iftoggle{ebook}{
+                \node[scale=2.856] at (\x@modcode,\y@modcode) {\hbox{\sffamily \modulecode}};
+                \node[scale=1.428] at (\x@modcode,\y@modtitel) {\hbox{\sffamily \titel}};
+            }{
+                \node[scale=4] at (\x@modcode,\y@modcode) {\hbox{\sffamily \modulecode}};
+                \node[scale=2] at (\x@modcode,\y@modtitel) {\hbox{\sffamily \titel}};
+            }
+            \end{tikzpicture}
+        }\par
+        \iftoggle{ebook}{
+            \vspace{2,142cm}
+        }{
+            \vspace{3cm}
+        }
+        {\sffamily\bfseries\Large\selectfont%
+                \documenttype\par
+        } 
+        {\sffamily\selectfont%
+            Versie \huidigeversie\par%
+            \auteurs
+        } 
+    \end{titlepage}
+    \iftoggle{ebook}{
+        %TODO: Waarom is dit nodig:
+        \setcounter{page}{2}
+    }{
+        \cleardoublepage
+    }
+}
+\makeatother
+%<titelpagina
+
+%>versiehistorie
+% commando voor versiehistorie tabel
+% #1 = tabel inhoud
+% tabel heeft 4 kolommen:
+% Datum & Versie & Omschrijving & Auteur
+% Gebruik \\ \line om de rijen te scheiden.
+\newcommand{\versiehistorieheader}{%
+	\arrayrulecolor{hrred}\hline
+	\rowcolor{hrred} 
+	\multicolumn{1}{c}{\textcolor{white}{\textbf{Datum}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Versie}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Omschrijving}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Auteur}}}
+	\\ \hline
+}
+\newcommand{\versiehistorie}[1]{
+	\section*{Versiehistorie}
+	{\renewcommand{\arraystretch}{1.24}%
+	\vspace*{.1\baselineskip}%
+	\begin{xltabular}{\textwidth}{|cc>{\raggedright\arraybackslash}Xc|}
+		\versiehistorieheader
+		\endfirsthead
+		\versiehistorieheader
+		\endhead
+		\multicolumn{4}{r}{\sffamily\small Wordt~vervolgd~op~de~volgende~pagina.}\\
+		\endfoot
+		\hline
+		\endlastfoot
+		#1
+	\end{xltabular}
+	\addtocounter{table}{-1}%
+	}\vspace{-.45\baselineskip}%
+}
+%<versiehistorie
+
+\newcommand{\mailafko}[1]{%
+    \href{mailto:#1@hr.nl}{#1}%
+}
+
+% environment voor itemize in tabel (B.v. versie tabel.)
+\newenvironment{itemizeintabel}{
+	
+    %Opties zijn nodig omdat \baslineskip wordt aangepast in \tabularx
+    \vspace{.3\baselineskip}
+    \begin{itemize}[leftmargin=*, itemsep=1mm]
+}{
+        \vspace*{-.7\baselineskip}
+    \end{itemize}
+}
+
+% backward compatibility
+\newenvironment{itemizeintabu}{
+	\ClassWarning{LaTeX-stijl HR}{Het gebruik van \noexpand\itemizeintabu wordt afgeraden voor nieuwe documenten. Gebruik \noexpand\itemizeintabel}%
+	\begin{itemizeintabel}
+	}{
+	\end{itemizeintabel}
+}
+
+%https://tex.stackexchange.com/questions/11336/macro-for-figure-position
+%>myFigure
+% iets meer ruimte boven en iets minder onder figuur:
+\makeatletter
+\newenvironment{myFigure}[1][!htbp]{%
+	\expandafter\figure\expandafter[#1]%
+    \expandafter\ifstrequal\expandafter{#1}{H}{%
+        \vspace{.2\baselineskip}%
+    }{%
+		\vspace{.3\baselineskip}%
+    }%
+	\def\end@fig@space{%
+        \expandafter\ifstrequal\expandafter{#1}{H}{%
+            \vspace{-.85\baselineskip}%
+        }{%
+            \vspace{-.2\baselineskip}%
+        }%
+    }%
+}{%
+    \end@fig@space{}%
+	\endfigure%
+}
+\makeatother
+%<myFigure
+
+%>myCircuit
+% iets meer ruimte boven en iets minder onder figuur:
+\makeatletter
+\newenvironment{myCircuit}[1][!htbp]{%
+	\expandafter\circuit\expandafter[#1]%
+    \expandafter\ifstrequal\expandafter{#1}{H}{%
+        \vspace{.2\baselineskip}%
+    }{%
+		\vspace{.3\baselineskip}%
+    }%
+	\def\end@fig@space{%
+        \expandafter\ifstrequal\expandafter{#1}{H}{%
+            \vspace{-.85\baselineskip}%
+        }{%
+            \vspace{-.2\baselineskip}%
+        }%
+    }%
+}{%
+    \end@fig@space{}%
+	\endcircuit%
+}
+\makeatother
+%<myCircuit
+
+%>myTable
+% iets meer ruimte boven en iets minder onder tabel:
+\makeatletter
+\newenvironment{myTable}[1][!htbp]{%
+    \begin{table}[#1]%
+    \expandafter\ifstrequal\expandafter{#1}{H}{%
+	    \vspace{.1\baselineskip}%
+	}{%
+    	\vspace{.2\baselineskip}%
+	}%
+    \def\end@table@space{%
+        \expandafter\ifstrequal\expandafter{#1}{H}{%
+            \vspace{-.6\baselineskip}%
+        }{%
+            \vspace{.1\baselineskip}%
+        }%
+    }%
+}{%
+    \end@table@space{}%
+    \end{table}%
+}
+\makeatother
+%<myTable
+
+%>figuur
+% commando voor figuur
+% figuren staan in directory ./figs
+% #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
+% #2 = width of scale optie voor \includegraphics
+% #3 = filenaam (zonder extensie); labelnaam=fig:filenaam
+% #4 = titel
+\newcommand{\figuur}[4][!htbp]{
+    \begin{myFigure}[#1]
+        \centering%
+        \includegraphics[#2]{figs/#3}
+        \caption{#4}
+        \label{fig:#3}
+    \end{myFigure}
+}
+%<figuur
+
+%https://tex.stackexchange.com/questions/120036/pgfkeys-store-unknown-keys-in-a-command
+\makeatletter
+\def\pgfutil@gobble#1{}
+\pgfkeys{/handlers/.unknown to list/.code=%
+	\let#1\pgfutil@gobble
+	\pgfkeysalso{% or \pgfkeys{\pgfkeyscurrentpath/.cd,
+		.unknown/.code=% how to handle the difference between 'key' and 'key=value'?
+		\ifx\pgfkeyscurrentvalue\pgfkeysnovalue
+			\let\pgfkeys@temp\pgfkeyscurrentname
+		\else
+			\expandafter\expandafter\expandafter\def\expandafter\expandafter\expandafter\pgfkeys@temp\expandafter\expandafter\expandafter{\expandafter\pgfkeyscurrentname\expandafter=\expandafter{\pgfkeyscurrentvalue}}%
+		\fi
+		\expandafter\expandafter\expandafter\def\expandafter\expandafter\expandafter#1\expandafter\expandafter\expandafter{\expandafter#1\expandafter,\pgfkeys@temp},%
+		.@clear list/.code=\let#1\pgfutil@gobble%
+	}%
+}
+
+\newenvironment{hrincludegraphics}[1][]{%
+	\expandafter\includegraphics\expandafter[#1]%
+}{%
+	\endincludegraphics%
+}
+\makeatother
+
+\pgfkeys{
+	/hrfigure/.is family,% 
+	/hrfigure,%
+	label/.store in = \hrfigurelabel,%
+	caption/.store in = \hrfigurecaption,%
+	placement/.store in = \hrfigureplacement,%
+	.unknown to list=\hrfigureunkown%
+}
+
+%>hrfigure
+% alternatief commando voor figuur
+% figuren staan in directory ./figs
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = fig:#2)
+%		caption = ... (default = #2)
+% #2 = filenaam (zonder extensie); labelnaam=fig:filenaam
+\newcommand\hrfigure[2][scale=1]{%
+	\pgfkeys{/hrfigure, label=fig:#2, caption = #2., placement = !htbp, #1}%
+	\begin{myFigure}[\hrfigureplacement]%
+	 	\centering%
+	 	\hrincludegraphics[\hrfigureunkown]{figs/#2}%
+	 	\caption{\hrfigurecaption}%
+	 	\label{\hrfigurelabel}%
+	\end{myFigure}%
+	\pgfkeys{/hrfigure/.@clear list}%
+}
+%<hrfigure
+
+%>tikzfiguur
+% commando voor figuur getekend met tikz
+% figuren staan in directory ./tikz
+% #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
+% #2 = filenaam (zonder extensie); labelnaam=fig:filenaam
+% #3 = titel
+\newcommand{\tikzfiguur}[3][!htbp]{%
+	\begin{myFigure}[#1]%
+		\centering%
+		\input{tikz/#2}%
+		\caption{#3}%
+		\label{fig:#2}%
+	\end{myFigure}%
+}
+%<tikzfiguur
+
+\pgfkeys{
+	/hrtikzfigure/.is family,% 
+	/hrtikzfigure,%
+	label/.store in = \hrtikzfigurelabel,%
+	caption/.store in = \hrtikzfigurecaption,%
+	placement/.store in = \hrtikzfigureplacement
+}
+
+%>hrtikzfigure
+% alternatief commando voor tikzfiguur
+% figuren staan in directory ./tikz
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = fig:#2)
+%		caption = ... (default = #2)
+% #2 = filenaam (zonder extensie); labelnaam=fig:filenaam
+\newcommand\hrtikzfigure[2][]{%
+	\pgfkeys{/hrtikzfigure, label=fig:#2, caption = #2., placement = !htbp, #1}%
+	\begin{myFigure}[\hrtikzfigureplacement]%
+	 	\centering%
+		\input{tikz/#2}%
+	 	\caption{\hrtikzfigurecaption}%
+	 	\label{\hrtikzfigurelabel}%
+	\end{myFigure}
+}
+%<hrtikzfigure
+
+%>tikzinlinefiguur
+% commando voor figuur getekend met tikz
+% figuren staan inline
+% #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
+% #2 = label
+% #3 = TikZ-code
+% #4 = titel
+\newcommand{\tikzinlinefiguur}[4][H]{
+	\begin{myFigure}[#1]%
+		\centering%
+		\begin{tikzpicture}%
+		#3%
+		\end{tikzpicture}%
+		\caption{#4}%
+		\label{fig:#2}%
+	\end{myFigure}
+}
+%<tikzinlinefiguur
+
+%>hrtikzinlinefigure
+% alternatief commando voor tikzinlinefiguur
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = )
+%		caption = ... (default = )
+% #2 = TikZ-code
+\newcommand\hrtikzinlinefigure[2][]{%
+	\pgfkeys{/hrtikzfigure, label=, caption =, placement = !htbp, #1}%
+	\begin{myFigure}[\hrtikzfigureplacement]%
+	 	\centering%
+        \begin{tikzpicture}%
+		#2%
+		\end{tikzpicture}%
+	 	\caption{\hrtikzfigurecaption}%
+	 	\label{\hrtikzfigurelabel}%
+	\end{myFigure}%
+}
+%<hrtikzinlinefigure
+
+\usepackage{newfloat}
+%http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/caption/newfloat.pdf
+\DeclareFloatingEnvironment[name=Schakeling, placement=!htbp]{circuit}
+
+%>schakeling
+% commando voor schakeling
+% #1 OPTIONEEL = placement argumenten voor figure b.v. tb of H 
+% #2 = circuittikz code
+% #3 = titel
+% #4 = labelnaam=sch:#4
+% spacing voor en na schakeling consistent gemaakt met figuur
+\newcommand{\schakeling}[4][!htbp]{
+	\begin{myCircuit}[#1]%
+        \centering%
+		\begin{circuitikz}%
+			#2%
+		\end{circuitikz}%	
+		\caption{#3}%
+		\label{sch:#4}%
+	\end{myCircuit}%
+}
+\makeatother
+%<schakeling
+
+%>hrschakeling
+% alternatief commando voor schakeling
+% #1 OPTIONEEL = key, value pairs
+%		placement = ... (default = !htbp)
+%		label = ... (default = )
+%		caption = ... (default = )
+% #2 = circuitTikZ-code
+\newcommand\hrschakeling[2][]{%
+	\pgfkeys{/hrtikzfigure, label=, caption =, placement = !htbp, #1}%
+	\begin{myCircuit}[\hrtikzfigureplacement]%
+	 	\centering%
+        \begin{circuitikz}%
+		#2%
+		\end{circuitikz}%
+	 	\caption{\hrtikzfigurecaption}%
+	 	\label{\hrtikzfigurelabel}%
+	\end{myCircuit}%
+}
+%<hrschakeling
+
+%>tabularx
+\usepackage{tabularx}
+%<tabularx
+
+%>xltabular
+\usepackage{xltabular}
+%<xltabular
+
+%>tabel
+\usepackage{expl3}
+
+\ExplSyntaxOn
+
+\cs_new_protected:Nn \hr_kopstijl:n 
+{
+	\seq_put_right:Nn \l_tmpb_seq {\multicolumn{1}{c}{\textcolor{white}{\textbf{#1}}}}
+}
+
+\cs_new_protected:Nn \hr_tabelkop:n
+{
+	\seq_set_split:Nnn \l_tmpa_seq {&} {#1}
+	\seq_map_function:NN \l_tmpa_seq \hr_kopstijl:n
+}
+
+% commando voor tabel
+% #1 OPTIONEEL = placement argument voor table e.g. tb or H (default = !htbp)
+% #2 = titel
+% #3 = labelnaam=tab:#3
+% #4 = array kolom definities
+% #5 = kop tabel (eerste regel)
+% #6 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+\NewDocumentCommand \tabel {O{!htbp}mmmmm} 
+{
+	\IfSubStr{#4}{X}{\errmessage{Kolomspecificatie~X~wordt~niet~langer~ondersteund~door~het~commando~\noexpand\tabel~gebruik~\noexpand\tabelX}}{}%	
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkop:n{#5}
+		\begin{tabular}{|#4|}
+			\arrayrulecolor{hrred} \hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\
+			#6 \\\hline
+		\end{tabular}%
+	\end{myTable}
+}
+
+% variant voor brede tabel
+% tabel wordt geschaald zodat hij past op tekstbreedte pagina
+\NewDocumentCommand \tabelmaxpaginabreedgeschaald {O{!htbp}mmmmm}
+{ 
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkop:n{#5}
+		\begin{adjustbox}{max~width=\textwidth}%
+			\begin{tabular}{|#4|}
+				\arrayrulecolor{hrred} \hline
+				\rowcolor{hrred}
+				\seq_use:Nn \l_tmpb_seq {&} \\
+				#6 \\\hline
+			\end{tabular}%
+		\end{adjustbox}%
+	\end{myTable}
+}
+
+% variant voor lange tabel
+% #1 = titel
+% #2 = labelnaam=tab:#3
+% #3 = longtabel kolom definities
+% #4 = kop tabel (eerste regel)
+% #5 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+% #6 = aantal kolommen
+\NewDocumentCommand \langetabel {mmmmmm} 
+{
+	\IfSubStr{#3}{X}{\errmessage{Kolomspecificatie~X~wordt~niet~langer~ondersteund~door~het~commando~\noexpand\langetabel~gebruik~\noexpand\langetabelX}}{}%
+	{\centering%
+		\renewcommand{\arraystretch}{1.24}%
+		\vspace*{.1\baselineskip}%
+		\hr_tabelkop:n{#4}
+		\begin{longtable}{|#3|}
+			\caption{#1}\label{tab:#2} \\
+			\arrayrulecolor{hrred} \hline
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endfirsthead
+			\caption[]{(Vervolg)~#1} \\
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endhead
+			\multicolumn{#6}{r}{\sffamily\small Deze~tabel~wordt~vervolgd~op~de~volgende~pagina.}\\
+			\endfoot
+			\hline
+			\endlastfoot
+			#5 
+		\end{longtable}%
+	}\vspace{-.45\baselineskip}%
+}
+
+% commando voor tabelX
+% #1 OPTIONEEL = width voor tablularx (default = \textwidth)
+% #2 OPTIONEEL = placement argument voor table e.g. tb or H (default = !htbp)
+% #3 = titel
+% #4 = labelnaam=tab:#3
+% #5 = tabularx kolom definities
+% #6 = kop tabel (eerste regel)
+% #7 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+\NewDocumentCommand \tabelX {O{\textwidth}O{!htbp}mmmmm} 
+{
+	\begin{myTable}[#2]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#3}
+		\label{tab:#4}
+		\hr_tabelkop:n{#6}
+		\begin{tabularx}{#1}{|#5|}
+			\arrayrulecolor{hrred} \hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\
+			#7 \\\hline
+		\end{tabularx}%
+	\end{myTable}
+}
+
+% variant waarbij de X kolommen verticaal in het midden uitgelijnd zijn.
+\NewDocumentCommand \tabelXm {O{\textwidth}O{!htbp}mmmmm} 
+{
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+	\tabelX[#1][#2]{#3}{#4}{#5}{#6}{#7}%
+	}%
+}
+
+% variant voor lange tabel
+% #1 OPTIONEEL = width voor tablularx (default = \textwidth)
+% #2 = titel
+% #3 = labelnaam=tab:#3
+% #4 = longtabel kolom definities
+% #5 = kop tabel (eerste regel)
+% #6 = inhoud tabel (rest van de regels)
+%      gebruik \\ om rijen te scheiden
+% #7 = aantal kolommen
+\NewDocumentCommand \langetabelX {O{\textwidth}mmmmmm} 
+{
+	{\centering%
+		\renewcommand{\arraystretch}{1.24}%
+		\vspace*{.1\baselineskip}%
+		\hr_tabelkop:n{#5}
+		\begin{xltabular}{#1}{|#4|}
+			\caption{#2}\label{tab:#3} \\
+			\arrayrulecolor{hrred} \hline
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endfirsthead
+			\caption[]{(Vervolg)~#2} \\
+			\hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\\hline
+			\endhead
+			\multicolumn{#7}{r}{\sffamily\small Deze~tabel~wordt~vervolgd~op~de~volgende~pagina.}\\
+			\endfoot
+			\hline
+			\endlastfoot
+			#6
+		\end{xltabular}%
+	}\vspace{-.45\baselineskip}%
+}
+
+% variant waarbij de X kolommen verticaal in het midden uitgelijnd zijn.
+\NewDocumentCommand \langetabelXm {O{\textwidth}mmmmmm} 
+{
+	{\renewcommand{\tabularxcolumn}[1]{m{##1}}%
+		\langetabelX[#1]{#2}{#3}{#4}{#5}{#6}{#7}%
+	}%
+}
+
+\ExplSyntaxOff
+%<tabel
+
+%>USE
+% command om usenglish woorden te markeren zodat ze correct worden afgebroken  
+\newcommand{\USE}[1]{\foreignlanguage{usenglish}{#1}}
+%<USE
+
+% Woorden met een - zoals data-elementen worden in LaTeX alleen afgebroken bij -
+% data\hyp{}elementen wordt wel netjes afgebroken
+% http://stackoverflow.com/questions/2193307/how-to-get-latex-to-hyphenate-a-word-that-contains-a-dash
+\newcommand{\hyp}{-\penalty0\hskip0pt\relax}
+
+% verwijs naar een sectie (bij de printed versie wordt het paginanummer erbij vermeld).
+\newcommand{\csecref}[1]{%
+    \cref{#1}%
+    \iftoggle{ebook}{}{
+        op \cpageref{#1}%
+    }%
+}
+
+% verwijs naar een sectie aan begin van een regel (bij de printed versie wordt het paginanummer erbij vermeld).
+\newcommand{\Csecref}[1]{%
+    \Cref{#1}%
+    \iftoggle{ebook}{}{
+        op \cpageref{#1}%
+    }%
+}
+
+%>pdfpagref
+% verwijzingen naar specifieke pagina van een ander pdf document op internet
+% #1 = OPTIONEEL Verschil tussen paginanummer (weergegeven in pdf viewer) en nummer weergegeven op de pagina zelf.
+% #2 = url van het betreffende pdf document
+% #3 = nummer weergegeven op de pagina zelf
+\makeatletter
+\newcounter{pdfpagref@counter}
+\newcommand{\pdfpagref}[3][0]{%
+    \setcounter{pdfpagref@counter}{#3}%
+    \addtocounter{pdfpagref@counter}{#1}%
+    \href{#2\#page=\thepdfpagref@counter}{pagina~#3}%
+}
+\makeatother
+%<pdfpagref
+
+%>pdfdeelref
+% verwijzingen naar specifiek deel van een ander pdf document op internet
+% #1 = naam van deel, b.v. chapter, section, subsection, enz
+% #2 = naam voor deel,  b.v. hoofdstuk~, paragraaf~, enz
+% #3 = url van het betreffende pdf document
+% #4 = nummer van het betreffende deel, bijvoorbeeld 6.2
+\newcommand{\pdfdeelref}[4]{%
+    \href{#3\#nameddest=#1.#4}{#2#4}%
+}
+%<pdfdeelref
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/mdframed/mdframed.pdf
+\usepackage{mdframed}
+%>opdracht
+\newcounter{opdracht}
+\newenvironment{opdracht}[1]{
+    \refstepcounter{opdracht}%
+    \vspace{.5\baselineskip}%
+    \begin{mdframed}[
+        innerleftmargin=1.5em,
+        innerrightmargin=1.5em,
+        innertopmargin=.8\baselineskip,
+        innerbottommargin=.6\baselineskip,
+        linecolor=hrred, 
+        linewidth=.8pt, 
+        frametitlebackgroundcolor=hrred,
+        frametitle={\sectionfont\color{white}Opdracht~\theopdracht: #1}
+    ]
+    }{
+    \end{mdframed}
+}
+%<opdracht
+
+%>conclusie
+% Nummer van de conclusie is hetzelfde als het nummer van de voorgaande opdracht 
+\newcommand{\conclusie}[1]{
+    \vspace{.5\baselineskip}%
+	\begin{mdframed}[
+		nobreak=true,
+		align=center,
+		innerleftmargin=1.5em,
+		innerrightmargin=1.5em,
+		innertopmargin=.8\baselineskip,
+		innerbottommargin=.6\baselineskip,
+		linecolor=hrred, 
+		linewidth=.8pt, 
+		frametitlebackgroundcolor=hrred,
+		frametitle={\sectionfont\color{white} Conclusie~\theopdracht}
+		]
+		\vspace*{5\baselineskip}
+		#1
+	\end{mdframed}	
+}
+%<conclusie
+
+%>handtekening
+\newcounter{handtekening}
+\newcommand{\handtekening}[1][]{%
+	\ClassWarning{LaTeX-stijl HR}{Het gebruik van \noexpand\handtekening wordt afgeraden voor nieuwe documenten.}
+    \ifstrequal{#1}{}{\stepcounter{handtekening}}{}%
+    \ifstrequal{#1}{a}{\stepcounter{handtekening}}{}%
+	%frame voor handtekening alleen in printed versie
+	\iftoggle{ebook}{%
+		Als alles correct werkt zal de docent opdracht \thehandtekening#1 aftekenen.  
+	}{%
+    \vspace{.5\baselineskip}%
+    \begin{mdframed}[
+        userdefinedwidth=.6\linewidth,
+        nobreak=true,
+        align=center,
+        innerleftmargin=1.5em,
+        innerrightmargin=1.5em,
+        innertopmargin=.8\baselineskip,
+        innerbottommargin=.6\baselineskip,
+        linecolor=hrred, 
+        linewidth=.8pt, 
+        frametitlebackgroundcolor=hrred,
+        frametitle={\sectionfont\color{white}Handtekening docent voor opdracht \thehandtekening#1:}
+    ]
+	    	\vspace*{5\baselineskip}%
+	    \end{mdframed}%
+	}%
+}%
+%<handtekening
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/babel/base/babel.pdf
+\usepackage[usenglish, dutch]{babel}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/biblatex/doc/biblatex.pdf
+\usepackage[
+    backend=biber,
+    backref=true,
+    backrefstyle=none, % neem paginanummer niet samen in de backref lijst dus 1,2,3 i.p.v. 1-3 (anders kun je niet op 2 klikken)
+    sortcites=true,
+    doi = false, % doi informatie wordt niet weergegeven
+    useprefix=false
+]{biblatex}
+\addbibresource{bibliography.bib}
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+\makeatother
+\DefineBibliographyStrings{dutch}{
+    backrefpage = {geciteerd op p.},
+    backrefpages = {geciteerd op pp.},
+}
+
+%>citepdfpag
+% verwijzingen naar specifieke pagina van
+% een ander pdf document op internet uit de referentielijst
+% #1 = OPTIONEEL Verschil tussen paginanummer (weergegeven in pdf viewer) en nummer weergegeven op de pagina zelf.
+% #2 = Bibtexkey
+% #3 = nummer weergegeven op de pagina zelf
+% geinspireerd door: http://tex.stackexchange.com/questions/191174/biblatex-citefield-not-expanded-as-expected
+\makeatletter
+\DeclareCiteCommand{\@saveurlcite}{}{\savefield{url}{\@savedurl}}{}{}
+\newcounter{cite@pag}
+\newcommand{\citepdfpag}[3][0]{%
+    \setcounter{cite@pag}{#3}%
+    \addtocounter{cite@pag}{#1}%
+    \@saveurlcite{#2}%
+    \edef\@savedurlpag{\@savedurl\#page=\thecite@pag}%
+    \cite[\href{\@savedurlpag}{pagina~#3}]{#2}%
+}
+\makeatother
+%<citepdfpag
+
+%>citepdfdeel
+% verwijzingen naar specifiek deel van
+% een ander pdf document op internet uit de referentielijst
+% #1 = naam van deel, b.v. chapter, section, subsection, enz
+% #2 = naam voor deel,  b.v. hoofdstuk~, paragraaf~, enz
+% #3 = Bibtexkey van het betreffende pdf document
+% #4 = nummer van het betreffende deel, bijvoorbeeld 6.2
+% geinspireerd door: http://www.tex.ac.uk/FAQ-twooptarg.html
+\makeatletter
+\newcommand\citepdfdeel[4]{%
+    \@saveurlcite{#3}%
+    \edef\@savedurldeel{\@savedurl\#nameddest=#1.#4}%
+    \cite[\href{\@savedurldeel}{#2#4}]{#3}%
+}
+\makeatother
+%<citepdfdeel
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/titlesec/titlesec.pdf
+% Verander opmaak titels
+\usepackage{titlesec}
+\ifstrequal\expandafter{\myClass}{book}{
+    % Nummer van hoofdstuk groot rechts boven titel
+    \titleformat{\chapter}[display]{\sectionfont\Huge}{%
+    \sectionfont\fontsize{45.64172pt}{0pt}\selectfont\filleft\thechapter}{.5\baselineskip}{}
+}{}
+\titleformat{\section}{\sectionfont\Large}{\thesection}{1em}{}
+\titleformat{\subsection}{\sectionfont\large}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\sectionfont\large}{\thesubsubsection}{1em}{}
+
+%https://tex.stackexchange.com/questions/96570/automatically-determine-which-texlive-version-is-being-used
+\makeatletter
+\begingroup
+\edef\get@@version{\def\noexpand\get@version##1\detokenize{TeX Live}##220##3##4##5)##6\noexpand\@nil}
+\get@@version{\gdef\TeXLiveVersion{20#3#4}}
+\expandafter\get@version\pdftexbanner\@nil
+\endgroup
+\makeatother
+
+% changed for Latex TexLive 2020
+\IfStrEq{\TeXLiveVersion}{2018}{%
+\titlespacing{\section}{0pt}{.8\baselineskip}{0.2\baselineskip}
+\titlespacing{\subsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{0.2\baselineskip}
+}{}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/footmisc/footmisc.pdf
+% ruimte onder aan de pagina tussen tekst en voetnoot niet na voetnoot
+% package moet VOOR fancyhdr om warning te voorkomen
+\usepackage[
+    bottom,
+    hang,
+    multiple
+]{footmisc}
+% inspringen
+\setlength{\footnotemargin}{1em}
+% ruimte tussen footnotes:
+\setlength{\footnotesep}{.8\baselineskip}
+
+\expandafter\ifstrequal\expandafter{\myClass}{book}{
+% Voetnoot teller NIET resetten bij elk hoofdstuk
+%BUGFIX voor LaTeX Live 2018:
+%Zie https://tex.stackexchange.com/questions/425600/latex-error-command-counterwithout-already-defined
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
+}{}
+
+\makeatletter
+\newlength{\module@code@width}
+\settowidth{\module@code@width}{\modulecode}
+\addtolength{\module@code@width}{6mm}
+
+\newlength{\page@number@width}
+\settowidth{\page@number@width}{\thepage}
+\addtolength{\page@number@width}{6mm}
+
+\newcommand{\rease@header}{\vspace{4pt}}
+
+\newcommand{\module@code@box}{\colorbox{hrred}{\makebox[\module@code@width][c]{\color{white}\textbf{\modulecode}}}}
+\newcommand{\page@number@box}{\colorbox{hrred}{\makebox[\page@number@width][c]{\color{white}\textbf{\vphantom{2}\thepage}}}}
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/fancyhdr/fancyhdr.pdf
+\usepackage{fancyhdr}
+\newcommand{\myfancy}{
+    \fancyhead{}
+    \fancyfoot{}
+    \ifboolexpr{togl {ebook} or togl {onesided}}{
+        \fancyhead[L]{\headerfont\module@code@box{}\rease@header{}}
+		\expandafter\ifstrequal\expandafter{\myClass}{article}{
+        	\fancyhead[R]{\headerfont\nouppercase{\rightmark}\rease@header{}}
+		}{
+        	\fancyhead[R]{\headerfont\nouppercase{\leftmark}\rease@header{}}
+		}
+        \fancyfoot[L]{\headerfont{}Hogeschool Rotterdam}
+        \fancyfoot[R]{\headerfont\titel{}\hspace{1em}\page@number@box{}}
+    }{
+		\expandafter\ifstrequal\expandafter{\myClass}{article}{
+	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
+	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}        
+		}{
+        	\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
+        	\fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}\rease@header{}}
+		}
+        \fancyfoot[OR]{\headerfont{}Hogeschool Rotterdam\hspace{1em}\page@number@box{}}
+        \fancyfoot[EL]{\headerfont\page@number@box{}\hspace{1em}\titel{}}
+    }
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+\makeatother
+\markboth{\text{}}{\text{}}
+\pagestyle{fancy}
+\myfancy
+\fancypagestyle{plain}{\myfancy}
+
+\makeatletter
+\iftoggle{ebook}{
+}{
+    % zorg dat header en footer niet afgedrukt worden op verder lege pagina.
+    \let\old@cleardoublepage\cleardoublepage
+    \renewcommand{\cleardoublepage}{\clearpage\thispagestyle{empty}\old@cleardoublepage}
+}
+\makeatother
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/parskip/parskip-doc.pdf
+% sla regel over bij nieuwe paragraaf in plaats van in te springen
+\usepackage{parskip}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/required/graphics/grfguide.pdf
+\usepackage{graphicx}
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/tools/array.pdf
+\usepackage{array}
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/required/tools/longtable.pdf
+\usepackage{longtable}
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/multirow/doc/multirow.pdf
+% multirow is nodig om meerdere rijcellen binnen 1 kolom samen te nemen tot 1 cel 
+\usepackage{multirow}
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/adjustbox/adjustbox.pdf
+% adjustbox is handig om een tabel te schalen.
+\usepackage{adjustbox}
+% http://ctan.cs.uu.nl/macros/latex/contrib/float/float.pdf
+% float definieert de H placement specificatie om figuren op vast plaats te zetten
+\usepackage{float}
+% pas regels voor plaatsen floats aan
+% Zie http://tex.stackexchange.com/questions/39017/how-to-influence-the-position-of-float-environments-like-figure-and-table-in-lat
+\renewcommand{\topfraction}{.95} %in plaats van .70
+\renewcommand{\bottomfraction}{.95} %in plaats van .30
+\renewcommand{\textfraction}{.05} %in plaats van .20
+\renewcommand{\floatpagefraction}{.90} %in plaats van .5
+
+% http://ctan.triasinformatica.nl/macros/latex/contrib/siunitx/siunitx.pdf
+\usepackage{siunitx}
+\sisetup{
+    per-mode = symbol,
+    binary-units = true,
+    range-units = single,
+% dutch localisation
+    range-phrase = { tot en met },
+    output-decimal-marker = {,},
+    list-final-separator = { en },
+    list-pair-separator  = { en },
+}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/caption/caption-eng.pdf
+\usepackage[
+    font={\captionfont},
+    format=hang,
+    justification=RaggedRight,
+    labelfont={color=hrred, bf},
+    hypcap=true,
+    skip=.6\baselineskip
+]{caption}
+
+%http://get-software.net/macros/latex/contrib/nowidow/nowidow.pdf
+% vermijdt weduwen en wezen
+\usepackage[defaultlines=2,all]{nowidow}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/csquotes/csquotes.pdf
+% standaard Nederlandse quotes zijn old-fashioned (openen laag)
+%>csquote
+\usepackage[style=english]{csquotes}
+% Zie: https://onzetaal.nl/taaladvies/advies/aanhalingstekens-dubbele-aanhalingstekens
+\newcommand{\dquote}[1]{\enquote{#1}}
+% Zie: https://onzetaal.nl/taaladvies/advies/enkele-aanhalingstekens
+\newcommand{\squote}[1]{\enquote*{#1}}
+%<csquote
+
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/enumitem/enumitem.pdf
+% enumitem zorgt ervoor dat je een enumeratie eenvoudiger kunt aanpassen. B.v. het inspringen.
+\usepackage{enumitem}
+\setlistdepth{5}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\arabic*.}
+\setlist[enumerate,3]{label=\arabic*.}
+\setlist[enumerate,4]{label=\arabic*.}
+\setlist[enumerate,5]{label=\arabic*.}
+\renewlist{enumerate}{enumerate}{5}
+\setlist{topsep=-.2\baselineskip, itemsep=-.3\baselineskip}
+\setlist[itemize,1]{label=\textbullet}
+\setlist[itemize,2]{label=$\circ$}
+\setlist[itemize,3]{label=$\triangleright$}
+\setlist[itemize,4]{label=$\diamond$}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/footnotebackref/footnotebackref.pdf
+\usepackage{footnotebackref}
+% patch see:
+% http://tex.stackexchange.com/questions/78423/how-to-use-the-footnotebackref-package-with-footnotemark-and-footnotetext
+\makeatletter
+\LetLtxMacro{\BHFN@Old@footnotemark}{\@footnotemark}
+\renewcommand*{\@footnotemark}{%
+    \refstepcounter{BackrefHyperFootnoteCounter}%
+    \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}%
+    \label{\BackrefFootnoteTag}%
+    \BHFN@Old@footnotemark
+}
+\makeatother
+
+%http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/microtype/microtype.pdf
+\usepackage{microtype}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/hyperref/doc/manual.pdf
+\usepackage{hyperref}
+\iftoggle{ebook}{
+    \hypersetup{
+        colorlinks=true,
+        breaklinks=true,
+        anchorcolor=blue,
+        citecolor=blue,
+        filecolor=blue,
+        linkcolor=blue,
+        urlcolor=blue,
+        pdftitle={\titel{}},
+        pdfauthor={Hogeschool Rotterdam},
+        pdfdisplaydoctitle=true,
+        pdfpagelayout=SinglePage,
+        %pdfstartview={XYZ null null 1.50}, %voor debuggen
+        %pdfstartview=FitH, % voor debuggen
+    }
+}{
+    \hypersetup{
+        colorlinks=true,
+        breaklinks=true,
+        linkcolor=black,
+        citecolor=black,
+        urlcolor=black,
+        filecolor=black,
+        pdftitle={\titel{}},
+        pdfauthor={Hogeschool Rotterdam},
+        pdfdisplaydoctitle=true,
+        pdfpagelayout=\iftoggle{onesided}{SinglePage}{TwoPageRight},
+        %pdfstartview={XYZ null null 1.50}, %voor debuggen
+        %pdfstartview=FitH, % voor debuggen
+    }
+}
+
+%http://ctan.triasinformatica.nl/systems/doc/pdftex/manual/pdftex-a.pdf#page=24
+\pdfsuppressptexinfo=1
+
+% http://ctan.cs.uu.nl/macros/latex/contrib/cleveref/cleveref.pdf
+\usepackage[dutch, noabbrev, nameinlink]{cleveref}
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+\crefname{opdracht}{opdracht}{opdrachten}
+\Crefname{opdracht}{Opdracht}{Opdrachten}
+\expandafter\ifstrequal\expandafter{\myClass}{article}{
+    \crefname{section}{hoofdstuk}{hoofdstukken}
+    \Crefname{section}{Hoofdstuk}{Hoofdstukken}
+    \crefname{subsection}{paragraaf}{paragrafen}
+    \Crefname{subsection}{Paragraaf}{Paragrafen}
+    \crefname{subsubsection}{paragraaf}{paragrafen}
+    \Crefname{subsubsection}{Paragraaf}{Paragrafen}
+}{}
+\crefname{appendix}{bijlage}{bijlagen}
+\Crefname{appendix}{Bijlage}{Bijlagen}
+\crefname{circuit}{schakeling}{schakelingen}
+\Crefname{circuit}{Schakeling}{Schakelingen}
+\newcommand{\crefrangeconjunction}{ tot en met }
