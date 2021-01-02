@@ -83,7 +83,7 @@
 		\rowcolor{hrred}
 		\seq_use:Nn \l_tmpb_seq {&} \\\hline
 		\endfirsthead
-		\multicolumn{#4}{l}{\hspace*{-.5em}\footnotesize\color{darkgray}Vervolg~van~de~vorige~pagina.}\vspace{-.2ex}\\ \hline
+		\multicolumn{#4}{l}{\hspace*{-.5em}\sffamily\small\ Vervolg~van~de~vorige~pagina.}\\ \hline
 		\rowcolor{hrred}
 		\seq_use:Nn \l_tmpb_seq {&} \\\hline
 		\endhead
@@ -111,17 +111,17 @@
 		\rowcolor{hrred}
 		\seq_use:Nn \l_tmpb_seq {&} \\\hline
 		\endfirsthead
-		\multicolumn{4}{l}{\hspace*{-.5em}\footnotesize\color{darkgray}Vervolg~van~de~vorige~pagina.}\vspace{-.2ex}\\ \hline
+		\multicolumn{4}{l}{\hspace*{-\tabcolsep}\sffamily\small\ Vervolg~van~de~vorige~pagina.}\\ \hline
 		\rowcolor{hrred}
 		\seq_use:Nn \l_tmpb_seq {&} \\\hline
 		\endhead
-		\multicolumn{4}{r}{\footnotesize\color{darkgray}Wordt~vervolgd~op~de~volgende~pagina.\hspace*{-.5em}}\\
+		\multicolumn{4}{r}{\sffamily\small\ Wordt~vervolgd~op~de~volgende~pagina.\hspace*{-\tabcolsep}}\\
 		\endfoot
 		\endlastfoot
 		#1
 	\end{xltabular}
 	}\vspace{-3ex}%
-	{\footnotesize\color{darkgray}%
+	{\footnotesize\
 		De~beheersingsniveaus~van~de~verschillende~leerdoelen~zijn~afkomstig~van~de~taxonomie~van~Bloom~(met~een~bewerking~van~Anderson).~
 		A~=~Kennis,~onthouden,~B~=~Inzien,~begrijpen,~C~=~Toepassen,~gebruiken,~D~=~Problemen~oplossen,~analyseren,~synthetiseren.\par
 	}%
