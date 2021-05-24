@@ -27,7 +27,7 @@ Deze inleidende tekst is extra lang zodat je kunt zien hoe de leerdoelentabel au
 
 Bla \herhaal{50}{bladiebla}.
 
-\section{Werkvorm}
+\section{Werkvormen}
 \label{sec:werkvorm}
 Bla \herhaal{50}{bladiebla}.
 
@@ -39,9 +39,13 @@ Bla \herhaal{45}{bladiebla}.
 
 De verschillende werkvormen zijn weergegeven in de onderstaande tabel.
 
-\tabelzonder{cXr@{\hspace{.7\tabcolsep}}l}{}{
-	Lessen & Theorie volgen en begin maken met de labopdrachten. & 5 & klokuur/week\\ \hline
-	Zelfstudie & Bestuderen van het studiemateriaal. Uitwerken van alle labopdrachten. & 11 & klokuur/week
+\tabelzonder{lXr}{
+	Werkvorm & Omschrijving & Studielast
+}{
+	Theorielessen & Theorie volgen. & 16 klokuren \\\hline
+	Practicum & Begin maken met de labopdrachten. & 48 klokuren \\\hline
+	Tentamen & Maken van het schriftelijke tentamen. & 2 klokuren \\\hline
+	Zelfstudie & Bestuderen van het studiemateriaal. Uitwerken van alle labopdrachten. & 130 klokuren
 }
 
 \iftoggle{ebook}{\needspace{5cm}}{}
@@ -61,8 +65,7 @@ Deze cursus draagt bij aan het ontwikkelen van de competentie:
 \end{itemize}
 
 \section{Leerdoelen}
-De leerdoelen zijn gegeven in de onderstaande tabel.
-
+%De leerdoelen zijn gegeven in de onderstaande tabel.
 \label{sec:leerdoelen}
 \leerdoelentabel{
 	%De student is in staat om	
@@ -141,56 +144,57 @@ In deze paragraaf wordt de gedetailleerde planning gegeven. De planning kan gedu
 % Wijkt af van Word template Week i.p.v. Lesweek
 % Wijkt ook af omdat in Word template alleen de contacturen staan.
 \iftoggle{ebook}{\begin{small}}{}
-\langetabelzonder{c>{\raggedright\arraybackslash\hsize=0.5\hsize\linewidth=\hsize}Xr>{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X}{
-	Week & Werkvorm & Tijd & Beschrijving
+\langetabelzonder{c>{\raggedright\arraybackslash\hsize=0.5\hsize\linewidth=\hsize}X>{\raggedright\arraybackslash\hsize=1.5\hsize\linewidth=\hsize}X}{
+	Week & Werkvorm & Beschrijving
 }{
 	\multirow{2}{*}{\bigred{1.1}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm} \\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.2}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm} \\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.3}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm} \\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.4}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm}\\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}.\\
 	\hline
 	\multirow{2}{*}{\bigred{1.5}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm} \\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.6}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm} \\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.7}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm} \\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
 	\hline
 	\multirow{3}{*}{\bigred{1.8}} & 
-	Les & 5 uur & Bla bla.\\
-	& Zelfstudie & 11 uur & Zie \cref{sec:werkvorm}  \\
-	& \textcolor{hrred}{\textbf{Opdracht}} & & Deadline \deadline{}\\
+	Les & Bla bla.\\
+	& Zelfstudie & Bla\herhaal{5}{ bla die bla}.  \\
+	& \textcolor{hrred}{\textbf{Opdracht}} & Deadline \deadline{}\\
 	\hline
 	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{T4}} & 
-	\textcolor{hrred}{\textbf{Tentamen}} & 120 min &  \\[1ex]
+	\textcolor{hrred}{\textbf{Tentamen}} &  \\[1ex]
 	\hline
 	\multirow{1}{*}{\bigred{2.8}} & 
-	\textcolor{hrred}{\textbf{Herkansing opdracht}} & & Deadline \deadline{}\\
+	\textcolor{hrred}{\textbf{Herkansing opdracht}} & Deadline \deadline{}\\
 	\hline
 	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{HT4}} & 
-	\textcolor{hrred}{\textbf{Hertentamen}} & 120 min &  \\[1ex]
-}{4}
+	\textcolor{hrred}{\textbf{Hertentamen}} &  \\[1ex]
+}{3}
 \iftoggle{ebook}{\end{small}}{}
 	
-\needspace{4cm}
+\needspace{5cm}
 \versiehistorie{
 	12-2020 & 1.0 & Eerste versie. & \mailafko{BroJZ} \\
+	05-2021 & 2.0 & Urenverantwoording aangepast. & \mailafko{BroJZ} 
 }
 
 \end{document}
