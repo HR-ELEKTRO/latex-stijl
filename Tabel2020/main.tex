@@ -212,6 +212,79 @@
 	Een lange tabel is geen \squote{floating} object en wordt dus altijd op de plaats waar hij gedefinieerd is neergezet.
 	Dit kan er toe leiden dat een tabel die eigenlijk wel op een pagina past toch verdeeld wordt over meerdere pagina's.
 	Gebruik het commando |\langetabelXm| dus alleen als een tabel die gemaakt is met het commando |\tabelXm| niet op een pagina past.
+
+	\clearpage	
+	\section{Problemen en oplossingen}
+	Het gebruik van de tabel-commando's leidt soms tot problemen.
+	Enkele van deze problemen met de bijbehorende oplossingen worden in dit hoofdstuk besproken.
+\end{llstShortInline}	
+	\subsection{\texorpdfstring{Het gebruik van \code{\|} in de kolomdefinitie}{Het gebruik van | in de kolomdefinitie}}
+\begin{llstShortInline}
+	In |styleCode.tex| zijn een aantal environments gedefinieerd waarmee je eenvoudig inline programmeercode in een document kunt opnemen door het tussen \code{\|}-en te plaatsen.
+	Bijvoorbeeld voor C-code kun je dit doen zoals weergegeven in \cref{lst:clstShortInline}.
+	Het resultaat van deze \LaTeX{}-code is gegeven in \cref{fig:clstShortInline}.
+
+\begin{floatlst}[style=lstyle]{clstShortInline}{Het gebruik van \lcode{clstShortInline}.}
+\begin{clstShortInline}
+	In deze paragraaf kan eenvoudig C-code opgenomen worden.
+	Een voorbeeld van een |if|-statement is |if (Pasen == Pinxteren)|.
+\end{clstShortInline}
+\end{floatlst}
+
+	\figuur{width=.9\textwidth}{clstShortInline}{Het resultaat van de code uit \cref{lst:clstShortInline}.}
+		
+	Als in zo'n environment een tabel opgenomen wordt met een verticale streep tussen enkele kolommen\footnote{%
+		Door het teken \code{\|} op te nemen in de kolomdefinitie.
+	} dan ontstaat een foutmelding omdat het \code{\|}-teken geherdefinieerd is.
+	
+	De code die gegeven is in \cref{lst:tabelInclstShortInline} levert de volgende foutmelding op:
+	\dquote{\code{Use of \\lstinline doesn't match its definition.}}.
+	
+\begin{floatlst}[style=lstyle]{tabelInclstShortInline}{Een tabel in een \lcode{clstShortInline}-environment.}
+\begin{clstShortInline}
+	In deze paragraaf kan eenvoudig C-code opgenomen worden.
+	Een voorbeeld van een |if|-statement is |if (Pasen == Pinxteren)|.
+	\tabel{Een waarheidstabel.}{waarheid}{cc|cc}{
+		$a$ & $b$ & $a+b$ & $a\cdot{}b$
+	}{
+		0 & 0 & 0 & 0\\
+		0 & 1 & 1 & 0\\
+		1 & 0 & 1 & 0\\
+		1 & 1 & 1 & 1
+	}
+\end{clstShortInline}
+\end{floatlst}
+
+	Dit kan eenvoudig opgelost worden door de environment voor de tabeldefinitie uit te zetten en daarna weer aan te zetten,
+	zie \cref{lst:tabelUitclstShortInline}. Het resultaat van deze \LaTeX{}-code is gegeven in \cref{fig:tabelUitclstShortInline}.
+
+\begin{floatlst}[style=lstyle]{tabelUitclstShortInline}{Een tabel buiten een \lcode{clstShortInline}-environment.}
+\begin{clstShortInline}
+	In deze paragraaf kan eenvoudig C-code opgenomen worden.
+	Een voorbeeld van een |if|-statement is |if (Pasen == Pinxteren)|.
+\end{clstShortInline}
+\tabel{Een waarheidstabel.}{waarheid}{cc|cc}{
+	$a$ & $b$ & $a+b$ & $a\cdot{}b$
+}{
+	0 & 0 & 0 & 0\\
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1
+}
+
+\begin{clstShortInline}
+	Een voorbeeld van een |while|-statement is |while (Pasen != Pinxteren)|.
+\end{clstShortInline}
+\end{floatlst}
+
+	\figuur{width=.9\textwidth}{tabelUitclstShortInline}{Het resultaat van de code uit \cref{lst:tabelUitclstShortInline}.}
+	
+	Over het algemeen wordt geadviseerd om geen verticale lijnen tussen de kolommen in een tabel te gebruiken.
+	Soms kan een verticale lijn de tabel wel duidelijker maken, bijvoorbeeld om in een waarheidstabel de scheiding tussen de in- en uitgangen duidelijk te maken.
+
+	\subsection{\texorpdfstring{Het gebruik van \lcode{\\multicolumn} in de tabelkop}{Het gebruik van \textbackslash{}multicolumn in de tabelkop}}
+	%TODO Nog doen!
+	Nog doen!
 	
 	\clearpage	
 	\section{Voorbeelden}
