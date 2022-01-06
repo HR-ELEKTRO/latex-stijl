@@ -12,15 +12,45 @@
 \include{style_nl_NL}
 \include{styleCode}
 
-\newcommand{\listing}[1]{%
+\newcommand{\listing}[2][]{%
 	\floatlstinput[
 		style=lstyle, 
 		breakatwhitespace=false,
 		rangebeginprefix= \%>,
 		rangeendprefix=\%<,
-		linerange={#1-#1},
-	]{../main.tex}{#1}{\LaTeX{}-code waarmee \cref{tab:#1} gemaakt is.}
+		linerange={#2-#2},
+	]{../main.tex}{#2}{\ifstrequal{#1}{}{\LaTeX{}-code waarmee \cref{tab:#2} gemaakt is.}{#1}}
 }
+
+%>hr_tabelkopmulticolumn
+\ExplSyntaxOn
+\cs_new_protected:Nn \hr_tabelkopmulticolumn:n
+{
+	\seq_set_split:Nnn \l_tmpb_seq {&} {#1}
+}
+\ExplSyntaxOff
+%<hr_tabelkopmulticolumn
+
+%>tabelmulticolumn
+\ExplSyntaxOn
+\NewDocumentCommand \tabelmulticolumn {O{!htbp}mmmmm} 
+{
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkopmulticolumn:n{#5}
+		\begin{tabular}{|#4|}
+			\arrayrulecolor{hrred} \hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\
+			#6 \\\hline
+		\end{tabular}%
+	\end{myTable}
+}
+\ExplSyntaxOff
+%<tabelmulticolumn
 
 \begin{document}
 \begin{llstShortInline}
@@ -170,8 +200,8 @@
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}
 	%<tabelvoorbeeld4
 
@@ -283,8 +313,40 @@
 	Soms kan een verticale lijn de tabel wel duidelijker maken, bijvoorbeeld om in een waarheidstabel de scheiding tussen de in- en uitgangen duidelijk te maken.
 
 	\subsection{\texorpdfstring{Het gebruik van \lcode{\\multicolumn} in de tabelkop}{Het gebruik van \textbackslash{}multicolumn in de tabelkop}}
-	%TODO Nog doen!
-	Nog doen!
+	Het commando |\multicolumn| werkt niet in een tabelkop. 
+	Dit komt omdat in |\hr_kopstijl:n| al een |\multicolumn| gebruikt wordt om de tekst in de kop van de juiste voorgrondkleur (wit) te voorzien en te centreren in de kolom.
+	
+	Dit probleem kan opgelost worden door het betreffende |\tabel|-commando te kopiëren en de aanroep naar |\hr_tabelkop:n| te vervangen door een aanroep naar |\hr_tabelkopmulticolumn:n|, zie \cref{lst:hr_tabelkopmulticolumn}.
+
+	\listing[Het commando \lcode{hr_tabelkopmulticolumn:n}.]{hr_tabelkopmulticolumn}	
+	
+	In \cref{lst:tabelmulticolumn} is het commando |\tabelmulticolumn| gedefinieerd door het commando |\tabel| uit |style_nl_NL.tex| te kopiëren en is de aanroep naar \hcode{\\hr\_tabel\\-kop:n} vervangen door een aanroep naar |\hr_tabelkopmulticolumn:n|.
+	
+	\listing[Het commando \lcode{tabelmulticolumn}.]{tabelmulticolumn}	
+	
+	\Cref{tab:vb_tabelmulticolumn} is gemaakt met dit nieuwe commando |\tabelmulticolumn|, zie \cref{lst:vb_tabelmulticolumn}.
+	Er moet nu voor elke kolom in de kop een |\multicolumn| commando gebruikt worden, ook als de koptekst maar één kolom beslaat.
+
+	Bijvoorbeeld:	
+\begin{lstfragment}[style=lstyle]
+	\multicolum{1}{c}{\textcolor{white}{\textbf{koptekst}}
+\end{lstfragment}
+	De eerste parameter van |\multicolumn| geeft aan over hoeveel kolommen de koptekst uitgesmeerd wordt.
+		
+	\listing{vb_tabelmulticolumn}
+	
+	%>vb_tabelmulticolumn
+	\tabelmulticolumn{Voorbeeld van een multicolumn koptekst: de EXOR-functie}{vb_tabelmulticolumn}{ccc}{
+		\multicolumn{2}{c}{\textcolor{white}{\textbf{inputs}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{output}}} 
+	}{
+		0 & 0 & 0 \\	 
+		0 & 1 & 1 \\	 
+		1 & 0 & 1 \\	 
+		1 & 0 & 0 	 
+	}
+	%<vb_tabelmulticolumn
+	
+	Let op: de commando's |\hr_tabelkopmulticolumn:n| en |\tabelmulticolumn| zijn niet in |style_nl_NL.tex| opgenomen en deze code moet je dus zelf in je document kopiëren, zie \cref{lst:hr_tabelkopmulticolumn,lst:tabelmulticolumn}.
 	
 	\clearpage	
 	\section{Voorbeelden}
@@ -427,9 +489,9 @@
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}
 	%<vb4
@@ -522,14 +584,14 @@
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
 	%<vb81
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		3 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		3 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		4 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		4 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
 	%>vb82
 		5 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
@@ -557,9 +619,9 @@
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}
 	%<vb9
@@ -604,11 +666,11 @@
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		3 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		3 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
 		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}{4}
 	%<vb11
@@ -815,8 +877,8 @@
 			\arrayrulecolor{hrred}\hline
 			\rowcolor{hrred} 
 			\multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[1c]}}} & \multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[1l]}}} & \multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[2]}}} \\ \hline
-			1 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn.\\
-			2 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. \\\hline
+			1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn.\\
+			2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. \\\hline
 		\end{tabularx}%
 	\end{myTable}
 	%<vb16
