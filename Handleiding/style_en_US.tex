@@ -1214,8 +1214,17 @@
 %http://ctan.triasinformatica.nl/systems/doc/pdftex/manual/pdftex-a.pdf#page=24
 \pdfsuppressptexinfo=1
 
+% url met mogelijkheid tot afbreken:
+\newcommand{\urlhyp}[1]{%
+	\StrSubstitute{#1}{\\-}{}[\nakedurl]%
+	\href{\nakedurl}{\hcode{#1}}%
+}
+
 % href met voetnoot met daarin de URL:
-\newcommand{\hreffn}[3][]{\href[#1]{#2}{#3}\footnote{\url{#2}}}
+\newcommand{\hreffn}[3][]{%
+	\StrSubstitute{#2}{\\-}{}[\nakedurl]%
+	\href[#1]{#2}{#3}\footnote{\href{\nakedurl}{\hcode{#2}}}%
+}
 
 % http://ctan.cs.uu.nl/macros/latex/contrib/cleveref/cleveref.pdf
 \usepackage[noabbrev, nameinlink, capitalise]{cleveref}
