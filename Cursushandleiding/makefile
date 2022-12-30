@@ -29,7 +29,7 @@ all : $(TARGET).pdf $(TARGET)_ebook.pdf
 
 .PHONY : clean
 clean :
-	-$(RM) -f *.aux $(SOURCE).log $(SOURCE).toc $(SOURCE).out $(SOURCE).bcf $(SOURCE).blg $(SOURCE).bbl $(SOURCE).run.xml
+	-$(RM) -f *.aux $(SOURCE).log $(SOURCE).toc $(SOURCE).out $(SOURCE).bcf $(SOURCE).blg $(SOURCE).bbl $(SOURCE).run.xml $(SOURCE).synctex.gz $(SOURCE).fdb_latexmk $(SOURCE).fls *.bak
 
 .PHONY : cleanall
 cleanall :
