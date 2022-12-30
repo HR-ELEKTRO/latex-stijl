@@ -11,7 +11,8 @@
 \IfFileExists{args.tex}{
     \input{args}
 }{
-    \ebooktrue
+    % 20223012 aangepast zodat A4 versie default is.
+    \ebookfalse
     \chartertrue
 }
 
@@ -58,9 +59,10 @@
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/geometry/geometry.pdf
 % iPad screen size 147mm x 197mm.
+% iPad 2019 screen size 156mm x 208mm.
 \iftoggle{ebook} {
     \usepackage[
-        papersize={150mm,200mm},
+        papersize={166.5mm,222mm}, %trail on error zodat er net zoveel tekst op een regel past als bij A4 versie
         top=14mm,
         head=10mm,
         headsep=5mm,
@@ -1198,10 +1200,12 @@
     \hypersetup{
         colorlinks=true,
         breaklinks=true,
-        linkcolor=black,
-        citecolor=black,
-        urlcolor=black,
-        filecolor=black,
+        % 20221230 aangepast omdat steeds meer collega's en studenten print versie online gebruiken.
+        anchorcolor=blue, 
+        citecolor=blue,
+        filecolor=blue,
+        linkcolor=blue,
+        urlcolor=blue,
         pdftitle={\titel{}},
         pdfauthor={Hogeschool Rotterdam},
         pdfdisplaydoctitle=true,
