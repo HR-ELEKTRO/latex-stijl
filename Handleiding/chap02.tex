@@ -53,9 +53,13 @@ De specifieke commando's die daarvoor gebruik kunnen worden zijn in een apart be
 De figuren zijn geplaatst in het directory |./figs| en de programma's zijn geplaatst in het directory |./progs|.
 
 Er is een makefile waarmee je het dictaat kunt compileren in twee versies: een papieren en een ebook versie.
-De papieren versie is bedoeld om dubbelzijdig te printen, heeft een bindmarge, hoofdstukken beginnen op oneven pagina's en links hebben geen kleur (klikken op papier werkt namelijk niet),
-maar werken wel (voor het geval iemand toch liever deze versie elektronisch leest).
-De ebook versie is enkelzijdig en heeft gekleurde links.
+De papieren versie is bedoeld om dubbelzijdig te printen, heeft een bindmarge, hoofdstukken beginnen op oneven pagina's%
+% AANGEPAST 01-01-2023 en links hebben geen kleur (klikken op papier werkt namelijk niet),
+%maar werken wel (voor het geval iemand toch liever deze versie elektronisch leest)
+.
+De ebook versie is enkelzijdig%
+% en heeft gekleurde links
+.
 De makefile maakt daarbij gebruik van het bestand |args.tex| om argumenten aan de \LaTeX\hyp{}code mee te geven.
 Als je \emph{géén} gebruik maakt van de makefile, kun je deze opties zelf aanpassen in |args.tex|.
 Als je \emph{wél} gebruik maakt van de makefile, dan worden deze opties vanuit de makefile overschreven en moet je de opties dus in de makefile aanpassen.
@@ -109,7 +113,7 @@ De class article kun je gebruiken voor eenvoudige documenten zoals bijvoorbeeld 
 	De sourcecode vind je hier: \url{https://bitbucket.org/HR_ELEKTRO/tds02/}.%
 }.
 
-Als je de de commando's |\frontmatter| en |\mainmatter| gebruikt in een book, dan worden de pagina's tussen deze twee commando's (in de papieren versie) Romeins genummerd.
+Als je de commando's |\frontmatter| en |\mainmatter| gebruikt in een book, dan worden de pagina's tussen deze twee commando's (in de papieren versie) Romeins genummerd.
 In de ebook versie worden de pagina's altijd gewoon doorgenummerd zodat het paginanummer dat door de reader wordt weergegeven overeenkomt met het werkelijke paginanummer.
 
 \section{Cursushandleiding}
@@ -148,7 +152,7 @@ De kolommen moeten gescheiden worden door een |&|-teken (zoals gebruikelijk bij 
 Gebruik |\\ \line| om de rijen te scheiden.
 Het is de bedoeling dat de meest recente versie bovenaan in de tabel komt.
 
-In de kolom Auteur kun je gebruik maken van het commando |\mailafko| om de standaard HR afkorting van de auteur aanklikbaar te maken.
+In de kolom Auteur kun je gebruik maken van het commando |\mailafko| om de standaard HR-afkorting van de auteur aanklikbaar te maken.
 Door het aanklikken van de afkorting kan de auteur eenvoudig worden gemaild.
 
 Als je in de kolom Omschrijving gebruik wilt maken van een puntsgewijze lijst,
@@ -206,8 +210,8 @@ een optie waarbij er altijd 2 regels bijeen gehouden worden.
 Het commando \code[mathescape]{\\noclub[$n$]} kan meteen na een paragraaf gebruikt worden om aan te geven dat de eerste $n$ regels van deze paragraaf bij elkaar moeten 
 blijven en het commando \code[mathescape]{\\nowidow[$m$]} kan meteen na een paragraaf gebruikt worden om aan te geven dat de laatste $m$ regels van deze paragraaf bij
 elkaar moeten blijven.
-In het verleden gebruikte ik de package |needspace| maar |nowidow| is veel handiger omdat je daarmee  \squote{automatisch} weduwen en wezen kunt voorkomen.
-Package |needspace| kan nog steeds van pas komen als je meerdere paragrafen bij elkaar wilt houden maar deze package is niet in |style_nl_NL.tex| opgenomen.
+In het verleden gebruikte ik de package |needspace|, maar |nowidow| is veel handiger omdat je daarmee  \squote{automatisch} weduwen en wezen kunt voorkomen.
+Package |needspace| kan nog steeds van pas komen als je meerdere paragrafen bij elkaar wilt houden, maar deze package is niet in |style_nl_NL.tex| opgenomen.
 
 De papieren versie is two-sided en gebruikt standaard |\flushbottom| wat ervoor zorgt dat de inhoud van een pagina verticaal verdeeld wordt over de pagina door rubber spaces
 (ruimte tussen paragrafen en rondom floats) op te rekken.
@@ -216,11 +220,11 @@ De ebook versie is one-sided en gebruikt standaard |\raggedbottom|.
 
 \section{Aanhalingstekens}
 \label{sec:aanhalingstekens}
-Als je een woord tussen dubbele aanhalingtekens wilt plaatsen, dan kun je dat, zoals je vast wel weet, in \LaTeX{} niet doen door het teken |"| te gebruiken omdat dit teken gebruikt
+Als je een woord tussen dubbele aanhalingstekens wilt plaatsen, dan kun je dat, zoals je vast wel weet, in \LaTeX{} niet doen door het teken |"| te gebruiken omdat dit teken gebruikt
 wordt om karakters van een trema te voorzien.
 De code |"extra"| geeft dus "extra".
 Omdat ik UFT8 code gebruik kun je een ë gewoon intypen als |ë|.
-Het probleem met de aanhalingstekens kun je oplossen door de code |``trema''|: ``trema'' maar in de stijl is het commando |\dquote| gedefinieerd waarmee je ook dubbele
+Het probleem met de aanhalingstekens kun je oplossen door de code |``trema''|: ``trema'', maar in de stijl is het commando |\dquote| gedefinieerd waarmee je ook dubbele
 aanhalingstekens om een tekstfragment kunt plaatsten.
 Bijvoorbeeld: |\dqoute{trema}| geeft: \dquote{trema}.
 Omdat in dit commando gebruik gemaakt wordt van de package |csquote| is het nu gemakkelijker om de stijl van de aanhalingstekens te veranderen
@@ -278,7 +282,7 @@ De vierde en laatste parameter is de titel van het figuur.
 De code: |\figuur{width=.5\textwidth}{zebra}{Een zebra.}| produceert \cref{fig:zebra}.
 \figuur{width=.5\textwidth}{zebra}{Een zebra.}
 
-In plaats van het commando |\figuur| kun je ook het commando |\hrfigure| gebuiken. Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
+In plaats van het commando |\figuur| kun je ook het commando |\hrfigure| gebruiken. Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
 De tweede parameter geeft de filenaam (zonder extensie).
 Dit bestand moet in het directory |./figs| geplaatst zijn.
 
@@ -348,10 +352,10 @@ Dit is een zeer uitgebreide package met een vrij steile leercurve\footnote{%
 Er zijn wel hele mooie resultaten mee te behalen.
 Deze package is in de stijl opgenomen en wordt gebruikt om de titlepage te \squote{tekenen}.
 De tikzlibraries |fadings| en |shadows| worden daar ook in gebruikt. 
-Daarnaast worden ook de tikzlibraries |shapes|, |arrows|, |arrows.meta| en |positioning| in de stijl gebruikt maar overige tikzlibraries moet je zelf opnemen in de preamble van je document met het commando |\usetikzlibrary|.
+Daarnaast worden ook de tikzlibraries |shapes|, |arrows|, |arrows.meta| en |positioning| in de stijl gebruikt, maar overige tikzlibraries moet je zelf opnemen in de preamble van je document met het commando |\usetikzlibrary|.
 
 Er zijn, met dank aan Daniël Versluis, verschillende commando's opgenomen in de stijl om Ti$k$Z-tekeningen in een document op te nemen. 
-Het commando |\tikzfiguur| kan gerbuikt worden om een |tikzpicture|-environment die in een apart document is geplaatst in een document op te nemen. 
+Het commando |\tikzfiguur| kan gebruikt worden om een |tikzpicture|-environment die in een apart document is geplaatst in een document op te nemen. 
 Het commando is vergelijkbaar met het \cref{sec:figuren} besproken commando |\figuur|. 
 Het commando |\tikzfiguur| heeft drie parameters waarvan de eerste optioneel is.
 De eerste parameter bevat de \squote{placement} argumenten voor de |\figure| environment.
@@ -384,7 +388,7 @@ Het in een apart (los) bestand plaatsen van de Ti$k$Z-code heeft een groot voord
 	\url{http://www.tikzedt.org/}.
 } van harte aanbevelen. 
 
-In plaats van het commando |\tikzfiguur| kun je ook het commando |\hrtikzfigure|\label{hrtikzfigure} gebuiken. Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
+In plaats van het commando |\tikzfiguur| kun je ook het commando |\hrtikzfigure|\label{hrtikzfigure} gebruiken. Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
 De tweede parameter geeft de filenaam (zonder extensie).
 Dit bestand moet in het directory |./tikz| geplaatst zijn.
 
@@ -414,7 +418,7 @@ De code gegeven in \cref{lst:tikzvoorbeeld2} produceert het blokdiagram dat in \
 Als je de Ti$k$Z-code liever in het document zelf opneemt, dan kun je het commando {\lstlcs\hcode{\\tikz\\-inline\\-fi\\-guur}} gebruiken.
 Dit commando heeft vier parameters waarvan de eerste optioneel is.
 De eerste parameter bevat de \squote{placement} argumenten voor de |figure|-environment.
-De tweede parameter is de suffix van het label ({\lstllabel\code{fig:suffix}}).
+De tweede parameter is het suffix van het label ({\lstllabel\code{fig:suffix}}).
 De derde parameter bevat de Ti$k$Z-code die in een |tikzpicture|-environment zal worden geplaatst. 
 De vierde en laatste parameter is de titel van het figuur.
 
@@ -717,7 +721,7 @@ linerange={tabelvoorbeeld3-tabelvoorbeeld3},
 
 Als je de |X|-kolom alleen links, alleen rechts of helemaal niet uitgevuld wilt hebben, dan kan dat door een prefix toe te voegen aan de |X|-kolomspecificatie, zie \cref{tab:xspecs}.
 
-\tabel{Verschillende prefixen van de \lcode{X}-kolomspecifier.}{xspecs}{lp{6cm}}{
+\tabel{Verschillende prefixen van de \lcode{X}-kolomspecifier.}{xspecs}{ll}{
 	uitlijning & \lcode{X}-kolomspecificatie met prefix
 }{
 	niet & \lcode{>\{\\centering\\arraybackslash\}X} \\

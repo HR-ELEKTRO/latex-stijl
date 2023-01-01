@@ -22,7 +22,7 @@ De derde parameter is een deel van het label, de labelnaam wordt {\lstllabel\hco
 De laatste parameter is de titel van de listing.
 Het commando |\floatlstinput| heeft de voorkeur omdat \LaTeX{} dan zelf kan bepalen waar de listing wordt geplaatst en de listing dan niet halverwege afgebroken wordt.
 
-De environments |floatlst| en |lst| kunnen gebruikt worden als de code niet uit een bestand moet worden gelezen maar in de environment zelf wordt opgenomen.
+De environments |floatlst| en |lst| kunnen gebruikt worden als de code niet uit een bestand moet worden gelezen, maar in de environment zelf wordt opgenomen.
 Deze environments hebben drie parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstset| worden meegegeven, bijvoorbeeld: |style = cstyle, style = linenumbers|.
 De tweede parameter is een deel van het label, de labelnaam wordt {\lstllabel\hcode{lst:tweede\\-argument}}.
@@ -33,7 +33,7 @@ Het commando |\lstinputfragment| kan gebruikt worden als je een codefragment uit
 Het fragment wordt op de plaats van het commando ingevuld.
 Dit commando heeft twee parameters die gelijk zijn aan de eerste twee parameters van het commando |floatlstinput|.
 
-De environment |lstfragment| kan gebruikt worden als een codefragment niet uit een bestand moet worden gelezen maar in de environment zelf wordt opgenomen (zonder titel en zonder label).
+De environment |lstfragment| kan gebruikt worden als een codefragment niet uit een bestand moet worden gelezen, maar in de environment zelf wordt opgenomen (zonder titel en zonder label).
 Het fragment wordt op de plaats van het commando ingevuld.
 Dit commando heeft één parameters die gelijk is aan de eerste parameter van de environment |floatlst|.
 

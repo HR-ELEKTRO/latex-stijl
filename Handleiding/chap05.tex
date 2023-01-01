@@ -4,7 +4,7 @@
 \chapter{Algemene \LaTeX{}-tips en -trucs}
 Nog enkele algemene \LaTeX{}-tips en -trucs:
 \begin{itemize}
-    \item Latex kent minstens vier verschillende verschillende liggende streepjes, zie \cref{tab:streepjes}.
+    \item Latex kent minstens vier verschillende liggende streepjes, zie \cref{tab:streepjes}.
         De laatste moet je als rekenkundig minteken gebruiken.
     \tabel{Liggende streepjes in \LaTeX{}}{streepjes}{ccc}{%
         Engelse naam\footnotemark{} & code & resultaat
@@ -46,8 +46,8 @@ Nog enkele algemene \LaTeX{}-tips en -trucs:
         \item Gebruik accolades rond dubbele achternamen.
         \item Neem \code[mathescape,language={[AlLaTeX]TeX}]{Langid = \{$\ldots{}$\}} op in elke entry zodat er correct wordt afgebroken.
         \item Gebruik |--| bij het aangeven van een aangesloten aantal pagina's:\\ |Pages = {293--326}|.
-        \item Geef ISBN nummers op met streepjes ertussen:\\ |ISBN = {978-0-201-89684-8}| om een overfull hbox te voorkomen.
-            Gebruik: \url{http://tools.wmflabs.org/isbn/IsbnCheckAndFormat} om ISBN nummers zonder streepjes om te zetten in de officiële notatie (met steepjes).
+        \item Geef ISBN-nummers op met streepjes ertussen:\\ |ISBN = {978-0-201-89684-8}| om een overfull hbox te voorkomen.
+            Gebruik: \url{http://tools.wmflabs.org/isbn/IsbnCheckAndFormat} om ISBN-nummers zonder streepjes om te zetten in de officiële notatie (met streepjes).
     \end{itemize}
     \item |\sloppy| zorgt ervoor dat overfull hbox vermeden wordt door spaties ongelimiteerd lang te maken.
         Gebruik daarna |\fussy| om weer netjes uit te vullen.
@@ -101,10 +101,10 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
     }. In woorden waarbij de f en de i niet bij dezelfde lettergreep horen, zoals bijvoorbeeld selfish is het beter om  om geen ligatuur te gebruiken.
     Gebruik daarom \code{self\\makebox\{\}ish} self\makebox{}ish.
     Vergelijk selfish met self\makebox{}ish\footnote{%
-    	Je moet wel inzoemen om het verschil te kunnen zien. In selfish zit de f vast aan de i en bij het selecteren van tekst is de fi één letter. In self\makebox{}ish zit een beetje ruimte tussen de f en de i en bij het selecteren van tekst zijn het twee aparte letters.  
+    	Je moet wel inzoomen om het verschil te kunnen zien. In selfish zit de f vast aan de i en bij het selecteren van tekst is de fi één letter. In self\makebox{}ish zit een beetje ruimte tussen de f en de i en bij het selecteren van tekst zijn het twee aparte letters.  
 	}.
     Hetzelfde geldt voor woorden zoals off\makebox{}line enzovoorts.
-    \item Gebruik de package |upgreek| voor rechtopstaande griekse letters.
+    \item Gebruik de package |upgreek| voor rechtopstaande Griekse letters.
 \end{itemize}
 
 Nog enkele tips voor het gebruik van \LaTeX{} in combinatie met git:
