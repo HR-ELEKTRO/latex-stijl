@@ -1,4 +1,5 @@
 % !TeX spellcheck = nl_NL
+% LTeX: language=nl
 % minimaal document met gebruik van HR-stijl
 \newcommand{\myClass}{article}
 \newcommand{\cursuscode}{HR-TABEL}
@@ -13,13 +14,13 @@
 \include{styleCode}
 
 \newcommand{\listing}[2][]{%
-	\floatlstinput[
-		style=lstyle, 
-		breakatwhitespace=false,
-		rangebeginprefix= \%>,
-		rangeendprefix=\%<,
-		linerange={#2-#2},
-	]{../main.tex}{#2}{\ifstrequal{#1}{}{\LaTeX{}-code waarmee \cref{tab:#2} gemaakt is.}{#1}}
+	\floatlstinput[%
+		style=lstyle,% 
+		breakatwhitespace=true,%
+		rangebeginprefix=\%>,%
+		rangeendprefix=\%<,%
+		linerange={#2-#2},%
+	]{../main.tex}{#2}{\ifstrequal{#1}{}{\LaTeX{}-code waarmee \cref{tab:#2} gemaakt is.}{#1}}%
 }
 
 %>hr_tabelkopmulticolumn
@@ -36,7 +37,7 @@
 \NewDocumentCommand \tabelmulticolumn {O{!htbp}mmmmm} 
 {
 	\begin{myTable}[#1]
-		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}} {\renewcommand{\arraystretch}{1.36}}%
 		\centering%
 		\caption{#2}
 		\label{tab:#3}
@@ -96,9 +97,9 @@
 	De code die gegeven is in \cref{lst:tabelvoorbeeld1} produceert \cref{tab:tabelvoorbeeld1}.
 	
 	%\clearpage
-	\listing{tabelvoorbeeld1}
+\listing{tabelvoorbeeld1}%
 		
-	%>tabelvoorbeeld1
+%>tabelvoorbeeld1
 	\tabel{Zomaar een tabel.}{tabelvoorbeeld1}{lrr}{
 		Getal & Decimaal & Hexadecimaal
 	}{        
@@ -107,7 +108,7 @@
 		twintig & 20 & 14 \\ 
 		tweehonderdvijfenvijftig & 255 & FF
 	}
-	%<tabelvoorbeeld1
+%<tabelvoorbeeld1
 	
 	\subsection{\texorpdfstring{\lcode{\\tabelmaxpaginabreedgeschaald}}{\textbackslash{}tabelmaxpaginabreedgeschaald}}
 	Het commando |\tabelmaxpaginabreedgeschaald| heeft exact dezelfde parameters als het commando |\tabel|.
@@ -149,7 +150,7 @@
 
 	\listing{tabelvoorbeeld2}
 	
-	%>tabelvoorbeeld2
+%>tabelvoorbeeld2
 	\tabelX{Zomaar een uitgevulde tabel.}{tabelvoorbeeld2}{XX}{
 		Kolom 1 & Kolom2
 	}{        
@@ -157,7 +158,7 @@
 		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
 		De rechterkolom zal net zo breed zijn als de linker.
 	}
-	%<tabelvoorbeeld2
+%<tabelvoorbeeld2
 	
 	Het is ook mogelijk om de kolommen die uitgevuld worden niet even breed te maken.
 	De code die gegeven is in \cref{lst:tabelvoorbeeld3} produceert \cref{tab:tabelvoorbeeld3}.
@@ -167,19 +168,19 @@
 	
 	\listing{tabelvoorbeeld3}
 	
-	%>tabelvoorbeeld3
-	\tabelX{Zomaar een uitgevulde tabel met kolommen van ongelijke breedte.}{tabelvoorbeeld3}{>{\hsize=0.67\hsize\linewidth=\hsize}X>{\hsize=1.33\hsize\linewidth=\hsize}X}{
+%>tabelvoorbeeld3
+	\tabelX{Zomaar een uitgevulde tabel met kolommen van ongelijke breedte.}{tabelvoorbeeld3}{>{\hsize = 0.67\hsize\linewidth = \hsize}X>{\hsize = 1.33\hsize\linewidth = \hsize}X}{
 		Kolom 1 & Kolom2
 	}{        
 		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. &
 		Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
 		De rechterkolom zal twee keer zo breed zijn als de linker.
 	}
-	%<tabelvoorbeeld3
+%<tabelvoorbeeld3
 	
 	Als je de |X|-kolom alleen links, alleen rechts of helemaal niet uitgevuld wilt hebben, dan kan dat door een prefix toe te voegen aan de |X|-kolomspecificatie, zie \cref{tab:xspecs}.
 	
-	\tabel{Verschillende prefixen van de \lcode{X}-kolomspecificatie.}{xspecs}{lp{6cm}}{
+	\tabel{Verschillende prefixen van de \lcode{X}-kolomspecificatie.}{xspecs}{ll}{
 		uitlijning & \lcode{X}-kolomspecificatie met prefix
 	}{
 		niet & \lcode{>\{\\centering\\arraybackslash\}X} \\
@@ -193,8 +194,8 @@
 	
 	\listing{tabelvoorbeeld4}
 	
-	%>tabelvoorbeeld4
-	\tabelX{Tabel met X kolommen.}{tabelvoorbeeld4}{>{\centering}X>{\raggedleft}X>{\raggedright}XX}{
+%>tabelvoorbeeld4
+	\tabelX{Tabel met X kolommen.}{tabelvoorbeeld4} {>{\centering}X>{\raggedleft}X>{\raggedright}XX}{
 		\texttt{>\{\textbackslash{}centering\}X} & 
 		\texttt{>\{\textbackslash{}raggedleft\}X} & 
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
@@ -203,7 +204,7 @@
 		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
 		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}
-	%<tabelvoorbeeld4
+%<tabelvoorbeeld4
 
 	\subsection{\texorpdfstring{\lcode{\\langetabelX}}{\textbackslash{}langetabelX}}
 	Het commando |\langetabelX| moet gebruikt worden als een tabel langer is dan een pagina.
@@ -222,7 +223,7 @@
 	
 	\listing{tabelvoorbeeld5}
 	
-	%>tabelvoorbeeld5
+%>tabelvoorbeeld5
 	\tabelXm{Zomaar een uitgevulde tabel waarbij de regels verticaal in het midden uitgelijnd worden}{tabelvoorbeeld5}{XX}{
 		Kolom 1 & Kolom2
 	}{        
@@ -232,7 +233,7 @@
 		Tweede regel & 	Zomaar een stukje tekst om te laten zien hoe deze tekst uitgevuld en uitgelijnd wordt. 
 		De rechterkolom zal net zo breed zijn als de linker.
 	}
-	%<tabelvoorbeeld5
+%<tabelvoorbeeld5
 		
 	\subsection{\texorpdfstring{\lcode{\\langetabelXm}}{\textbackslash{}langetabelXm}}
 	Het commando |\langetabelXm| moet gebruikt worden als een tabel langer is dan een pagina.
@@ -316,7 +317,7 @@
 	Het commando |\multicolumn| werkt niet in een tabelkop. 
 	Dit komt omdat in |\hr_kopstijl:n| al een |\multicolumn| gebruikt wordt om de tekst in de kop van de juiste voorgrondkleur (wit) te voorzien en te centreren in de kolom.
 	
-	Dit probleem kan opgelost worden door het betreffende |\tabel|-commando te kopiëren en de aanroep naar |\hr_tabelkop:n| te vervangen door een aanroep naar |\hr_tabelkopmulticolumn:n|, zie \cref{lst:hr_tabelkopmulticolumn}.
+	Dit probleem kan opgelost worden door het betreffende |\tabel|-commando te kopiëren en de aanroep naar |\hr_tabelkop:n| te vervangen door een aanroep naar \hcode{\\hr_tabel\\-kop\\-multi\\-col\\-umn:n}, zie \cref{lst:hr_tabelkopmulticolumn}.
 
 	\listing[Het commando \lcode{hr_tabelkopmulticolumn:n}.]{hr_tabelkopmulticolumn}	
 	
@@ -335,7 +336,7 @@
 		
 	\listing{vb_tabelmulticolumn}
 	
-	%>vb_tabelmulticolumn
+%>vb_tabelmulticolumn
 	\tabelmulticolumn{Voorbeeld van een multicolumn koptekst: de EXOR-functie}{vb_tabelmulticolumn}{ccc}{
 		\multicolumn{2}{c}{\textcolor{white}{\textbf{inputs}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{output}}} 
 	}{
@@ -344,11 +345,11 @@
 		1 & 0 & 1 \\	 
 		1 & 0 & 0 	 
 	}
-	%<vb_tabelmulticolumn
+%<vb_tabelmulticolumn
 	
 	Let op: de commando's |\hr_tabelkopmulticolumn:n| en |\tabelmulticolumn| zijn niet in |style_nl_NL.tex| opgenomen en deze code moet je dus zelf in je document kopiëren, zie \cref{lst:hr_tabelkopmulticolumn,lst:tabelmulticolumn}.
 	
-	\clearpage	
+	%\clearpage	
 	\section{Voorbeelden}
 	In dit hoofdstuk vind je voorbeelden van het gebruik van de verschillende commando's om tabellen te maken in de HR-stijl.
 	\subsection{\texorpdfstring{\lcode{\\tabel}}{\textbackslash{}tabel}}
@@ -356,7 +357,7 @@
 	
 	\listing{vb1}
 
-	Deze tekst wordt boven de tabel afgedrukt.
+	Deze tekst wordt boven de tabel afgedrukt. Als de tabel nog op de pagina past. Anders verschuift (float) de tabel naar de volgende pagina.
 
 	% commando voor tabel
 	% #1 OPTIONEEL = placement argument voor table e.g. tb or H 
@@ -366,7 +367,7 @@
 	% #5 = kop tabel (eerste regel)
 	% #6 = inhoud tabel (rest van de regels)
 	%      gebruik \\ om rijen te scheiden
-	%>vb1
+%>vb1
 	\tabel{Eenvoudige tabel.}{vb1}{clr}{
 		\# & artikel & aantal
 	}{
@@ -374,18 +375,18 @@
 		2 & condensatoren & 200 \\
 		3 & spoelen & 3
 	}
-	%<vb1
+%<vb1
 	
-	Deze tekst wordt onder de tabel afgedrukt.
+	Deze tekst wordt onder de tabel afgedrukt. Als de tabel nog op de pagina past. Anders verschuift (float) de tabel naar de volgende pagina.
 
-	\clearpage
+	%\clearpage
 	\Cref{tab:vb2} is gebruikt het placement argument |H|, zie \cref{lst:vb2}.
 	
 	\listing{vb2}
 	
-	Deze tekst wordt boven de tabel afgedrukt.
+	Deze tekst wordt altijd boven de tabel afgedrukt omdat het placement argument |H| gebruikt is.
 
-	%>vb2
+%>vb2
 	\tabel[H]{Eenvoudige tabel.}{vb2}{clr}{
 		\# & artikel & aantal
 	}{
@@ -393,9 +394,9 @@
 		2 & condensatoren & 200 \\
 		3 & spoelen & 3
 	}
-	%<vb2
+%<vb2
 	
-	Deze tekst wordt onder de tabel afgedrukt.
+	Deze tekst wordt altijd onder de tabel afgedrukt omdat het  placement argument |H| gebruikt is.
 	
 	\clearpage
 	\subsection{\texorpdfstring{\lcode{\\langetabel}}{\textbackslash{}langetabel}}
@@ -416,7 +417,7 @@
 	\langetabel{Eenvoudige maar lange tabel.}{vb3}{clr}{
 		\# & artikel & aantal
 	}{
-		1 & weerstanden & 10 \\
+		1 & weerstanden die op voorraad zijn & 10 \\
 		2 & condensatoren & 200 \\
 		3 & spoelen & 3 \\
 		4 & weerstanden & 10 \\
@@ -452,22 +453,12 @@
 		33 & spoelen & 3 \\
 		34 & weerstanden & 10 \\
 		35 & condensatoren & 200 \\
+%>vb32
 		36 & spoelen & 3 \\
 		37 & weerstanden & 10 \\
 		38 & condensatoren & 200 \\
 		39 & spoelen & 3 \\
 		40 & weerstanden & 10 \\
-		41 & condensatoren & 200 \\
-		42 & spoelen & 3 \\
-		43 & weerstanden & 10 \\
-		44 & condensatoren & 200 \\
-		45 & spoelen & 3 \\
-%>vb32
-		46 & weerstanden & 10 \\
-		47 & condensatoren & 200 \\
-		48 & spoelen & 3 \\
-		49 & weerstanden & 10 \\
-		50 & condensatoren & 200 
 	}{3}
 %<vb32
 	
@@ -482,19 +473,18 @@
 	\clearpage	
 	Deze tekst wordt boven de tabel afgedrukt.
 
-	%>vb4
+%>vb4
 	\tabelX{Tabel met X kolommen.}{vb4}{>{\centering}X>{\raggedleft}X>{\raggedright}XX}{
 		\texttt{>\{\textbackslash{}centering\}X} & 
 		\texttt{>\{\textbackslash{}raggedleft\}X} & 
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} gebruikt om de regel af te breken.\\
+		Dit is rij nummer 2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}
-	%<vb4
+%<vb4
 
 	Deze tekst wordt onder de tabel afgedrukt.
 
@@ -505,8 +495,8 @@
 
 	Deze tekst wordt boven de tabel afgedrukt.
 
-	%>vb5
-	\tabelX{Tabel met ongelijke X kolommen.}{vb5}{>{\hsize=1.33\hsize\linewidth=\hsize}X>{\hsize=0.67\hsize\linewidth=\hsize}X}{
+%>vb5
+	\tabelX{Tabel met ongelijke X kolommen.}{vb5}{>{\hsize = 1.33\hsize\linewidth = \hsize}X>{\hsize = 0.67\hsize\linewidth = \hsize}X}{
 		kolom 1 & 
 		kolom 2
 	}{
@@ -515,7 +505,7 @@
 		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
 		Kolom 2 moet maar half zo breed zijn als kolom 1. 
 	}
-	%<vb5
+%<vb5
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 
@@ -526,8 +516,8 @@
 
 	Deze tekst wordt boven de tabel afgedrukt.
 
-	%>vb6	
-	\tabelX[\textwidth][H]{Tabel met ongelijke X kolommen.}{vb6}{>{\hsize=1.33\hsize\linewidth=\hsize}X>{\hsize=0.67\hsize\linewidth=\hsize}X}{
+%>vb6	
+	\tabelX[\textwidth][H]{Tabel met ongelijke X kolommen.}{vb6}{>{\hsize = 1.33\hsize\linewidth = \hsize}X>{\hsize = 0.67\hsize\linewidth = \hsize}X}{
 		kolom 1 & 
 		kolom 2
 	}{
@@ -536,7 +526,7 @@
 		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
 		Kolom 2 moet maar half zo breed zijn als kolom 1. 
 	}
-	%<vb6
+%<vb6
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 	
@@ -547,8 +537,8 @@
 	
 	Deze tekst wordt boven de tabel afgedrukt.
 
-	%>vb7
-	\tabelX[.8\textwidth]{Tabel met ongelijke X kolommen.}{vb7}{>{\hsize=1.33\hsize\linewidth=\hsize}X>{\hsize=0.67\hsize\linewidth=\hsize}X}{
+%>vb7
+	\tabelX[.8\textwidth]{Tabel met ongelijke X kolommen.}{vb7}{>{\hsize = 1.33\hsize\linewidth = \hsize}X>{\hsize = 0.67\hsize\linewidth = \hsize}X}{
 		kolom 1 & 
 		kolom 2
 	}{
@@ -557,7 +547,7 @@
 		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
 		Kolom 2 moet maar half zo breed zijn als kolom 1. 
 	}
-	%<vb7
+%<vb7
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 
@@ -577,27 +567,27 @@
 	\clearpage
 	Deze tekst wordt boven de tabel afgedrukt.
 	
-	%>vb81
+%>vb81
 	\langetabelX{Lange tabel met X kolommen.}{vb8}{>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedright\arraybackslash}XX}{
 		\texttt{>\{\textbackslash{}centering\}X} & 
 		\texttt{>\{\textbackslash{}raggedleft\}X} & 
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-	%<vb81
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		3 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		4 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-	%>vb82
-		5 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+%<vb81
+		Dit is rij 2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+		Dit is rij 3 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+		Dit is rij 4 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+%>vb82
+		Dit is rij 5 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.
 	}{4}
-	%<vb82
+%<vb82
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 
@@ -612,19 +602,18 @@
 	\clearpage	
 	Deze tekst wordt boven de tabel afgedrukt.
 	
-	%>vb9
+%>vb9
 	\tabelXm{Tabel met X kolommen die verticaal in het midden uitgelijnd zijn.}{vb9}{>{\centering}X>{\raggedleft}X >{\raggedright}X X}{
 		\texttt{>\{\textbackslash{}centering\}X} & 
 		\texttt{>\{\textbackslash{}raggedleft\}X} & 
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
+		Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+		Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken. \\
+		Dit is rij 2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
 	}
-	%<vb9
+%<vb9
 
 	Deze tekst wordt onder de tabel afgedrukt.
 
@@ -635,7 +624,7 @@
 	
 	Deze tekst wordt boven de tabel afgedrukt.
 	
-	%>vb10
+%>vb10
 	\tabelXm[.8\textwidth]{Tabel met ongelijke X kolommen.}{vb10}{>{\hsize=1.33\hsize\linewidth=\hsize}X >{\hsize=0.67\hsize\linewidth=\hsize}X}{
 		kolom 1 & 
 		kolom 2
@@ -645,7 +634,7 @@
 		Deze iets langere tekst komt te staan in kolom 2 en zou uitgevuld moeten zijn.
 		Kolom 2 moet maar half zo breed zijn als kolom 1. 
 	}
-	%<vb10
+%<vb10
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 
@@ -659,21 +648,27 @@
 
 	Deze tekst wordt boven de tabel afgedrukt.
 	
-	%>vb11
-	\langetabelXm{Lange tabel met X kolommen.}{vb11}{>{\centering\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedright\arraybackslash}XX}{
+%>vb11
+	\langetabelXm{Lange tabel met X kolommen.}{vb11}{>{\centering\arraybackslash }X>{\raggedleft\arraybackslash }X>{\raggedright\arraybackslash }XX}{
 		\texttt{>\{\textbackslash{}centering\}X} & 
 		\texttt{>\{\textbackslash{}raggedleft\}X} & 
 		\texttt{>\{\textbackslash{}raggedright\}X} & 
 		\texttt{X}
 	}{
-		1 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\\
-		2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn. \\
-		3 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
-		Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.
-	}{4}
-	%<vb11
+	Deze iets langere tekst komt te staan in kolom 1 en zou niet uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+	Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+%<vb11
+	Dit is rij 2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+	Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+	Dit is rij 3 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+	Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+	Dit is rij 4 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+	Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.\\
+%>vb11
+	Dit is rij 5 & Deze iets langere tekst komt te staan in kolom 2 en zou links uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 4 en zou uitgevuld moeten zijn.\newline
+	Hierboven is een \lcode{\\newline} commando gebruikt om de regel af te breken.
+}{4}
+%<vb11
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 	
@@ -685,13 +680,13 @@
 	
 	Deze tekst wordt boven de tabel afgedrukt.
 	
-	%>vb12
+%>vb12
 	\tabel{Tabel die te breed is.}{vb12}{cccccccc}{
 		kolom 1 & kolom 2 & kolom 3 & kolom 4 & kolom 5 & kolom 6 & kolom 7	& kolom 8	
 	}{
 		bla & bla & bla & bla & bla & bla & bla	& bla
 	}
-	%<vb12
+%<vb12
 
 	Deze tekst wordt onder de tabel afgedrukt.
 	
@@ -699,20 +694,20 @@
 
 	\listing{vb13}
 	
-	\clearpage
+	%\clearpage
 	Deze tekst wordt boven de tabel afgedrukt.
 	
-	%>vb13
+%>vb13
 	\tabelmaxpaginabreedgeschaald{\Cref{tab:vb12} die eigenlijk te breed is, is nu geschaald.}{vb13}{cccccccc}{
 		kolom 1 & kolom 2 & kolom 3 & kolom 4 & kolom 5 & kolom 6 & kolom 7	& kolom 8	
 	}{
 		bla & bla & bla & bla & bla & bla & bla	& bla
 	}
-	%<vb13
+%<vb13
 	
 	Deze tekst wordt onder de tabel afgedrukt.
 	
-	\clearpage
+	%\clearpage
 	\subsection{\texorpdfstring{\lcode{\\versiehistorie}}{\textbackslash{}versiehistory}}
 	Het commando |\versiehistorie| kan gebruikt worden om een versietabel af te drukken.
 	Dit commando heeft een nieuwe implementatie gekregen.
@@ -735,8 +730,9 @@
 		rangeendprefix=\%<,
 		linerange={versiehistorie-versiehistorie},
 	]{../main.tex}{versiehistorie}{\LaTeX{}-code waarmee de onderstaande versiehistorie gemaakt is.}
-	
-	%>versiehistorie
+
+\needspace{6cm}
+%>versiehistorie
 	\versiehistorie{
 		Datum & 3 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. Daarbij kan gebruik gemaakt worden van een opsomming. Voorbeeld van een opsomming:
 		\begin{itemizeintabel}
@@ -756,7 +752,7 @@
 		& \mailafko{BroJZ} \\
 		Datum & 1 & Beschrijving van de aanpassingen in deze versie. Natuurlijk worden de toevoegingen hier ook besproken. & \mailafko{BroJZ} \\
 	}
-	%<versiehistorie
+%<versiehistorie
 	
 	\clearpage
 	\section{Tips bij conversie}
@@ -774,7 +770,7 @@
 		Tabellen die gebruik maken van de kolomspecificatie |X[m]| kunnen gebruik maken van het |\tabelXm| commando. 
 	\end{itemize} 
 	
-	\tabel{Verschillende vertalingen van de \lcode{X}-kolomspecificatie.}{xcrlvertalen}{lp{6cm}}{
+	\tabel{Verschillende vertalingen van de \lcode{X}-kolomspecificatie.}{xcrlvertalen}{ll}{
 		oud & nieuw
 	}{
 		\lcode{X[c]} & \lcode{>\{\\centering\\arraybackslash\}X} \\
@@ -783,7 +779,7 @@
 		\lcode{X} & \lcode{X}
 	}
 	
-	\tabel{Verschillende vertalingen van de \lcode{X}-kolomspecificatie.}{xvertalen}{lp{7.5cm}}{
+	\tabel{Verschillende vertalingen van de \lcode{X}-kolomspecificatie.}{xvertalen}{lp{8.5cm}}{
 	oud & nieuw
 	}{
 		\lcode{X[1]X[2]} & \lcode{>\{\\hsize=0.67\\hsize\\linewidth=\\hsize\}X} \newline \lcode{>\{\\hsize=1.33\\hsize\\linewidth=\\hsize\}X}\\
@@ -816,7 +812,7 @@
 	
 	\listing{vb14}
 	
-	%>vb14
+%>vb14
 	% commando voor tabel
 	% #1 OPTIONEEL = placement argument voor table e.g. tb or H 
 	% #2 = titel
@@ -832,14 +828,14 @@
 		2 & condensatoren & 200 \\
 		3 & spoelen & 3
 	}
-	%<vb14
+%<vb14
 	
 	Zonder gebruik te maken van |tabu| kan deze tabel ook gecodeerd worden zoals gegeven in \cref{lst:vb15}. 
 	Het resultaat is gegeven in \cref{tab:vb15}.
 	
 	\listing{vb15}
-	
-	%>vb15
+	% prevents stange error (tabel written beyond end of page).
+%>vb15
 	\begin{myTable}[H]
 		\renewcommand{\arraystretch}{1.24}%
 		\centering%
@@ -854,7 +850,7 @@
 			3 & spoelen & 3 \\ \hline
 		\end{tabular}%
 	\end{myTable}
-	%<vb15
+%<vb15
 	
 	Om de regels in \cref{tab:vb15} dezelfde hoogte te geven als bij gebruik van de |tabu|-environment moet het commando |arraystretch| geherdefinieerd worden. 
 	
@@ -867,13 +863,13 @@
 	
 	\listing{vb16}
 	
-	%>vb16
+%>vb16
 	\begin{myTable}[H]
 		\renewcommand{\arraystretch}{1.24}%
 		\centering%
 		\caption{Tabel met X kolommen}
 		\label{tab:vb16}
-		\begin{tabularx}{\linewidth}{|>{\centering\arraybackslash\hsize=.75\hsize\linewidth=\hsize}X>{\centering\raggedright\hsize=.75\hsize\linewidth=\hsize}X>{\hsize=1.5\hsize\linewidth=\hsize}X|}
+		\begin{tabularx}{\linewidth}{|>{\centering\arraybackslash\hsize = .75\hsize\linewidth = \hsize}X>{\centering\raggedright\hsize = .75\hsize\linewidth = \hsize}X>{\hsize = 1.5\hsize\linewidth = \hsize}X|}
 			\arrayrulecolor{hrred}\hline
 			\rowcolor{hrred} 
 			\multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[1c]}}} & \multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[1l]}}} & \multicolumn{1}{c}{\textcolor{white} {\textbf{kolom X[2]}}} \\ \hline
@@ -881,7 +877,7 @@
 			2 & Deze iets langere tekst komt te staan in kolom 2 en zou rechts uitgelijnd moeten zijn. & Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. Deze iets langere tekst komt te staan in kolom 3 en zou uitgevuld moeten zijn. \\\hline
 		\end{tabularx}%
 	\end{myTable}
-	%<vb16
+%<vb16
 	
 	Een vertaaltabel voor de verschillende parameters van de |X|-kolomspecificaties is gegeven in \cref{tab:xspecificaties}.
 	
@@ -938,11 +934,11 @@
 	]{../main.tex}{vb17}{Eenvoudige voorbeeld van een versiehistorie.}
 	
 	\needspace{4cm}
-	%>vb17
+%>vb17
 	\versiehistorie{
 		Datum & Versie & Omschrijving & Auteur
 	}
-	%<vb17
+%<vb17
 	
 	Hieronder volgt een versiehistorie tabel met meerdere regels.
 	

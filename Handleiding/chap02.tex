@@ -1,4 +1,6 @@
 % !TeX spellcheck = nl_NL
+% !TEX root = main.tex
+% LTeX: language=nl
 \chapter[Gebuik \LaTeX{}-stijl Hogeschool Rotterdam]{Gebuik \LaTeX{}-stijl \\ Hogeschool Rotterdam}
 % verwijzingen naar specifiek deel van \cite{lshort}
 % #1 = nummer van deel, bijvoorbeeld 6.2
@@ -291,9 +293,9 @@ De volgende |name|s kunnen gebruikt worden:
 	\item |...| alle overige |name=value|-paren worden doorgegeven aan het |\|{\lstlcs\hcode{include\\-graphics}} commando.
 \end{itemize} 
 
-De code: |\hrfigure[width=2cm, label=kleinezebra, caption=Een kleine zebra.]{zebra}| produceert \cref{kleinezebra}.
+De code: |\hrfigure[width=2cm, label=klzebra, caption=Kleine zebra.]{zebra}| produceert \cref{klzebra}.
 
-\hrfigure[width=2cm, label=kleinezebra, caption=Een kleine zebra.]{zebra}
+\hrfigure[width=2cm, label=klzebra, caption=Kleine zebra.]{zebra}
 
 Als de witruimte onder of boven de figuur niet naar je zin is, dan kun je de |\vspace| commando's in de environment |myFigure| wijzigen.
 
@@ -409,7 +411,7 @@ De code gegeven in \cref{lst:tikzvoorbeeld2} produceert het blokdiagram dat in \
 \hrtikzfigure[label=dsp2, caption=Herhaling van \cref{fig:dsp}.]{dsp}
 %<tikzvoorbeeld2
 
-Als je de Ti$k$Z-code liever in het document zelf opneemt, dan kun je het commando |\tikzinlinefiguur| gebruiken.
+Als je de Ti$k$Z-code liever in het document zelf opneemt, dan kun je het commando {\lstlcs\hcode{\\tikz\\-inline\\-fi\\-guur}} gebruiken.
 Dit commando heeft vier parameters waarvan de eerste optioneel is.
 De eerste parameter bevat de \squote{placement} argumenten voor de |figure|-environment.
 De tweede parameter is de suffix van het label ({\lstllabel\code{fig:suffix}}).
@@ -437,7 +439,7 @@ De code gegeven in \cref{lst:tikzvoorbeeld3} produceert het blokdiagram dat in \
 }{Een Analog to Digital Converter.}
 %<tikzvoorbeeld3
 
-In plaats van het commando |\tikzinlinefiguur| kun je ook het commando |\hrtikzinlinefigure| gebruiken.
+In plaats van het commando |\tikzinlinefiguur| kun je ook het commando {\lstlcs\hcode{\\hr\\-tikz\\-in\\-line\\-figure}} gebruiken.
 Dit commando heeft slechts twee parameters waarbij de eerste optioneel is. 
 De tweede parameter bevat de Ti$k$Z-code die in een |tikzpicture|-environment zal worden geplaatst.
 

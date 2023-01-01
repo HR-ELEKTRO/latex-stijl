@@ -1,10 +1,16 @@
 % !TeX spellcheck = nl_NL
+% !TEX root = main.tex
+% LTeX: language=nl
 \chapter{Listings en code-fragmenten}
 \label{sec:listings}
 De commando's die gebruikt kunnen worden voor listings en codefragmenten zijn in een apart bestand geplaatst: |styleCode.tex|.
 Er wordt gebruikt gemaakt van de package \hcode[style=lstyle]{list\\-ings}\footnote{\url{https://www.ctan.org/pkg/listings}}.
 
-Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| als \Cpp{}-code, |lstyle| als \LaTeX\hyp{}code, |pstyle| als Python\hyp{}code, |mstyle| als MATLAB-code, |astyle| AVR\hyp{}assembler\hyp{}code, |amstyle| als MSP430\hyp{}assembler\hyp{}code en |legstyle| als LEG\hyp{}assembler\hyp{}code.
+Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| als \Cpp{}-code, |lstyle| als \LaTeX\hyp{}code, |pstyle| als Python\hyp{}code, |mstyle| als MATLAB-code, |astyle| AVR\hyp{}assembler\hyp{}code, |amstyle| als MSP430\hyp{}assembler\hyp{}code, |legstyle| als LEG\hyp{}assembler\hyp{}code\footnote{%
+    LEG\hyp{}assembler\hyp{}code wordt gebruikt in het boek \citetitle{Patterson2016} \cite{Patterson2016}.
+} en |pinkystyle| als Pinky\hyp{}assembler\hyp{}code\footnote{%
+    Pinky\hyp{}assembler\hyp{}code is een subset van de ARMv7 Thumb instructieset en is gedefinieerd in \cite{Broeders2022}.
+}.
 
 \section{Listings}
 De commando's |\floatlstinput| en |\lstinput| lezen code uit (een deel van) een bestand.
@@ -55,7 +61,7 @@ int main() {
 \footnotetext{Sinds C99 mag dit \ccode{return}-statement ook weggelaten worden. De functie \ccode{main} geeft dan toch \ccode{0} terug.}
 
 \section{Code-segmenten}
-Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\lcode| voor \LaTeX\hyp{}code, |\pycode| voor Python\hyp{}code, |\mcode| voor MATLAB\hyp{}code, |\acode| voor AVR\hyp{}assembler\hyp{}code, |\amcode| voor MSP430\hyp{}assembler\hyp{}code of |\legcode| voor LEG\hyp{}assembler\hyp{}code.
+Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\lcode| voor \LaTeX\hyp{}code, |\pycode| voor Python\hyp{}code, |\mcode| voor MATLAB\hyp{}code, |\acode| voor AVR\hyp{}assembler\hyp{}code, |\amcode| voor MSP430\hyp{}assembler\hyp{}code, |\legcode| voor LEG\hyp{}assembler\hyp{}code of |\pinkycode| voor Pinky\hyp{}assembler\hyp{}code.
 Deze commando's hebben twee parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinline| worden meegegeven.
 De twee\-de parameter is de code die inline moet worden geplaatst.
@@ -71,8 +77,9 @@ Dus als je de identifier \hcode{dit\\-Is\\-Een\\-Lange\\-Functie\\-naam} wilt la
 \end{lstfragment}
 Deze code levert het volgende, netjes afgebroken, resultaat: \hcode[style = cstyle]{return dit\\-Is\\-Een\\-Lange\\-Func\\-tie\\-naam();}.
 
-Code kan nog eenvoudiger in lopende tekst worden opgenomen in één van de environments: |clstShortInline|, |cpplstShortInline|, |llstShortInline|, {\lstlenvironment\hcode{py\\-lst\\-Short\\-In\\-line}}, |mlstShortInline|, |alstShortInline|, |amlstShortInline| of {\lstlenvironment\hcode{leg\\-lst\\-Short\\-In\\-line}}.
-Als in één van deze environments de de syntax \code{\|code\|} wordt gebruikt, dan wordt deze code inline geplaatst.
+Code kan nog eenvoudiger in lopende tekst worden opgenomen in één van de environments: |clstShortInline|, |cpplstShortInline|, |llstShortInline|, {\lstlenvironment\hcode{py\\-lst\\-Short\\-In\\-line}}, {\lstlenvironment\hcode{mlst\\-Short\\-In\\-line}}, 
+|alstShortInline|, |amlstShortInline|, {\lstlenvironment\hcode{leg\\-lst\\-Short\\-In\\-line}}  of {\lstlenvironment\hcode{pinky\\-lst\\-Short\\-In\\-line}}.
+Als in één van deze environments de syntax \code{\|code\|} wordt gebruikt, dan wordt deze code inline geplaatst.
 Maar pas op: dit werkt niet in voetnoten, titels enz.
 
 \section{Console in- en output}

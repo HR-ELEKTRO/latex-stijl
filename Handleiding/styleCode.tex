@@ -128,7 +128,7 @@
 		% style_nl_NL
         myClass,modulecode,cursuscode,huidigeversie,titel,auteurs,documenttype,sectionfont,headerfont,footerfont,captionfont,titelpagina,versiehistorie,mailafko,figuur,hrfigure,tikzfiguur,hrtikzfigure,tikzinlinefiguur,hrtikzinlinefigure,schakeling,tabel,tabelmaxpaginabreedgeschaald,langetabel,tabelX,langetabelX,tabelXm,langetabelXm,USE,hyp,csecref,Csecref,pdfpagref,pdfdeelref,conclusie,handtekening,citepdfpag,citepdfdeel,dquote,squote,ebookfalse,ebooktrue,chartertrue,opensanstrue,timestrue,progurl,
 		% styleCode
-		Cpp,floatlstinput,lstinput,lstinputfragment,code,ccode,cppcode,lcode,pycode,mcode,acode,amcode,legcode,hcode,cinput,proglink	
+		Cpp,floatlstinput,lstinput,lstinputfragment,code,ccode,cppcode,lcode,pycode,mcode,acode,amcode,legcode,pinkycode,hcode,cinput,proglink	
 	},
 	texcsstyle=\lstlcs,
 	deletetexcs={begin,end},
@@ -144,7 +144,7 @@
 		%itemizeintabu, // deprecated
 		itemizeintabel,myFigure,myTable,opdracht,
 		% styleCode
-		floatlst,lst,lstfragment,clstShortInline,cpplstShortInline,llstShortInline,pylstShortInline,mlstShortInline,alstShortInline,amlstShortInline,leglstShortInline,coutput
+		floatlst,lst,lstfragment,clstShortInline,cpplstShortInline,llstShortInline,pylstShortInline,mlstShortInline,alstShortInline,amlstShortInline,leglstShortInline,pinkylstShortInline,coutput
 	},
 	keywordstyle=[3]\lstlenvironment,
 	commentstyle=\lstlcomment,
@@ -177,7 +177,7 @@
 \newcommand{\lstmcomment}{\color{lstmatlabturquoisegreen}}
 \lstdefinestyle{mstyle}{
     language=Matlab,
-    morekeywords={mod},
+    morekeywords={},
     stringstyle=\lstmstring,
     keywordstyle=\lstmkeyword,
     identifierstyle=,
@@ -279,6 +279,49 @@
 	keywordstyle={[4]\lstlegimmediate},
 	identifierstyle=,
 	commentstyle=\lstlegcomment,	
+}
+
+% Pinky assembler
+\lstdefinelanguage[Pinky]{Assembler}{
+	morekeywords=[1]{
+		add.n,adds.n,adds.n,adds.n,ands.n,blx.n,bx.n,cbnz.n,cbz.n,cmp.n,cmp.n,eors.n,ldr.n,ldr.n,ldr.n,ldr.n,lsls.n,lsrs.n,movs.n,movs.n,nop.n,orrs.n,pop.n,push.n,str.n,str.n,str.n,sub.n,subs.n,subs.n,subs.n,beq.n,bne.n,bcs.n,blo.n,bcc.n,bhs.n,bmi.n,bpl.n,bvs.n,bvc.n,bhi.n,bls.n,bge.n,blt.n,bgt.n,ble.n,b.n,bal.n
+	},
+	morekeywords=[2]{
+		r0,r1,r2,r3,r4,r5,r6,r7,r13,r14,r15,sp,msp,psp,lr,pc,lr,a1,a2,a3,a4,v1,v2,v3,v4,psr,primask,faultmask,baseptr,control
+	},
+	morekeywords=[3]{
+		.globl,.global,.text,.data,.cpu,.thumb,.syntax,.thumb_func,.word
+	},
+	morekeywords=[4]{
+		\#0,\#1,\#2,\#3,\#4,\#5,\#6,\#7,\#8,\#9,\#10,\#11,\#12,\#13,\#14,\#15,\#16,\#17,\#18,\#19,\#20,\#21,\#22,\#23,\#24,\#25,\#26,\#27,\#28,\#29,\#30,\#31,\#32
+	},
+	alsoletter={:.\#},
+	alsodigit={?},
+	sensitive=false,
+	morecomment=[l]{//},
+	morestring=[b]{"},
+	morestring=[b]{'}
+	morecomment=[s]{/*}{*/},
+}[keywords,comments,strings]
+
+\newcommand{\lstpinkystring}{\color{lstblue}}
+\newcommand{\lstpinkymnemonic}{\color{lstpurple}\bfseries}
+%\newcommand{\lstpinkyregister}{\color{lstdarkerblue}\itshape}
+% \itshape verwijderd omdat lettertype inconsolata geen cursief ondersteund
+% zie: https://tex.stackexchange.com/questions/183204/inconsolata-italics
+\newcommand{\lstpinkyregister}{\color{lstdarkerblue}}
+\newcommand{\lstpinkydirective}{\color{lstpurple}\bfseries}
+\newcommand{\lstpinkyimmediate}{\color{lstdarkred}}
+\newcommand{\lstpinkycomment}{\color{lstturquoisegreen}}
+\lstdefinestyle{pinkystyle}{
+	language=[Pinky]Assembler,
+	stringstyle=\lstpinkystring,
+	keywordstyle=\lstpinkymnemonic,
+	keywordstyle={[2]\lstpinkyregister},
+	keywordstyle={[3]\lstpinkydirective},
+	keywordstyle={[4]\lstpinkyimmediate},
+	identifierstyle=,
+	commentstyle=\lstpinkycomment,	
 }
 
 \lstdefinestyle{nostyle}{
@@ -470,6 +513,14 @@
     ]@#2@%
 }
 
+\newcommand{\pinkycode}[2][]{%
+	\lstinline[
+        style=pinkystyle,
+        style=lstinlinestyle,%
+	#1
+	]@#2@%
+}
+
 % met \hcode kun je ervoor zorgen dat lange identifiers afgebroken kunnen worden. Mogelijke afbreekpunten met \\- markeren.
 \newcommand{\hcode}[2][]{%
     \lstinline[
@@ -553,6 +604,15 @@
     ]{|}%
 }{%
     \lstDeleteShortInline{|}%
+}
+
+\newenvironment{pinkylstShortInline}{%
+	\lstMakeShortInline[
+	style=pinkystyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
 }
 
 % gebruik voor opmaak van console output

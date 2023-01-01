@@ -1,3 +1,4 @@
+% LTeX: language=nl
 % De bijbehorende makefile genereert zowel de printed als de ebook versie
 
 \newcommand{\myClass}{book}
@@ -121,6 +122,13 @@ Dit is om de regel verder te vullen.
 \langetabel{Dit is een lange tabel.}{lang}{ccc}{
 	kolom 1 & kolom 2 & kolom 3 
 }{
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
+	data 1 & data 2 & data 3 \\ 
 	data 1 & data 2 & data 3 \\ 
 	data 1 & data 2 & data 3 \\ 
 	data 1 & data 2 & data 3 \\ 
@@ -506,6 +514,7 @@ Er volgt nu een harde pagebreak.
 
 \clearpage
 \section{LEG-assemblercode}
+\label{legass}
 Dit is een stukje LEG-assemblercode:
 \begin{lstfragment}[style=legstyle,moreemph={fact:,else:},emphstyle=\color{blue}]
 	.globl fact
@@ -523,6 +532,25 @@ De stijl is overgenomen uit Arm DS-5 Community Edition (die is gebaseerd op Ecli
 
 Je ziet dat cursief afdrukken van registernamen niet werkt. 
 Dit komt omdat het lettertype inconsolata geen italic font heeft, zie \url{https://tex.stackexchange.com/questions/183204/inconsolata-italics}. 
+Einde van deze paragraaf. 
+Er volgt nu een harde pagebreak.
+
+\clearpage
+\section{Pinky-assemblercode}
+Dit is een stukje \href{https://bytebucket.org/HR_ELEKTRO/rts10/wiki/LEGv7/LEGv7-Pinky_ebook.pdf}{Pinky}-assemblercode:
+\begin{lstfragment}[style=pinkystyle]
+    .cpu cortex-m4
+    .thumb
+    .syntax unified
+    .globl test
+    .text
+    .thumb_func
+test:
+    ADD.N   R0, R0, R1
+    BX.N    LR
+\end{lstfragment}
+Dit was een stukje Pinky-assemblercode. 
+De stijl is overgenomen van de LEG-assemblercode, zie \cref{legass}.
 Einde van deze paragraaf. 
 Er volgt nu een harde pagebreak.
 
