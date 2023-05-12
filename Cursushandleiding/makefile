@@ -2,9 +2,9 @@
 # BroJZ MuiKo may 2021
 
 # Define target and source file here:
-TARGET       = Cursushandleiding_XXX10
-SOURCE       = main
-DEPENDENCIES = *.tex bibliography.bib
+TARGET := Cursushandleiding_XXX10
+SOURCE := main
+DEPENDENCIES := *.tex bibliography.bib
 
 # Define font here:
 #FONT := "\timestrue"
