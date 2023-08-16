@@ -1,10 +1,10 @@
 # Makefile for MSYS2 under Windows or Linux
-# BroJZ MuiKo may 2021
+# BroJZ MuiKo aug 2023
 
 # Define target and source file here:
-TARGET       = Handleiding_LaTeX-stijl_HR
-SOURCE       = main
-DEPENDENCIES = *.tex bibliography.bib
+TARGET := Handleiding_LaTeX-stijl_HR
+SOURCE := main
+DEPENDENCIES := *.tex bibliography.bib
 
 # Define font here:
 #FONT := "\timestrue"

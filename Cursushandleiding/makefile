@@ -1,5 +1,5 @@
 # Makefile for MSYS2 under Windows or Linux
-# BroJZ MuiKo may 2021
+# BroJZ MuiKo aug 2023
 
 # Define target and source file here:
 TARGET := Cursushandleiding_XXX10
