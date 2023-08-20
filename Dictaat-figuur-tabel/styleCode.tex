@@ -634,5 +634,12 @@
     \normalexpandarg%
     \StrDel{#1}{\\-}[\bare@link]%
     \href{\progsurl/\bare@link}{\hcode{#1}}%
+    \fullexpandarg%
+}
+\newrobustcmd{\downloadlink}[1]{%
+    \normalexpandarg%
+    \StrDel{#1}{\\-}[\bare@link]%
+    \href{\downloadurl/\bare@link}{\hcode{#1}}%
+    \fullexpandarg%
 }
 \makeatother

@@ -82,7 +82,7 @@
         footskip=1.25cm,
         inner=2.2cm,
         outer=2.2cm,
-        bindingoffset=.6cm,
+        bindingoffset=\iftoggle{onesided}{0cm}{.6cm},
         twoside=\iftoggle{onesided}{false}{true}
     ]{geometry}
 }
@@ -1004,9 +1004,26 @@
 %https://tex.stackexchange.com/questions/96570/automatically-determine-which-texlive-version-is-being-used
 \makeatletter
 \begingroup
-\edef\get@@version{\def\noexpand\get@version##1\detokenize{TeX Live}##220##3##4##5)##6\noexpand\@nil}
-\get@@version{\gdef\TeXLiveVersion{20#3#4}}
-\expandafter\get@version\pdftexbanner\@nil
+\newif\ifmiktex
+\def\MiKTeX{MiKTeX}
+\@onelevel@sanitize\MiKTeX
+% Scans for 'MiKTeX' string with catcode 12 (other)
+\expandafter\def\expandafter\testmiktex\expandafter#\expandafter1\MiKTeX#2\relax{%
+    \ifx\empty#2\empty
+        \miktexfalse
+    \else
+        \miktextrue
+    \fi
+}
+\expandafter\expandafter
+\expandafter\testmiktex\expandafter\pdftexbanner\MiKTeX\relax\relax
+\ifmiktex
+    \gdef\TeXLiveVersion{0}
+\else
+    \edef\get@@version{\def\noexpand\get@version##1\detokenize{TeX Live}##220##3##4##5)##6\noexpand\@nil}
+    \get@@version{\gdef\TeXLiveVersion{20#3#4}}
+    \expandafter\get@version\pdftexbanner\@nil
+\fi
 \endgroup
 \makeatother
 
