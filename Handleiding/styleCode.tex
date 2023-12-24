@@ -23,6 +23,14 @@
 \definecolor{llightblue}{RGB}{0,149,255}
 \definecolor{lstdarkblue}{RGB}{0,0,128}
 \definecolor{lstdarkerblue}{RGB}{15,15,127}
+% rust:
+\definecolor{GrayCodeBlock}{RGB}{241,241,241}
+\definecolor{BlackText}{RGB}{110,107,94}
+\definecolor{RedTypename}{RGB}{182,86,17}
+\definecolor{GreenString}{RGB}{96,172,57}
+\definecolor{PurpleKeyword}{RGB}{184,84,212}
+\definecolor{GrayComment}{RGB}{170,170,170}
+\definecolor{GoldDocumentation}{RGB}{180,165,45}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/listings/listings.pdf
 \usepackage{listings}
@@ -324,6 +332,52 @@
 	commentstyle=\lstpinkycomment,	
 }
 
+% Rust
+% https://www.reddit.com/r/rust/comments/f7ocdx/rust_the_bookstyle_syntax_highlighting_for_latex/
+\lstdefinelanguage{Rust}
+{
+    columns=fullflexible,
+    keepspaces=true,
+    frame=single,
+    framesep=0pt,
+    framerule=0pt,
+    framexleftmargin=4pt,
+    framexrightmargin=4pt,
+    framextopmargin=5pt,
+    framexbottommargin=3pt,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    backgroundcolor=\color{GrayCodeBlock},
+    basicstyle=\ttfamily\color{BlackText},
+    keywords={
+        true,false,
+        unsafe,async,await,move,
+        use,pub,crate,super,self,mod,
+        struct,enum,fn,const,static,let,mut,ref,type,impl,dyn,trait,where,as,
+        break,continue,if,else,while,for,loop,match,return,yield,in
+    },
+    keywordstyle=\color{PurpleKeyword},
+    ndkeywords={
+        bool,u8,u16,u32,u64,u128,i8,i16,i32,i64,i128,char,str,
+        Self,Option,Some,None,Result,Ok,Err,String,Box,Vec,Rc,Arc,Cell,RefCell,HashMap,BTreeMap,
+        macro_rules
+    },
+    ndkeywordstyle=\color{RedTypename},
+    comment=[l][\color{GrayComment}\slshape]{//},
+    morecomment=[s][\color{GrayComment}\slshape]{/*}{*/},
+    morecomment=[l][\color{GoldDocumentation}\slshape]{///},
+    morecomment=[s][\color{GoldDocumentation}\slshape]{/*!}{*/},
+    morecomment=[l][\color{GoldDocumentation}\slshape]{//!},
+    morecomment=[s][\color{RedTypename}]{\#![}{]},
+    morecomment=[s][\color{RedTypename}]{\#[}{]},
+    stringstyle=\color{GreenString},
+    string=[b]"
+}
+
+\lstdefinestyle{rstyle}{
+	language=Rust,
+}
+
 \lstdefinestyle{nostyle}{
 	stringstyle=,
 	keywordstyle=,
@@ -515,8 +569,16 @@
 
 \newcommand{\pinkycode}[2][]{%
 	\lstinline[
-        style=pinkystyle,
-        style=lstinlinestyle,%
+		style=pinkystyle,
+		style=lstinlinestyle,%
+	#1
+	]@#2@%
+}
+
+\newcommand{\rcode}[2][]{%
+	\lstinline[
+		style=rstyle,
+		style=lstinlinestyle,%
 	#1
 	]@#2@%
 }
@@ -615,6 +677,14 @@
 	\lstDeleteShortInline{|}%
 }
 
+\newenvironment{rlstShortInline}{%
+	\lstMakeShortInline[
+	style=rstyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
+}
 % gebruik voor opmaak van console output
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/fancyvrb/fancyvrb.pdf
 % nodig om underline voor input te kunnen gebruiken: \cinput{...}

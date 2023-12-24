@@ -1,10 +1,10 @@
 # Makefile for MSYS2 under Windows or Linux
-# BroJZ MuiKo may 2021
+# BroJZ MuiKo aug 2023
 
 # Define target and source file here:
-TARGET       = Voorbeelddictaat
-SOURCE       = main
-DEPENDENCIES = *.tex bibliography.bib
+TARGET := Voorbeelddictaat
+SOURCE := main
+DEPENDENCIES := *.tex bibliography.bib
 
 # Define font here:
 #FONT := "\timestrue"
@@ -44,7 +44,7 @@ build :
 $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) -n \\ >args.tex
-	$(ECHO) "\ebooktrue" >args.tex
+	$(ECHO) "ebooktrue" >>args.tex
 	$(ECHO) $(FONT) >>args.tex
 	-$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(BIBER) $(BIBEROPT) $(basename $<) 
@@ -54,7 +54,7 @@ $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 $(TARGET).pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) -n \\ >args.tex
-	$(ECHO) "\ebookfalse" >args.tex
+	$(ECHO) "ebookfalse" >>args.tex
 	$(ECHO) $(FONT) >>args.tex
 	-$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(BIBER) $(BIBEROPT) $(basename $<)
