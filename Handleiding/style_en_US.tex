@@ -1136,7 +1136,7 @@
 \usepackage{siunitx}
 \sisetup{
     per-mode = symbol,
-    binary-units = true,
+% binary-units = true,
     range-units = single,
 }
 
@@ -1193,7 +1193,11 @@
 \makeatother
 
 %http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/microtype/microtype.pdf
+\iftoggle{opensans}{
+% Werkt niet goed met OpenSans
+}{
 \usepackage{microtype}
+}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/hyperref/doc/manual.pdf
 \usepackage{hyperref}
