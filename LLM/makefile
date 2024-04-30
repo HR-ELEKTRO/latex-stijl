@@ -48,15 +48,14 @@ build :
 %.pdf : %.tex $(DEPENDENCIES)
 	$(RM) -f args.tex
 	$(ECHO) -n \\ >args.tex
-	$(ECHO) "ebookfalse" >>args.tex
+	$(ECHO) "ebooktrue" >>args.tex
 	$(ECHO) $(FONT) >>args.tex
 	-$(PDFLATEX) $(PDFLATEXOPT) $<
 	$(BIBER) $(BIBEROPT) $(basename $<) 
 	$(PDFLATEX) $(PDFLATEXOPT) $<
-	$(MV) $@ $<.pdf
+	$(MV) $@ $(basename $<)_ebook.pdf
 	$(RM) -f args.tex
 	$(ECHO) -n \\ >args.tex
-	$(ECHO) "ebooktrue" >>args.tex
+	$(ECHO) "ebookfalse" >>args.tex
 	$(ECHO) $(FONT) >>args.tex
 	$(PDFLATEX) $(PDFLATEXOPT) $<
-	$(MV) $@ $<_ebook.pdf
