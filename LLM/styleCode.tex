@@ -1,0 +1,715 @@
+% mooie C++
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/relsize/relsize-doc.pdf
+\usepackage{relsize}
+\iftoggle{charter}{
+    \newcommand{\Cpp}{C\nolinebreak\raisebox{.2ex}[0pt][0pt]{\smaller{+\nolinebreak+}}}
+}{
+\newcommand{\Cpp}{C\nolinebreak\raisebox{.3ex}[0pt][0pt]{\smaller{+\nolinebreak+}}}
+}
+
+% define kleuren die in listings gebruikt worden
+\definecolor{lstlightgray}{RGB}{128,128,128}
+\definecolor{lstlightergray}{RGB}{169,169,199}
+\definecolor{lstdarkred}{RGB}{191,0,0}
+\definecolor{lstdarkerred}{RGB}{128,0,0}
+\definecolor{lstpurple}{RGB}{127,0,116}
+\definecolor{lstmatlabpurple}{RGB}{159,31,242}
+\definecolor{lstdarkgreen}{RGB}{0,128,0}
+\definecolor{lstdarkergreen}{RGB}{0,100,0}
+\definecolor{lstturquoisegreen}{RGB}{63,127,95}
+\definecolor{lstmatlabturquoisegreen}{RGB}{33,138,77}
+\definecolor{lstblue}{RGB}{42,0,255}
+\definecolor{lstblueer}{RGB}{0,0,255}
+\definecolor{llightblue}{RGB}{0,149,255}
+\definecolor{lstdarkblue}{RGB}{0,0,128}
+\definecolor{lstdarkerblue}{RGB}{15,15,127}
+% rust:
+\definecolor{GrayCodeBlock}{RGB}{241,241,241}
+\definecolor{BlackText}{RGB}{110,107,94}
+\definecolor{RedTypename}{RGB}{182,86,17}
+\definecolor{GreenString}{RGB}{96,172,57}
+\definecolor{PurpleKeyword}{RGB}{184,84,212}
+\definecolor{GrayComment}{RGB}{170,170,170}
+\definecolor{GoldDocumentation}{RGB}{180,165,45}
+
+% http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/listings/listings.pdf
+\usepackage{listings}
+\lstset{
+    literate=
+        {ä}{{\"a}}1 
+        {ë}{{\"e}}1 
+        {ï}{{\"i}}1 
+        {ö}{{\"o}}1
+        {ü}{{\"u}}1
+        {á}{{\'a}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ú}{{\'u}}1
+        {à}{{\`a}}1
+        {è}{{\`e}}1
+        {ì}{{\`i}}1
+        {ò}{{\`o}}1
+        {ù}{{\`u}}1
+        {â}{{\^a}}1
+        {ê}{{\^e}}1
+        {î}{{\^i}}1
+        {ô}{{\^o}}1
+        {û}{{\^u}}1
+        {©}{{\copyright}}1,
+    basicstyle=\linespread{1.1}\ttfamily\small,
+    tabsize=4,
+    showstringspaces=false,
+    upquote=true,
+    numbers=none,
+    aboveskip=.1\baselineskip,
+    belowskip=0pt,
+    abovecaptionskip=.3\baselineskip,
+    belowcaptionskip=-.2\baselineskip,
+    includerangemarker=false,
+    prebreak={\raisebox{0ex}[0ex][0ex]{\textcolor{black}{\ensuremath{\hookleftarrow}}}}, 
+    postbreak={\raisebox{0ex}[0ex][0ex]{\textcolor{black}{\ensuremath{\space\hookrightarrow\space}}}}, 
+    breaklines=true, 
+    breakatwhitespace=true, 
+    breakindent=0.1em,
+    numberbychapter=true,
+    captionpos=b,
+    keepspaces=true,
+}
+
+\lstdefinestyle{linenumbers}{
+    numbers=left, 
+    stepnumber=1, 
+    numberstyle=\tiny\textcolor{hrred}, 
+    numbersep=1em
+}
+
+% C 
+% corlor scheme from Code Composer Studio
+\newcommand{\lstcstring}{\color{lstblue}}
+\newcommand{\lstckeyword}{\color{lstpurple}\bfseries}
+\newcommand{\lstcincludefile}{\color{lstblue}}
+\newcommand{\lstccomment}{\color{lstturquoisegreen}}
+\lstdefinestyle{cstyle}{
+    language=C,
+    morekeywords={__interrupt, __asm, interrupt, asm, __attribute__,true,false},
+    morekeywords=[2]{<assert.h>,<complex.h>,<ctype.h>,<errno.h>,<fenv.h>,<float.h>,<inttypes.h>,<iso646.h>,<limits.h>,<locale.h>,<math.h>,<setjmp.h>,<signal.h>,<stdalign.h>,<stdarg.h>,<stdatomic.h>,<stdbool.h>,<stddef.h>,<stdint.h>,<stdio.h>,<stdlib.h>,<stdnoreturn.h>,<string.h>,<tgmath.h>,<threads.h>,<time.h>,<uchar.h>,<wchar.h>,<wctype.h>},
+    stringstyle=\lstcstring,
+    keywordstyle=\lstckeyword,
+    alsoletter={<>.},
+	keywordstyle=[2]\lstcincludefile,
+    identifierstyle=,
+    commentstyle=\lstccomment,
+}
+
+% C++
+% corlor scheme from Code Composer Studio
+\newcommand{\lstcppstring}{\color{lstblue}}
+\newcommand{\lstcppkeyword}{\color{lstpurple}\bfseries}
+\newcommand{\lstcppincludefile}{\color{lstblue}}
+\newcommand{\lstcppcomment}{\color{lstturquoisegreen}}
+\lstdefinestyle{cppstyle}{
+    language=C++,
+    morekeywords={alignas,alignof,char16_t,char32_t,concept,constexpr,decltype,noexcept,nullptr,requires,static_assert,thread_local,override,final},
+    morekeywords=[2]{<cstdlib>,<csignal>,<csetjmp>,<cstdarg>,<typeinfo>,<typeindex>,<type_traits>,<bitset>,<functional>,<utility>,<ctime>,<chrono>,<cstddef>,<initializer_list>,<tuple>,<any>,<optional>,<variant>,<compare>,<version>,<new>,<memory>,<scoped_allocator>,<memory_resource>,<climits>,<cfloat>,<cstdint>,<cinttypes>,<limits>,<exception>,<stdexcept>,<cassert>,<system_error>,<cerrno>,<contract>,<cctype>,<cwctype>,<cstring>,<cwchar>,<cuchar>,<string>,<string_view>,<charconv>,<array>,<vector>,<deque>,<list>,<forward_list>,<set>,<map>,<unordered_set>,<unordered_map>,<stack>,<queue>,<span>,<iterator>,<ranges>,<algorithm>,<execution>,<cmath>,<complex>,<valarray>,<random>,<numeric>,<ratio>,<cfenv>,<bit>,<iosfwd>,<ios>,<istream>,<ostream>,<iostream>,<fstream>,<sstream>,<syncstream>,<strstream>,<iomanip>,<streambuf>,<cstdio>,<locale>,<clocale>,<codecvt>,<regex>,<atomic>,<thread>,<mutex>,<shared_mutex>,<future>,<condition_variable>,<filesystem>},
+    stringstyle=\lstcppstring,
+    keywordstyle=\lstcppkeyword,
+    alsoletter={<>.},
+	keywordstyle=[2]\lstcppincludefile,
+    identifierstyle=,
+    commentstyle=\lstcppcomment,
+}
+
+% LaTeX
+% color scheme from TeXstudio
+\newcommand{\lstlcs}{\color{lstdarkerred}}
+\newcommand{\lstlbeginend}{\color{llightblue}}
+\newcommand{\lstlenvironment}{\color{lstdarkblue}}
+\newcommand{\lstlcomment}{\color{lstlightgray}}
+\newcommand{\lstlmath}{\color{lstdarkgreen}}
+\newcommand{\lstllabel}{\color{lstdarkgreen}}
+\lstdefinestyle{lstyle}{
+	language={[LaTeX]TeX},
+	moretexcs={%
+		% Alle latexcommando's is onbegonnen werk. Alle commando's die in style_NL_nl zijn gebruikt zijn hier opgenomen.
+        iftoggle,cref,Cref,crefname,Crefname,cpageref,Cpageref,href,url,frontmatter,mainmatter,backmatter,baslineskip,noclub,nowidow,includegraphics,texorpdfstring,usetikzlibrary,tikz,draw,path,fill,filldraw,cllip,shade,shadedraw,foreach,node,coordinate,graph,matrix,calender,addplot,enquote,lstinputlisting,lstset,lstinline,arrayrulecolor,tabularxcolumn,textcite,si,SI,num,arraybackslash,
+		% style_nl_NL
+        myClass,modulecode,cursuscode,huidigeversie,titel,auteurs,documenttype,sectionfont,headerfont,footerfont,captionfont,titelpagina,versiehistorie,mailafko,figuur,hrfigure,tikzfiguur,hrtikzfigure,tikzinlinefiguur,hrtikzinlinefigure,schakeling,tabel,tabelmaxpaginabreedgeschaald,langetabel,tabelX,langetabelX,tabelXm,langetabelXm,USE,hyp,csecref,Csecref,pdfpagref,pdfdeelref,conclusie,handtekening,citepdfpag,citepdfdeel,dquote,squote,ebookfalse,ebooktrue,chartertrue,opensanstrue,timestrue,progurl,
+		% styleCode
+		Cpp,floatlstinput,lstinput,lstinputfragment,code,ccode,cppcode,lcode,pycode,mcode,acode,amcode,legcode,pinkycode,hcode,cinput,proglink	
+	},
+	texcsstyle=\lstlcs,
+	deletetexcs={begin,end},
+	moretexcs=[2]{begin,end},
+	texcsstyle=[2]\lstlbeginend,
+	morekeywords=[3]{%
+        % standard environments
+		array,center,description,document,enumerate,eqnarray,equation,figure,flushleft,flushright,itemize,list,minipage,picture,quotation,quote,tabbing,table,tabular,thebiblipgraphy,theorem,titlepage,verbatim,verse,
+		%longtabu, tabu, // deprecated
+		% Alle latexenvironments is onbegonnen werk. Alle environments die in style_NL_nl zijn gebruikt zijn hier opgenomen.
+        tikzpicture,circuittikz,scope,axis,mdframed,tabularx,
+        % style_nl_NL
+		%itemizeintabu, // deprecated
+		itemizeintabel,myFigure,myTable,opdracht,
+		% styleCode
+		floatlst,lst,lstfragment,clstShortInline,cpplstShortInline,llstShortInline,pylstShortInline,mlstShortInline,alstShortInline,amlstShortInline,leglstShortInline,pinkylstShortInline,coutput
+	},
+	keywordstyle=[3]\lstlenvironment,
+	commentstyle=\lstlcomment,
+	moredelim=[s][\lstlmath]{$}{$},	
+	moredelim=[s][\lstlmath]{\\\[}{\\\]},	
+}
+
+% Python
+% color scheme from Thonny http://thonny.org/
+\newcommand{\lstpstring}{\color{lstdarkergreen}}
+\newcommand{\lstpkeyword}{\color{lstpurple}\bfseries}
+\newcommand{\lstpcomment}{\color{lstlightergray}}
+\lstdefinestyle{pystyle}{
+	language=Python,
+	% redefined keywords for Python 3
+	keywords={False,class,finally,is,return,None,continue,for,lambda,try,True,def,from,
+		nonlocal,while,and,del,global,not,with,as,elif,if,or,yield,assert,else,import,
+		pass,break,except,in,raise},
+	keywords=[2]{},
+	morekeywords={},
+	stringstyle=\lstpstring,
+	keywordstyle=\lstpkeyword,
+	identifierstyle={},
+	commentstyle=\lstpcomment,
+}
+
+% MATLAB
+\newcommand{\lstmstring}{\color{lstmatlabpurple}}
+\newcommand{\lstmkeyword}{\color{lstblueer}}
+\newcommand{\lstmcomment}{\color{lstmatlabturquoisegreen}}
+\lstdefinestyle{mstyle}{
+    language=Matlab,
+    morekeywords={},
+    stringstyle=\lstmstring,
+    keywordstyle=\lstmkeyword,
+    identifierstyle=,
+    commentstyle=\lstmcomment,
+}
+
+% AVR assembler
+\lstdefinelanguage[AVR]{Assembler}{
+    morekeywords=[1]{
+        adc,add,adiw,andi,asr,bclr,bld,brbc,brbs,brcc,brcs,break,breq,brge,brhc,brhs,brid,brie,brlo,brlt,brmi,brne,brpl,brsh,brtc,brts,brvc,brvs,bset,bst,cbi,cbr,clc,clh,cli,cln,clr,cls,clt,clv,clz,com,count,cp,cpc,cpi,cpse,dec,eicall,eijmp,elpm,end,eor,espm,fmul,fmuls,fmulsu,in,inc,jmp,ld,ldd,ldi,lds,lsl,lsr,mov,movw,neg,nop,ori,out,pop,push,rcall,ret,reti,rjmp,rol,sbc,sbci,sbi,sbic,sbis,sbiw,sbr,sbrc,sbrs,sec,seh,sei,sen,ser,ses,sev,sez,sleep,st,std,sts,sub,subi,swap,tst,wdr
+    },
+    morekeywords=[2]{
+        .byte,.cseg,.csegsize,.db,.device,.dseg,.dw,.endm,.equ,.eseg,.exit,.include,.includepath,.listmac,.macro,.nolist,.org,.set,.define,.undef,.ifdef,.ifndef,.else,.elseif,.elif,.message,.warning,.error,byte1,byte2,byte3,byte4,exp2,high,hwrd,log2,low,lwrd,page
+    },
+    alsoletter=.,
+    sensitive=false,
+    morecomment=[l]{\#},
+    morecomment=[l]{;},
+    morestring=[b]{"},
+    morestring=[b]{'}
+}[keywords,comments,strings]
+
+\newcommand{\lstamnemonic}{\color{lstblueer}}
+\newcommand{\lstacomment}{\color{lstdarkgreen}}
+\lstdefinestyle{astyle}{
+    language=[AVR]Assembler,
+    stringstyle=,
+    keywordstyle=[1]\lstamnemonic,
+    keywordstyle=[2],
+    identifierstyle=,
+    commentstyle=\lstacomment,  
+}
+
+% MSP430 assembler
+\lstdefinelanguage[MSP430]{Assembler}{
+	morekeywords=[1]{
+		adc,adc.b,adc.w,add,add.b,add.w,addc,addc.b,addc.w,and,and.b,and.w,bic,bic.b,bic.w,bis,bis.b,bis.w,bit,bit.b,bit.w,br,call,clr,clr.b,clr.w,clrc,clrn,clrz,cmp,cmp.b,cmp.w,dadc,dadc.b,dadc.w,dadd,dadd.b,dadd.w,dec,dec.b,dec.w,decd,decd.b,decd.w,dint,eint,inc,inc.b,inc.w,incd,incd.b,incd.w,inv,inv.b,inv.w,jc,jhs,jeq,jz,jge,jl,jmp,jn,jnc,jlo,jne,jnz,mov,mov.b,mov.w,nop,pop,pop.b,pop.w,push,push.b,push.w,ret,reti,rla,rla.b,rla.w,rlc,rlc.b,rlc.w,rra,rra.b,rra.w,rrc,rrc.b,rrc.w,sbc,sbc.b,sbc.w,setc,setn,setz,sub,sub.b,sub.w,subc,subc.b,subc.w,swpb,sxt,tst,tst.b,tst.w,xor,xor.b,xor.w,
+	},
+	morekeywords=[2]{
+		.bss,.data,.sect,.text,.byte,.double,.float,.float,.long,.short,.word,.align,.align,.include,.common,.global,.if,.else,.endif,.set,.macro,.endm
+	},
+	alsoletter=.,
+	sensitive=false,
+	morecomment=[l]{;},
+	morestring=[b]{"},
+	morestring=[b]{'}
+}[keywords,comments,strings]
+
+\newcommand{\lstamstring}{\color{lstblue}}
+\newcommand{\lstammnemonic}{\color{lstpurple}}
+\newcommand{\lstamcomment}{\color{lstturquoisegreen}}
+\lstdefinestyle{amstyle}{
+	language=[MSP430]Assembler,
+	stringstyle=\lstamstring,
+	keywordstyle=[1]\lstammnemonic,
+	keywordstyle=[2]\lstammnemonic,
+	identifierstyle=,
+	commentstyle=\lstamcomment,  
+}
+
+% LEG assembler
+\lstdefinelanguage[LEG]{Assembler}{
+	morekeywords=[1]{
+		add,adds,addi,addis,and,andi,andis,ands,b,b.eq,b.ne,b.lt,b.le,b.gt,b.ge,b.lo,b.ls,b.hi,b.hs,bl,br,cbnz,cbz,eor,eori,ldur,ldurb,ldurh,ldursw,ldxr,lsl,lsr,movk,movz,orr,orri,stur,sturb,sturh,sturw,stxr,sub,subi,subis,subs,fadds,faddd,fcmps,fcmpd,fdivs,fdivd,fsubs,fsubd,ldurs,ldurd,mul,nop,sdiv,smulh,sturs,sturd,udiv,umulh,cmp,cmpi,lda,mov
+	},
+	morekeywords=[2]{
+		x0,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20,x21,x22,x23,x24,x25,x26,x27,x28,x29,x30,x31,xzr,sp,pc,fp,lr,ip0,ip1,w0,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20,w21,w22,w23,w24,w25,w26,w27,w28,w29,w30,w31,wzr,d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,d21,d22,d23,d24,d25,d26,d27,d28,d29,d30,d31,s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31
+	},
+	morekeywords=[3]{
+		.globl
+	},
+	morekeywords=[4]{
+		\#0,\#1,\#2,\#3,\#4,\#5,\#6,\#7,\#8,\#9,\#10,\#11,\#12,\#13,\#14,\#15,\#16,\#17,\#18,\#19,\#20,\#21,\#22,\#23,\#24,\#25,\#26,\#27,\#28,\#29,\#30,\#31,\#32
+	},
+	alsoletter={:.\#},
+	alsodigit={?},
+	sensitive=false,
+	morecomment=[l]{//},
+	morestring=[b]{"},
+	morestring=[b]{'}
+	morecomment=[s]{/*}{*/},
+}[keywords,comments,strings]
+
+\newcommand{\lstlegstring}{\color{lstblue}}
+\newcommand{\lstlegmnemonic}{\color{lstpurple}\bfseries}
+%\newcommand{\lstlegregister}{\color{lstdarkerblue}\itshape}
+% \itshape verwijderd omdat lettertype inconsolata geen cursief ondersteund
+% zie: https://tex.stackexchange.com/questions/183204/inconsolata-italics
+\newcommand{\lstlegregister}{\color{lstdarkerblue}}
+\newcommand{\lstlegdirective}{\bfseries}
+\newcommand{\lstlegimmediate}{\color{lstdarkred}}
+\newcommand{\lstlegcomment}{\color{lstturquoisegreen}}
+\lstdefinestyle{legstyle}{
+	language=[LEG]Assembler,
+    stringstyle=\lstlegstring,
+	keywordstyle=\lstlegmnemonic,
+	keywordstyle={[2]\lstlegregister},
+	keywordstyle={[3]\lstlegdirective},
+	keywordstyle={[4]\lstlegimmediate},
+	identifierstyle=,
+	commentstyle=\lstlegcomment,	
+}
+
+% Pinky assembler
+\lstdefinelanguage[Pinky]{Assembler}{
+	morekeywords=[1]{
+		add.n,adds.n,adds.n,adds.n,ands.n,blx.n,bx.n,cbnz.n,cbz.n,cmp.n,cmp.n,eors.n,ldr.n,ldr.n,ldr.n,ldr.n,lsls.n,lsrs.n,movs.n,movs.n,nop.n,orrs.n,pop.n,push.n,str.n,str.n,str.n,sub.n,subs.n,subs.n,subs.n,beq.n,bne.n,bcs.n,blo.n,bcc.n,bhs.n,bmi.n,bpl.n,bvs.n,bvc.n,bhi.n,bls.n,bge.n,blt.n,bgt.n,ble.n,b.n,bal.n
+	},
+	morekeywords=[2]{
+		r0,r1,r2,r3,r4,r5,r6,r7,r13,r14,r15,sp,msp,psp,lr,pc,lr,a1,a2,a3,a4,v1,v2,v3,v4,psr,primask,faultmask,baseptr,control
+	},
+	morekeywords=[3]{
+		.globl,.global,.text,.data,.cpu,.thumb,.syntax,.thumb_func,.word
+	},
+	morekeywords=[4]{
+		\#0,\#1,\#2,\#3,\#4,\#5,\#6,\#7,\#8,\#9,\#10,\#11,\#12,\#13,\#14,\#15,\#16,\#17,\#18,\#19,\#20,\#21,\#22,\#23,\#24,\#25,\#26,\#27,\#28,\#29,\#30,\#31,\#32
+	},
+	alsoletter={:.\#},
+	alsodigit={?},
+	sensitive=false,
+	morecomment=[l]{//},
+	morestring=[b]{"},
+	morestring=[b]{'}
+	morecomment=[s]{/*}{*/},
+}[keywords,comments,strings]
+
+\newcommand{\lstpinkystring}{\color{lstblue}}
+\newcommand{\lstpinkymnemonic}{\color{lstpurple}\bfseries}
+%\newcommand{\lstpinkyregister}{\color{lstdarkerblue}\itshape}
+% \itshape verwijderd omdat lettertype inconsolata geen cursief ondersteund
+% zie: https://tex.stackexchange.com/questions/183204/inconsolata-italics
+\newcommand{\lstpinkyregister}{\color{lstdarkerblue}}
+\newcommand{\lstpinkydirective}{\color{lstpurple}\bfseries}
+\newcommand{\lstpinkyimmediate}{\color{lstdarkred}}
+\newcommand{\lstpinkycomment}{\color{lstturquoisegreen}}
+\lstdefinestyle{pinkystyle}{
+	language=[Pinky]Assembler,
+	stringstyle=\lstpinkystring,
+	keywordstyle=\lstpinkymnemonic,
+	keywordstyle={[2]\lstpinkyregister},
+	keywordstyle={[3]\lstpinkydirective},
+	keywordstyle={[4]\lstpinkyimmediate},
+	identifierstyle=,
+	commentstyle=\lstpinkycomment,	
+}
+
+% Rust
+% https://www.reddit.com/r/rust/comments/f7ocdx/rust_the_bookstyle_syntax_highlighting_for_latex/
+\lstdefinelanguage{Rust}
+{
+    columns=fullflexible,
+    keepspaces=true,
+    frame=single,
+    framesep=0pt,
+    framerule=0pt,
+    framexleftmargin=4pt,
+    framexrightmargin=4pt,
+    framextopmargin=5pt,
+    framexbottommargin=3pt,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    backgroundcolor=\color{GrayCodeBlock},
+    basicstyle=\ttfamily\color{BlackText},
+    keywords={
+        true,false,
+        unsafe,async,await,move,
+        use,pub,crate,super,self,mod,
+        struct,enum,fn,const,static,let,mut,ref,type,impl,dyn,trait,where,as,
+        break,continue,if,else,while,for,loop,match,return,yield,in
+    },
+    keywordstyle=\color{PurpleKeyword},
+    ndkeywords={
+        bool,u8,u16,u32,u64,u128,i8,i16,i32,i64,i128,char,str,
+        Self,Option,Some,None,Result,Ok,Err,String,Box,Vec,Rc,Arc,Cell,RefCell,HashMap,BTreeMap,
+        macro_rules
+    },
+    ndkeywordstyle=\color{RedTypename},
+    comment=[l][\color{GrayComment}\slshape]{//},
+    morecomment=[s][\color{GrayComment}\slshape]{/*}{*/},
+    morecomment=[l][\color{GoldDocumentation}\slshape]{///},
+    morecomment=[s][\color{GoldDocumentation}\slshape]{/*!}{*/},
+    morecomment=[l][\color{GoldDocumentation}\slshape]{//!},
+    morecomment=[s][\color{RedTypename}]{\#![}{]},
+    morecomment=[s][\color{RedTypename}]{\#[}{]},
+    stringstyle=\color{GreenString},
+    string=[b]"
+}
+
+\lstdefinestyle{rstyle}{
+	language=Rust,
+}
+
+\lstdefinestyle{nostyle}{
+	stringstyle=,
+	keywordstyle=,
+	identifierstyle=,
+	commentstyle=,
+}
+
+% Commando's \floatlstinput en \lstinput lezen code uit (een deel van) een bestand en plaatsen dit in een listing.
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% #3 = label=lst:#3
+% #4 = titel
+\newcommand{\floatlstinput}[4][]{%
+\lstinputlisting[
+    rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
+    rangeendprefix=//<,% Alleen nuttig voor C en C++ 
+    float=!htbp, 
+    label=lst:#3, 
+    caption={#4},%    
+    #1
+]{progs/#2}%
+}
+
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% #3 = label=lst:#3
+% #4 = titel
+\newcommand{\lstinput}[4][]{%
+\lstinputlisting[
+    aboveskip=.8\baselineskip,
+    belowskip=.4\baselineskip,
+    rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
+    rangeendprefix=//<,% Alleen nuttig voor C en C++ 
+    label=lst:#3, 
+    caption={#4},%    
+    #1
+]{progs/#2}%
+}
+
+% Commando \lstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+% geen titel, geen label
+\newcommand{\lstinputfragment}[2][]{%
+\lstinputlisting[
+    aboveskip=.6\baselineskip,%
+    rangebeginprefix=//>,% Alleen nuttig voor C en C++ 
+    rangeendprefix=//<,% Alleen nuttig voor C en C++ 
+    #1
+]{progs/#2}%
+}
+
+% De code in de environments floatlst en lst wordt in een listing geplaatst.
+% #1 = (optional) extra key=value paren voor lstset b.v.
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = linenumbers
+% #2 = label=lst:#2
+% #3 = titel
+\lstnewenvironment{floatlst}[3][]{%
+    \lstset{
+        float=!htbp, 
+        label=lst:#2, 
+        caption={#3},%   
+        #1
+    }%
+}{%
+}
+
+% #1 = (optional) extra key=value paren voor lstset b.v.
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = linenumbers
+% #2 = label=lst:#2
+% #3 = titel
+\lstnewenvironment{lst}[3][]{%
+    \lstset{
+        aboveskip=.8\baselineskip,
+        belowskip=.4\baselineskip,
+        label=lst:#2, 
+        caption={#3},%    
+        #1
+    }%
+}{%
+}
+
+% De code in de environments lstfragment wordt in een codefragment geplaatst.
+% #1 = (optional) extra key=value paren voor lstset b.v.
+%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = linenumbers
+% geen titel, geen label
+\lstnewenvironment{lstfragment}[1][]{%
+    \lstset{
+        aboveskip=.6\baselineskip,
+        #1
+    }%
+}{%
+}
+
+% \intextcodefont is nodig om \small te verwijderen
+\newcommand{\intextcodefont}{\ttfamily}
+\lstdefinestyle{lstinlinestyle}{
+    basicstyle=\intextcodefont, 
+    prebreak={}, 
+    postbreak={}, 
+    breakindent=0pt,
+}
+
+% Commando's \code, \lcode, \ccode, \cppcode, \pycode, \mcode en \acode kunnen gebruikt worden om inline code te definiëren.
+% #1 = (optional) extra key=value paren voor lstinline.
+% #2 = inline code
+\newcommand{\code}[2][]{%
+    \lstinline[
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\ccode}[2][]{%
+    \lstinline[
+        style=cstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\cppcode}[2][]{%
+    \lstinline[
+        style=cppstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\lcode}[2][]{%
+	\lstinline[
+		style=lstyle,
+		style=lstinlinestyle,%
+		#1
+	]@#2@%
+}
+
+\newcommand{\pycode}[2][]{%
+	\lstinline[
+	style=pystyle,
+	style=lstinlinestyle,%
+	#1
+	]@#2@%
+}
+
+\newcommand{\mcode}[2][]{%
+    \lstinline[
+        style=mstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\acode}[2][]{%
+    \lstinline[
+        style=astyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\amcode}[2][]{%
+	\lstinline[
+	style=amstyle,
+	style=lstinlinestyle,%
+	#1
+	]@#2@%
+}
+
+\newcommand{\legcode}[2][]{%
+    \lstinline[
+        style=legstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\pinkycode}[2][]{%
+	\lstinline[
+		style=pinkystyle,
+		style=lstinlinestyle,%
+	#1
+	]@#2@%
+}
+
+\newcommand{\rcode}[2][]{%
+	\lstinline[
+		style=rstyle,
+		style=lstinlinestyle,%
+	#1
+	]@#2@%
+}
+
+% met \hcode kun je ervoor zorgen dat lange identifiers afgebroken kunnen worden. Mogelijke afbreekpunten met \\- markeren.
+\newcommand{\hcode}[2][]{%
+    \lstinline[
+        style=lstinlinestyle,
+        style=nostyle,
+        literate={\\-}{}{0\discretionary{-}{}{}},%
+        #1
+    ]@#2@%
+}
+
+% handige afkorting |bla| voor \ccode{bla} maar pas op: werkt niet in footnotes, captions etc.
+% werkt niet als je | in latex code gebruikt (b.v. in math).
+% vandaar environment van gemaakt.
+\newenvironment{clstShortInline}{%
+    \lstMakeShortInline[
+        style=cstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{cpplstShortInline}{%
+    \lstMakeShortInline[
+        style=cppstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{llstShortInline}{%
+	\lstMakeShortInline[
+		style=lstyle,
+		style=lstinlinestyle,
+	]{|}%
+}{
+	\lstDeleteShortInline{|}%
+}
+
+\newenvironment{pylstShortInline}{%
+	\lstMakeShortInline[
+	style=pystyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
+}
+
+\newenvironment{mlstShortInline}{%
+    \lstMakeShortInline[
+        style=mstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{alstShortInline}{%
+    \lstMakeShortInline[
+        style=astyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{amlstShortInline}{%
+	\lstMakeShortInline[
+	style=amstyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
+}
+
+\newenvironment{leglstShortInline}{%
+    \lstMakeShortInline[
+        style=legstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{pinkylstShortInline}{%
+	\lstMakeShortInline[
+	style=pinkystyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
+}
+
+\newenvironment{rlstShortInline}{%
+	\lstMakeShortInline[
+	style=rstyle,
+	style=lstinlinestyle,
+	]{|}%
+}{%
+	\lstDeleteShortInline{|}%
+}
+% gebruik voor opmaak van console output
+% http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/fancyvrb/fancyvrb.pdf
+% nodig om underline voor input te kunnen gebruiken: \cinput{...}
+\usepackage{fancyvrb}
+\definecolor{darkgreen}{RGB}{0,100,0}
+\newcommand{\cinput}[1]{\color{darkgreen}{\underline{#1}}}
+\newenvironment{coutput}{%
+	\Verbatim[commandchars=\\\{\}]%
+    }{%
+    \endVerbatim%
+}
+
+%http://ctan.cs.uu.nl/macros/generic/xstring/xstring_doc_en.pdf
+\usepackage{xstring}
+\makeatletter
+\newrobustcmd{\proglink}[1]{%
+    \normalexpandarg%
+    \StrDel{#1}{\\-}[\bare@link]%
+    \href{\progsurl/\bare@link}{\hcode{#1}}%
+    \fullexpandarg%
+}
+\newrobustcmd{\downloadlink}[1]{%
+    \normalexpandarg%
+    \StrDel{#1}{\\-}[\bare@link]%
+    \href{\downloadurl/\bare@link}{\hcode{#1}}%
+    \fullexpandarg%
+}
+\makeatother

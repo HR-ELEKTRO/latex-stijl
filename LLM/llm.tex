@@ -1,0 +1,97 @@
+% minimaal document met gebruik van HR-stijl
+% !TEX root = llm.tex
+\newcommand{\myClass}{article}
+\newcommand{\cursuscode}{LLM}
+\newcommand{\titel}{Gebruik van Generatieve AI}
+%\newcommand{\documenttype}{...}
+\newcommand{\huidigeversie}{1.0}
+\newcommand{\auteurs}{
+	J.Z.M. Broeders
+}
+\include{style_nl_NL.tex}
+\include{styleCode.tex}
+\ExecuteBibliographyOptions{defernumbers=true}
+\usepackage{stackengine}
+
+\begin{document}
+\section*{Gebruik van Generatieve AI}
+In dit document wordt beschreven hoe we bij de opleiding Elektrotechniek van de Hogeschool omgaan met het gebruik van generatieve AI in opdrachten, projecten en (afstudeer)stages.
+
+\section*{Wanneer mag je er gebruik van maken en waar moet je op letten?} 
+Het antwoord op deze vraag kun je vinden in op hint: \url{https://hint.hr.nl/nl/HR/Over-de-HR/Kwaliteit-en-onderwijs/chatgpt/chatgpt-en-taalmodellen-voor-studenten/}.
+
+Als het gebruik van generatieve AI is toegestaan, dan moet je altijd de bron vermelden. Dit betekent dat je in je verslag of presentatie moet vermelden dat je gebruik hebt gemaakt van generatieve AI en welke bron je hebt gebruikt.
+
+Daarnaast zijn op hint ook (virtuele) stickers die je kunt gebruiken om aan te geven dat je gebruik hebt gemaakt van generatieve AI\footnote{%
+    Zie \url{https://hint.hr.nl/nl/HR/Over-de-HR/Kwaliteit-en-onderwijs/chatgpt/} onder \dquote{Hoe vermeld je het gebruik van ChatGPT in opdrachten?}.
+}.
+Deze stickers zijn in de rest van dit document ook gebruikt.
+
+\section*{Hoe vermeld je de bron?\belowbaseline[-5mm]{\includegraphics[height=2cm]{figs/human-creation.png}}}
+
+Bij de opleiding Elektrotechniek maken we bij voorkeur gebruik van de IEEE-stijl voor bronvermelding \cite{IEEE2023}.
+Helaas geeft de IEEE-stijl op het moment van schrijven van dit document (april 2024) geen specifieke richtlijnen voor het vermelden van generatieve AI-bronnen. 
+Het IEEE Author Center raadt aan om de Chicago Manual of Style te gebruiken\footnote{\url{https://guides.libraries.psu.edu/c.php?g=1338692&p=9866353}}.
+In de Chicago Manual of Style wordt aangeraden om generatieve AI-bronnen als volgt te vermelden\footnote{%
+\url{https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Documentation/faq0422.html}
+}:
+\begin{itemize}
+    \item 
+    Je kunt het gebruik van een AI-tool gewoon vermelden in je tekst.
+    Bijvoorbeeld: \dquote{De volgende Python-code om de grootste gemeenschappelijke deler van twee gehele getallen te bepalen is gegenereerd door Copilot:}.
+    Zie ook \hyperref[vbeen]{voorbeeld~1}.
+    \item
+    Als alternatief kun je ook een voetnoot gebruiken, zie \hyperref[vbtwee]{voorbeeld~2}.
+    \item
+    Gebruik alleen een bronvermelding, in de referentielijst, als er een URL beschikbaar is die bijvoorbeeld naar een discussie met ChatGPT leidt.
+    Er zijn browser plug-ins die je kunt gebruiken om zo'n URL te genereren, bijvoorbeeld  A.I. Archives\footnote{%
+        https://aiarchives.org/
+    }, zie \hyperref[vbdrie]{voorbeeld~3}.
+\end{itemize} 
+
+Je kunt generatieve AI ook gebruiken om je taalgebruik te verbeteren. Dit kun je het beste vermelden in de inleiding van je verslag of presentatie. Bijvoorbeeld: \dquote{De tekst in dit verslag is gecontroleerd en verbeterd met behulp van ChatGPT\footnote{%
+    \fullcite{Taal}
+}}.
+
+Kortom, je moet het gebruik van generatieve AI vermelden als je de resultaten reproduceert in je eigen werk, maar tenzij je een publiek beschikbare URL opneemt, moet die informatie in de tekst of in een voetnoot worden gezet, maar niet in een bibliografie of referentielijst. 
+
+\section*{Voorbeeld 1\belowbaseline[-5mm]{\includegraphics[height=2cm]{figs/chat-gpt.png}}}
+\label{vbeen}
+Op de vraag \dquote{
+    Wat zijn de vijf meest gebruikte programmeertalen voor embedded systems in volgorde van populariteit? 
+    Antwoord in maximaal 100 woorden.
+} gaf ChatGPT het volgende antwoord:
+
+De vijf meest gebruikte programmeertalen voor embedded systems, gerangschikt naar populariteit, zijn:
+\begin{enumerate}
+    \item 
+    C - Alomtegenwoordig vanwege zijn efficiëntie en directe hardwaretoegang.
+    \item 
+    C++ - Uitbreiding van C met objectgeoriënteerde mogelijkheden, vaak gebruikt voor complexe embedded systemen.
+    \item 
+    Assembly - Biedt maximale controle over hardware, maar vereist diepgaande kennis en is minder overdraagbaar\footnote{%
+        In het originele antwoord stond \dquote{draagbaar}.
+    }.
+    \item 
+    Python - Opkomend voor minder kritieke embedded taken vanwege zijn eenvoud en flexibiliteit.
+    \item 
+    Rust - Groeiende populariteit vanwege zijn geheugenzekerheid en threadveiligheid, vooral voor veiligheidskritieke systemen.
+\end{enumerate}
+
+\section*{Voorbeeld 2\belowbaseline[-5mm]{\includegraphics[height=2cm]{figs/chat-gpt.png}}}
+\label{vbtwee}
+Borstelloze motoren bieden hogere efficiëntie en betrouwbaarheid omdat ze geen mechanische borstels hebben die slijten, minder onderhoud vergen en geen vonken veroorzaken. Ze zijn ook compacter, produceren minder elektromagnetische interferentie en hebben een hoger vermogensgewichtsverhouding\footnote{%
+    \fullcite{BLDCmotor}
+}.
+
+\section*{Voorbeeld 3\belowbaseline[-5mm]{\includegraphics[height=2cm]{figs/partly-gpt-human.png}}}
+\label{vbdrie}
+De C-code voor de MSP430G255 waarmee een PWM-signaal op pin 2.6 wordt gegenereerd, met een frequentie van 1 kHz en een duty cycle van 10\%, is gegeven in \cref{lst:pwm}.
+Deze code is in samenwerking met ChatGPT gegenereerd \cite{PWM}.
+
+\floatlstinput[style=cstyle]{PWM\_2.6.c}{pwm}{PWM signaal op pin 2.6 van de MSP430G255.}
+
+\printbibliography{}
+
+
+\end{document}
