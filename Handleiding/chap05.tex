@@ -88,6 +88,10 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
     \item Het eerste woord in een zin wordt nooit afgebroken, dat kan wel eens problemen geven in een smalle kolom in een tabel.
         Zet er |\hspace{0pt}| voor om het toch af te laten breken.
     \item Gebruik een |\mbox| om ongewenst afbreken te voorkomen.
+    \item Het commando |\hurl| is een uitbreiding van het commando |\url|. 
+    In de als argument meegegeven url kunnen mogelijke afbreeklocaties worden aangegeven met de tekencombinatie |\\-|.
+    Dit is handig als een lange url niet correct wordt afgebroken en daardoor buiten de rechtermarge van de pagina valt.
+    Het commande |\hurl| is gedefinieerd in het bestand |styleCode.tex|.
     \item Bij het maken van een toets met behulp van de class exam kun je een |\solution| op een nieuwe regel beginnen met |\ifprintanswers\\\fi|.
     \item Soms wordt een extra lege regel toegevoegd aan het einde van een paragraaf als de laatste regel van de paragraaf exact past binnen de tekstbreedte. Dit kun je oplossen door |\vskip 0pt| achter de laatste regel van de paragraaf te plaatsen.
     \item \#, \$, \%, \textasciitilde, \_, \textasciicircum, \textbackslash, \{ en \} zijn speciale karakters en moeten als volgt ingevoerd worden: 
@@ -105,6 +109,8 @@ section{\texorpdfstring{$E=mc^2$}{E=mc2}}
 	}.
     Hetzelfde geldt voor woorden zoals off\makebox{}line enzovoorts.
     \item Gebruik de package |upgreek| voor rechtopstaande Griekse letters.
+    \item Soms kom je net een beetje ruimte op een pagina tekort.
+    Je kunt dan |\enlargethispage{.5\baselineskip}| gebruiken om de pagina met een halve regel te verlengen.
 \end{itemize}
 
 Nog enkele tips voor het gebruik van \LaTeX{} in combinatie met git:
