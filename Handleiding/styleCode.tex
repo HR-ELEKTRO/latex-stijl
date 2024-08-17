@@ -387,7 +387,7 @@
 
 % Commando's \floatlstinput en \lstinput lezen code uit (een deel van) een bestand en plaatsen dit in een listing.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -405,7 +405,7 @@
 }
 
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -425,7 +425,7 @@
 
 % Commando \lstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -441,7 +441,7 @@
 
 % De code in de environments floatlst en lst wordt in een listing geplaatst.
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 % #2 = label=lst:#2
 % #3 = titel
@@ -456,7 +456,7 @@
 }
 
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 % #2 = label=lst:#2
 % #3 = titel
@@ -473,7 +473,7 @@
 
 % De code in de environments lstfragment wordt in een codefragment geplaatst.
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle of astyle (C, C++, Python, MATLAB, AVR assembler)
+%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 % geen titel, geen label
 \lstnewenvironment{lstfragment}[1][]{%
@@ -710,6 +710,12 @@
     \normalexpandarg%
     \StrDel{#1}{\\-}[\bare@link]%
     \href{\downloadurl/\bare@link}{\hcode{#1}}%
+    \fullexpandarg%
+}
+\newrobustcmd{\hurl}[1]{%
+    \normalexpandarg%
+    \StrDel{#1}{\\-}[\bare@url]%
+    \href{\bare@url}{\hcode{#1}}%
     \fullexpandarg%
 }
 \makeatother
