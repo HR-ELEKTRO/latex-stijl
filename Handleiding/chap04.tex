@@ -6,13 +6,14 @@
 De commando's die gebruikt kunnen worden voor listings en codefragmenten zijn in een apart bestand geplaatst: |styleCode.tex|.
 Er wordt gebruikt gemaakt van de package \hcode[style=lstyle]{list\\-ings}\footnote{\url{https://www.ctan.org/pkg/listings}}.
 
-Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| als \Cpp{}-code, |lstyle| als \LaTeX\hyp{}code, |pstyle| als Python\hyp{}code, |mstyle| als MATLAB-code, |astyle| AVR\hyp{}assembler\hyp{}code, |amstyle| als MSP430\hyp{}assembler\hyp{}code, |legstyle| als LEG\hyp{}assembler\hyp{}code\footnote{%
+Er worden een aantal zogenoemde \squote{styles} gedefinieerd die in de onderstaande commando's gebruikt kunnen worden: |linenumbers| voegt regelnummers toe, |cstyle| maakt de code op als C-code, |cppstyle| als \Cpp{}-code, |lstyle| als \LaTeX\hyp{}code, |pystyle| als Python\hyp{}code, |mstyle| als MATLAB-code, |astyle| AVR\hyp{}assembler\hyp{}code, |amstyle| als MSP430\hyp{}assembler\hyp{}code, |legstyle| als LEG\hyp{}assembler\hyp{}code\footnote{%
     LEG\hyp{}assembler\hyp{}code wordt gebruikt in het boek \citetitle{Patterson2016} \cite{Patterson2016}.
-} en |pinkystyle| als Pinky\hyp{}assembler\hyp{}code\footnote{%
+}, |pinkystyle| als Pinky\hyp{}assembler\hyp{}code\footnote{%
     Pinky\hyp{}assembler\hyp{}code is een subset van de ARMv7 Thumb instructieset en is gedefinieerd in \cite{Broeders2022}.
-}.
+} en |rstyle| als Rust\hyp{}code.
 
 \section{Listings}
+\label{sec:lstcommands}
 De commando's |\floatlstinput| en |\lstinput| lezen code uit (een deel van) een bestand.
 Deze commando's hebben vier parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinputlisting| worden meegegeven, bijvoorbeeld: \hcode[style=lstyle]{style = cstyle, style = line\\-numbers, line\\-range = \{1-6, 13-27\}}.
@@ -61,7 +62,7 @@ int main() {
 \footnotetext{Sinds C99 mag dit \ccode{return}-statement ook weggelaten worden. De functie \ccode{main} geeft dan toch \ccode{0} terug.}
 
 \section{Code-segmenten}
-Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\lcode| voor \LaTeX\hyp{}code, |\pycode| voor Python\hyp{}code, |\mcode| voor MATLAB\hyp{}code, |\acode| voor AVR\hyp{}assembler\hyp{}code, |\amcode| voor MSP430\hyp{}assembler\hyp{}code, |\legcode| voor LEG\hyp{}assembler\hyp{}code of |\pinkycode| voor Pinky\hyp{}assembler\hyp{}code.
+Inline code kan gedefinieerd worden met de commando's: |\code| voor taalonafhankelijke code, |\ccode| voor C-code, |\cppcode| voor \Cpp{}-code, |\lcode| voor \LaTeX\hyp{}code, |\pycode| voor Python\hyp{}code, |\mcode| voor MATLAB\hyp{}code, |\acode| voor AVR\hyp{}assembler\hyp{}code, |\amcode| voor MSP430\hyp{}assembler\hyp{}code, |\legcode| voor LEG\hyp{}assembler\hyp{}code, |\pinkycode| voor Pinky\hyp{}assembler\hyp{}code of |\rcode| voor Rust\hyp{}code.
 Deze commando's hebben twee parameters waarvan de eerste optioneel is.
 Als eerste argument kunnen extra |key=value| paren voor het commando |\lstinline| worden meegegeven.
 De twee\-de parameter is de code die inline moet worden geplaatst.
@@ -122,4 +123,29 @@ In deze \MakeLowercase\documenttype{} is dat als volgt gedaan:
 
 De code |\proglink{lpfbodelog.m}| levert nu de volgende link op: \proglink{lpfbodelog.m}.
 
+\section{Syntaxiskleuring}
+\label{sec:syntaxiskleuring}
+De syntaxiskleuring van de codefragmenten is afhankelijk van de gebruikte stijl.
+Voor C-code en \Cpp{}-code wordt de kleurstelling van Code Composer Studio (dat gebaseerd is op Eclipse) gebruikt.
 
+De code voor een programma dat alleen de watchdog timer van een MSP430 uitschakelt, ziet er als volgt uit:
+
+\begin{lstfragment}[style=cstyle]
+#include <msp430.h>
+
+int main(void)
+{
+    WDTCTL = WDTPW | WDTHOLD; // stop de watchdog timer
+    while (1)
+    {
+    }
+    return 0;
+}
+\end{lstfragment}
+
+Als je dit vergelijkt met de opmaak en kleurstelling van de code in Code Composer Studio, dan valt op dat de naam van de includefile \ccode{msp430.h} niet blauw gekleurd is zoals in CCS.
+Dit kun je oplossen door het volgende optionele argumenten aan het commando voor de listing, zie \cref{sec:lstcommands}, mee te geven: |alsoletter={<>.},morekeywords={[2]{<msp430.h>}}|.
+
+\begin{lstfragment}[style=cstyle,alsoletter={<>.},morekeywords={[2]{<msp430.h>}}]
+#include <msp430.h>
+\end{lstfragment}    
