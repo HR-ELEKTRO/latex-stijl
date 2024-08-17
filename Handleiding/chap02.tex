@@ -603,6 +603,50 @@ Het is mij niet duidelijk welke aanpak de voorkeur heeft.
     linerange={pgfplotsvoorbeeld-pgfplotsvoorbeeld},
 ]{../chap02.tex}{pgfplotsvoorbeeld}{\LaTeX{}-code waarmee \cref{fig:frm} gemaakt is.}
 
+\subsection{Meerdere figuren of andere dingen naast elkaar}
+\label{sec:meerderefiguren}
+Als je gebruik maakt van één van de bovenstaande commando's om figuren in een document op te nemen, dan staat er niets links of rechts van het figuur, zie \cref{klzebra}.
+Soms is het handiger om meerdere kleine figuren (of andere dingen) naast elkaar te plaatsen.
+Dit kan met behulp van de |multicols|-environment van de package |multicol|\footnote{\url{https://www.ctan.org/pkg/multicol}}.
+Deze environment heeft één optionele parameter waarin je kunt opgeven hoeveel kolommen je wilt hebben.
+
+De code die gegeven is in \cref{lst:multicols} zet \cref{fig:teddybeer1,fig:teddybeer2} naast elkaar.
+
+\floatlstinput[
+    style=lstyle,
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+    linerange={beren-beren},
+]{../chap02.tex}{multicols}{\LaTeX{}-code waarmee \cref{fig:teddybeer1} en \cref{fig:teddybeer2} naast elkaar gezet zijn.}
+
+%>beren
+\begin{multicols}{2}
+	\figuur[H]{width=.8\columnwidth}{teddybeer1}{Plaatje van een teddybeer.}
+	\columnbreak
+	\figuur[H]{width=.8\columnwidth}{teddybeer2}{Plaatje van een andere teddybeer.}
+\end{multicols}
+%<beren
+
+De code die gegeven is in \cref{lst:beerformule} zet \cref{fig:teddybeer3} en \cref{eq:life} naast elkaar.
+
+\lstinput[
+    style=lstyle,
+    rangebeginprefix= \%>,
+    rangeendprefix=\%<,
+    linerange={beerformule-beerformule},
+]{../chap02.tex}{beerformule}{\LaTeX{}-code waarmee \cref{fig:teddybeer3} en \cref{eq:life} naast elkaar gezet zijn.}
+
+%>beerformule
+\begin{multicols}{2}
+	\hrfigure[placement=H, width=.8\columnwidth, label=fig:teddybeer3, caption=Teddybeer met T-shirt.]{teddybeer1}
+	\columnbreak
+	\vspace*{1cm}
+	\begin{equation}\label{eq:life}
+		\int\limits_{birth}^{death} struggle\;\;dt=life
+	\end{equation}
+\end{multicols}
+%<beerformule
+
 \section{Tabellen}
 \label{sec:tabellen}
 Voor tabellen werd in eerdere versies van deze style de package |tabu|\footnote{\url{https://www.ctan.org/pkg/tabu}} gebruikt.
