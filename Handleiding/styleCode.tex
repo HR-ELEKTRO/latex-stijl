@@ -15,6 +15,7 @@
 \definecolor{lstpurple}{RGB}{127,0,116}
 \definecolor{lstmatlabpurple}{RGB}{159,31,242}
 \definecolor{lstdarkgreen}{RGB}{0,128,0}
+\definecolor{lstlightgreen}{RGB}{0,255,0}
 \definecolor{lstdarkergreen}{RGB}{0,100,0}
 \definecolor{lstturquoisegreen}{RGB}{63,127,95}
 \definecolor{lstmatlabturquoisegreen}{RGB}{33,138,77}
@@ -92,7 +93,7 @@
 \newcommand{\lstccomment}{\color{lstturquoisegreen}}
 \lstdefinestyle{cstyle}{
     language=C,
-    morekeywords={__interrupt, __asm, interrupt, asm, __attribute__,true,false},
+    morekeywords={__asm,asm,__attribute__},
     morekeywords=[2]{<assert.h>,<complex.h>,<ctype.h>,<errno.h>,<fenv.h>,<float.h>,<inttypes.h>,<iso646.h>,<limits.h>,<locale.h>,<math.h>,<setjmp.h>,<signal.h>,<stdalign.h>,<stdarg.h>,<stdatomic.h>,<stdbool.h>,<stddef.h>,<stdint.h>,<stdio.h>,<stdlib.h>,<stdnoreturn.h>,<string.h>,<tgmath.h>,<threads.h>,<time.h>,<uchar.h>,<wchar.h>,<wctype.h>},
     stringstyle=\lstcstring,
     keywordstyle=\lstckeyword,
@@ -190,6 +191,71 @@
     keywordstyle=\lstmkeyword,
     identifierstyle=,
     commentstyle=\lstmcomment,
+}
+
+% VHDL
+% Work in progress
+% Modelsim kleuren zijn heel specifiek
+\definecolor{lstmodelsimbasic}{RGB}{107,89,212}
+\definecolor{modelsimkeyidentifier}{RGB}{145,0,162}
+\definecolor{modelsimkeywordone}{RGB}{215,56,4}
+\definecolor{modelsimlibs}{RGB}{24,60,175}
+\definecolor{modelsimtypes}{RGB}{91,200,0}
+\definecolor{modelsimliterals}{RGB}{19,143,183}
+\definecolor{modelsimlogicoperators}{RGB}{25,224,240}
+\definecolor{modelsimfunctions}{RGB}{242,203,65}
+\definecolor{modelsimcomment}{RGB}{6,133,6}
+\definecolor{modelsimstring}{RGB}{180,180,180}
+
+\lstdefinestyle{vstyle}{
+    language=vhdl,
+    basicstyle=\linespread{1.1}\ttfamily\small\color{lstmodelsimbasic}\bfseries,
+    identifierstyle=\color{modelsimkeyidentifier}\bfseries,
+    keywordstyle=[1]\color{modelsimkeywordone}\bfseries,
+    keywordstyle=[2]\color{modelsimlibs}\bfseries,
+    keywordstyle=[3]\color{modelsimtypes}\bfseries,
+    keywordstyle=[4]\color{modelsimliterals}\bfseries,
+    keywordstyle=[5]\color{modelsimlogicoperators}\bfseries,
+    keywordstyle=[6]\color{modelsimfunctions}\bfseries,
+    keywordstyle=[7]\color{modelsimtypes}\mdseries,
+    stringstyle=\color{modelsimstring},
+    commentstyle=\color{modelsimcomment},
+    keywords=[1]{
+        library, use, all, entity, is, port, in, out, end, architecture, of, body,
+        function, variable, begin, downto, signal, process, if, else, elsif, case, 
+        when, then, range, to, component, type, with, select, others, constant, 
+        inout, buffer, map, true, false, array, subtype, wait, generic,
+        for, loop, generate, next, exit, assert, report, severity, after,
+    }, 
+    alsoletter={'},
+    morekeywords=[2]{
+          work, math_real, std_logic_arith, std_logic_unsigned,
+          ieee, numeric_std, std_logic_1164,
+    },
+    % types
+    morekeywords=[3]{
+        real, time, std_logic_vector, std_ulogic_vector, std_logic, std_ulogic, natural, bit, bit_vector, signed, unsigned, boolean, 
+    },
+    % literals
+    alsoletter={0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+    morekeywords=[4]{
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+        00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 0A, 0B, 0C, 0D, 0E, 0F, 
+        10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 
+        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 
+        30, 31, 32, 
+        40, 46, 64, 78, 79, 128, 256, 512, 1024, 2048, 4096, 8192, 16384,
+    },
+    % logic operators
+    morekeywords=[5]{
+        and, or, not, nand, nor, xor, nxor, 
+    },
+    % functions,
+    morekeywords=[6]{rising_edge, falling_edge, resize, to_signed, to_unsigned},
+    % atrributes
+    morekeywords=[7]{length, range,},
+    morecomment=[l]{--},
+    morecomment=[s]{/*}{*/},
 }
 
 % AVR assembler
@@ -387,7 +453,7 @@
 
 % Commando's \floatlstinput en \lstinput lezen code uit (een deel van) een bestand en plaatsen dit in een listing.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
+%      style = cstyle, cppstyle, pystyle, mstyle, vstyle,  astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, VHDL, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -405,7 +471,7 @@
 }
 
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
+%      style = cstyle, cppstyle, pystyle, mstyle, vstyle,  astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, VHDL, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -425,7 +491,7 @@
 
 % Commando \lstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
 % #1 = (optional) extra key=value paren voor lstinputlisting b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
+%      style = cstyle, cppstyle, pystyle, mstyle, vstyle,  astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, VHDL, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 %      linerange={1-6, 13-27}
 % #2 = filenaam (moet in het directory ./progs staan)
@@ -441,7 +507,7 @@
 
 % De code in de environments floatlst en lst wordt in een listing geplaatst.
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
+%      style = cstyle, cppstyle, pystyle, mstyle, vstyle,  astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, VHDL, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 % #2 = label=lst:#2
 % #3 = titel
@@ -456,7 +522,7 @@
 }
 
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
+%      style = cstyle, cppstyle, pystyle, mstyle, vstyle,  astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, VHDL, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 % #2 = label=lst:#2
 % #3 = titel
@@ -473,7 +539,7 @@
 
 % De code in de environments lstfragment wordt in een codefragment geplaatst.
 % #1 = (optional) extra key=value paren voor lstset b.v.
-%      style = cstyle, cppstyle, pystyle, mstyle, astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
+%      style = cstyle, cppstyle, pystyle, mstyle, vstyle,  astyle, amstyle, legstyle, pinkystyle of rstyle (C, C++, Python, MATLAB, VHDL, AVR assembler, MSP430-assembler, LEG-assembler, Pinky-assembler of Rust)
 %      style = linenumbers
 % geen titel, geen label
 \lstnewenvironment{lstfragment}[1][]{%
@@ -538,6 +604,14 @@
 \newcommand{\mcode}[2][]{%
     \lstinline[
         style=mstyle,
+        style=lstinlinestyle,%
+        #1
+    ]@#2@%
+}
+
+\newcommand{\vcode}[2][]{%
+    \lstinline[
+        style=vstyle,
         style=lstinlinestyle,%
         #1
     ]@#2@%
@@ -635,6 +709,15 @@
 \newenvironment{mlstShortInline}{%
     \lstMakeShortInline[
         style=mstyle,
+        style=lstinlinestyle,
+    ]{|}%
+}{%
+    \lstDeleteShortInline{|}%
+}
+
+\newenvironment{vlstShortInline}{%
+    \lstMakeShortInline[
+        style=vstyle,
         style=lstinlinestyle,
     ]{|}%
 }{%
