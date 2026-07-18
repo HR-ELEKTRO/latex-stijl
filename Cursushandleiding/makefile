@@ -2,7 +2,7 @@
 # BroJZ MuiKo aug 2023
 
 # Define target and source file here:
-TARGET := Cursushandleiding_XXX10
+TARGET := Cursushandleiding_BLA10
 SOURCE := main
 DEPENDENCIES := *.tex bibliography.bib
 

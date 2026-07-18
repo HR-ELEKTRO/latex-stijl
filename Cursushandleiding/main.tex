@@ -1,41 +1,53 @@
+% !TEX root=main.tex
+% LTeX: language=nl
 % !TeX spellcheck = nl_NL
 % Parameters voor Cursushandleiding:
-\newcommand{\cursusnaam}{Cursusnaam 1}
-\newcommand{\cursuscode}{ELEXXX10} % inclusief ELE en versienummer
+\newcommand{\cursusnaam}{Blaten voor beginners} % Voeg alleen een volgnummer toe als er meerdere cursussen met dezelfde naam zijn.
+\newcommand{\cursuscode}{ELEBLA10} % inclusief ELE en versienummer
+\newcommand{\cursusafko}{BLA1} % zonder ELE en versienummer
 \newcommand{\ects}{7}
 \newcommand{\studiejaar}{1}
 \newcommand{\kwartaal}{1}
 \newcommand{\deadline}{zondag 23.59 uur}
 %https://onzetaal.nl/taaladvies/tijden-noteren/
-\newcommand{\huidigeversie}{1.0}
+\newcommand{\huidigeversie}{3.0} % dit is de versie van de cursushandleiding, niet van de cursus
 
 \input{styleCursusHandleiding.tex}
 \input{styleCode.tex}
 
+% Specifieke commando's om dummy tekst te genereren, zodat deze voorbeeld cursushandleiding er vol uitziet.
 \newcommand{\herhaal}[2]{%
 	\foreach \n in {1,...,#1}{#2 }%
 	\unskip%
 }
+\newcommand{\Bla}{\textcolor{gray}{Bla}}
+\newcommand{\bla}{\textcolor{gray}{bla}}
+\newcommand{\bladiebla}{\textcolor{gray}{bladiebla}}
+\newcommand{\die}{\textcolor{gray}{die}}
 
 \begin{document}
 \koptabel
 
 \section{Inleiding}
-Bla \herhaal{50}{bladiebla}.
+Deze cursus nodigt jou als beginnend elektrotechnisch ingenieur uit om je technische competenties te verrijken met een nieuwe vaardigheid: menselijke communicatie.
 
-Deze inleidende tekst is extra lang zodat je kunt zien hoe de leerdoelentabel automatisch afgebroken wordt.
+Je leert hoe je van een technische uitleg moeiteloos overstapt naar een gezellig gesprek. 
+Je ontdekt hoe bevrijdend het kan zijn om af en toe eens heerlijk te blaten als een schaap, niet omdat het moet, maar omdat het je helpt los te komen van strakke patronen en je creativiteit opent.
 
-Bla \herhaal{50}{bladiebla}.
+Bovendien ontwikkel je in deze cursus de vaardigheid van het verkopen van gebakken lucht. 
+Dit als oefening in overtuigingskracht, storytelling en het vermogen om ideeën aantrekkelijk te verpakken. 
+Want zelfs de beste technische oplossing heeft soms een beetje glans nodig om gezien te worden.
+
+Welkom bij deze cursus waarin je niet alleen praat, maar verbindt. Niet alleen denkt, maar durft. 
+En soms... gewoon even blaat\footnote{%
+	Voor wie het nog niet door had: deze inleidende tekst is gegenereerd met behulp van AI.
+}.
+
+\Bla{} \herhaal{50}{\bladiebla{}}.
 
 \section{Werkvormen en studielast}
 \label{sec:werkvormen}
-Bla \herhaal{50}{bladiebla}.
-
-Deze tekst is extra lang zodat je kunt zien hoe de leerdoelentabel automatisch afgebroken wordt.
-
-Bla \herhaal{50}{bladiebla}.
-
-Bla \herhaal{45}{bladiebla}.
+\Bla{} \herhaal{50}{\bladiebla{}}.
 
 De verschillende werkvormen zijn weergegeven in de onderstaande tabel.
 
@@ -48,21 +60,17 @@ De verschillende werkvormen zijn weergegeven in de onderstaande tabel.
 	Zelfstudie & Bestuderen van het studiemateriaal. Uitwerken van alle labopdrachten. & 130 klokuren
 }
 
+\textcolor{gray}{De totale studielast in klokuren dient gelijk te zijn aan het aantal studiepunten maal 28. In dit voorbeeld is dat $7\times{}28 = 196$ klokuren.}
+
 \iftoggle{ebook}{\needspace{5cm}}{}
 \section{Competenties}
 \label{sec:competenties}
 Deze cursus draagt bij aan het ontwikkelen van de competentie:
 \begin{itemize}
-	\item \textbf{analyseren} door bla bla (LD1\footnote{%
+	\item \textbf{adviseren} door bla bla (LD2\footnote{%
 		LD = leerdoel, zie \cref{sec:leerdoelen}.
 	});
-	\item \textbf{ontwerpen} door bla bla (LD2); 
-	\item \textbf{realiseren} door bla bla (LD3);
-	\item \textbf{beheren} door bla bla (LD4);
-	\item \textbf{managen} door bla bla (LD5);
-	\item \textbf{adviseren} door bla bla (LD6);
-	\item \textbf{onderzoeken} door bla bla (LD7);
-	\item \textbf{professionaliseren} door bla bla (LD8).
+	\item \textbf{professionaliseren} door \bla{} \bla{} (LD1 + LD2);
 \end{itemize}
 
 \section{Leerdoelen}
@@ -71,32 +79,30 @@ Deze cursus draagt bij aan het ontwikkelen van de competentie:
 \leerdoelentabel{
 	%De student is in staat om	
 	\leerdoel{C}{50}{
-		te blaten als een schaap zodanig dat \herhaal{25}{bladiebla}. 
+		te blaten als een schaap zodanig dat \herhaal{25}{\bladiebla{}}. 
 	}
 	\leerdoel{C}{50}{
-		gebakken lucht te verkopen zodanig dat \herhaal{15}{bladiebla}.
+		gebakken lucht te verkopen zodanig dat \herhaal{15}{\bladiebla{}}.
 	}
 	\leerdoel{A}{0}{
-		bla zodanig dat \herhaal{15}{bladiebla}.
-	}
-	\leerdoel{B}{0}{
-		bla zodanig dat \herhaal{15}{bladiebla}.
-	}
-	\leerdoel{C}{0}{
-		bla zodanig dat \herhaal{15}{bladiebla}.
+		\bla{} zodanig dat \herhaal{15}{\bladiebla{}}.
 	}
 }
 
 \section{Toetsing en beoordeling}
 \label{sec:toetsing}
 Deze cursus bevat twee deeltoetsen waarbij de leerdoelen 1 en 2 summatief worden getoetst.
-Bij deze twee deeltoetsen kun je in totaal maximaal 100 punten behalen.
+% Sinds 2026-2027 wordt niet meer met punten maar met cijfers gewerkt. 
+% Het cijfer van de deeltoetsen wordt uitgedrukt in cijfers van 0.0 tot en met 10.0.
+Bij elke van deze deeltoetsen kun je een cijfer van 0.0 tot en met 10.0 behalen.
 Het praktische deel wordt getoetst door middel van een opdracht.
-Bij deze deeltoets kun je maximaal 50 punten behalen en moet je minimaal 20 punten behalen.
+% Indien een minimum cijfer wordt toegepast:
+Bij deze deeltoets moet je minimaal het cijfer 4.0 behalen.
 Het theoriedeel wordt getoetst door middel van een schriftelijke toets.
 Bij deze toets mag je alleen het bij deze cursus \hyperref[sec:verplichteliteratuur]{verplichte boek} gebruiken.
 Dit boek mag \emph{geen} aantekeningen bevatten.
-Bij deze deeltoets kun je maximaal 50 punten behalen en moet je minimaal 20 punten behalen.
+% Indien een minimum cijfer wordt toegepast:
+Bij deze deeltoets moet je minimaal het cijfer 4.0 behalen.
 
 \tabelzonder{lccc>{\centering\arraybackslash}X}{Toets & Leerdoelen & Weging & Duur & Deadline}{
 	Opdracht & 1 & 50\,\% & & Lesweek 8, \deadline{}
@@ -104,18 +110,36 @@ Bij deze deeltoets kun je maximaal 50 punten behalen en moet je minimaal 20 punt
 	Tentamen & 2 & 50\,\% & 120 min & 
 }
 
+% Indien een minimum cijfer wordt toegepast:
+Is bij de theorietoets of bij de opdracht een cijfer minder dan 4.0 behaald en als het gewogen gemiddelde 5.5 of hoger is, dan is het eindcijfer een O (Onvoldoende).
+In alle overige gevallen is het eindcijfer gelijk aan het gewogen gemiddelde van de bij de deeltoetsen behaalde cijfers.
+De weging van de deeltoetsen is gegeven in de bovenstaande tabel.
 
-Zijn bij de theorietoets of bij de opdracht minder dan 20 punten behaald en in totaal 55 of meer punten behaald, dan is het eindcijfer een O (Onvoldoende).
-In alle overige gevallen is het eindresultaat gelijk aan het totaal aantal behaalde punten gedeeld door tien.
+% Inzage (sinds 2026-2027):
+% Als er geen inzagemoment ingeroosterd wordt, dan kun je de volgende zin gebruiken:
+Inzage in de beoordeling is mogelijk, op verzoek, tot 3 weken nadat de resultaten bekend zijn gemaakt.
 
+% Herkkansingsregeling
 De opdracht en de theorietoets kunnen, indien onvoldoende, apart worden herkanst.
 De theorietoets kan herkanst worden in HT1.
 Als de praktische opdracht met een onvoldoende is beoordeeld, dan mag je een \emph{andere} eindopdracht maken. De deadline voor deze opdracht is week 2.8 \deadline{}.
-De geldigheid van de deelresultaten is beperkt tot het studiejaar waarin deze zijn behaald.
+% Aangepast vanaf 2026-2027
+% De geldigheid van de deelresultaten is beperkt tot het studiejaar waarin deze zijn behaald.
+
+% Frauderegeling (sinds 2026-2027)
+% De examencommissie wil blijkbaar dat vanuit de cursushandleiding naar de hogeschoolgids wordt verwezen, dat kan met de volgende tekst:
+Ingeleverd werk wordt gecontroleerd op fraude, zoals plagiaat en het ongeoorloofd gebruik van kunstmatige intelligentie (AI).
+Bij vermoeden van fraude wordt melding gemaakt bij de Examencommissie. 
+Voor meer informatie: zie Hogeschoolgids bijlage 4, hoofdstuk 9 \dquote{Fraude, plagiaat en onregelmatigheden}.
+
+%Daarnaast is het handig om in de cursushandleiding iets over het gebruik van AI te vermelden.
+%Bijvoorbeeld met de tekst:
+Het is niet toegestaan om AI te gebruiken voor het genereren van teksten en/of data, het maken van documenten of als primaire bron van informatie, tenzij het gebruik van AI expliciet is toegestaan in de opdracht.
+Het gebruik van AI als hulpmiddel bij het verbeteren van het eigen geschreven werk, zoals voor grammaticale correcties en stijlverbeteringen is wel toegestaan.
 
 \section{Voorkennis}
 \label{sec:voorkennis}
-Bla \herhaal{15}{bladiebla}.
+\Bla{} \herhaal{15}{\bladiebla{}}.
 
 \section{Aansluiting op verdere studie}
 \label{sec:aansluiting}
@@ -123,19 +147,19 @@ Deze cursus biedt veel handige tools om tijdens je minor of het afstuderen te ku
 
 \section{Verplichte literatuur}
 \label{sec:verplichteliteratuur}
-\fullcite{Broeders2020}. Dit dictaat wordt gebruikt bij de introductie in C++.\\
-In de lessen heb je een MSP-EXP430G2 ontwikkelbord en een breadboard nodig. Beide zijn verkrijgbaar in het magazijn op het Academieplein.
+\fullcite{Jacobs2022}.
 
-\needspace{3cm}
-\section{Docentenbereikbaarheid}
-\label{sec:docenten}
-\vspace{-.4\baselineskip}
-\tabelzonder{llX}{Docent & E-mail & MS Teams chat}{
-	J.Z.M. Broeders & \mail{BroJZ} & \chat{BROJZ}{Harry Broeders} \\\hline 
-	K.A. Muilwijk & \mail{MuiKo} & \chat{MUIKO}{Koen Muilwijk} \\\hline
-	R.T. Verhagen & \mail{VeRon} & \chat{VERON}{Ron Verhagen} \\\hline
-	D. Versluis & \mail{VersD} & \chat{VERSD}{Daniël Versluis}
-}
+In practicum heb je een MSP-EXP430G2 ontwikkelbord en een breadboard nodig. Beide zijn verkrijgbaar in de HintShop.
+
+% Vanwege de privacy is de sectie docentenbereikbaarheid verwijderd sinds 2026-2027.
+% \needspace{3cm}
+% \section{Docentenbereikbaarheid}
+% \label{sec:docenten}
+% \vspace{-.4\baselineskip}
+% \tabelzonder{llX}{Docent & E-mail & MS Teams chat}{
+% 	J.Z.M. Broeders & \mail{BroJZ} & \chat{BROJZ}{Harry Broeders} \\\hline 
+% 	K.A. Muilwijk & \mail{MuiKo} & \chat{MUIKO}{Koen Muilwijk}
+% }
 
 \section{Deadlines en speciale activiteiten}
 \label{sec:deadlines}
@@ -152,52 +176,53 @@ In deze paragraaf wordt de gedetailleerde planning gegeven. De planning kan gedu
 }{
 	\multirow{2}{*}{\bigred{1.1}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.2}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.3}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.4}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}.\\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}.\\
 	\hline
 	\multirow{2}{*}{\bigred{1.5}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.6}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}. \\
 	\hline
 	\multirow{2}{*}{\bigred{1.7}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}. \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}. \\
 	\hline
 	\multirow{3}{*}{\bigred{1.8}} & 
 	Les & Bla bla.\\
-	& Zelfstudie & Bla\herhaal{5}{ bla die bla}.  \\
+	& Zelfstudie & Bla\herhaal{5}{ \bla{} \die{} \bla{}}.  \\
 	& \textcolor{hrred}{\textbf{Opdracht}} & Deadline \deadline{}\\
 	\hline
-	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{T4}} & 
+	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{T1}} & 
 	\textcolor{hrred}{\textbf{Tentamen}} &  \\[1ex]
 	\hline
 	\multirow{1}{*}{\bigred{2.8}} & 
 	\textcolor{hrred}{\textbf{Herkansing opdracht}} & Deadline \deadline{}\\
 	\hline
-	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{HT4}} & 
+	\rule{0pt}{3.5ex}\multirow{1}{*}{\bigred{HT1}} & 
 	\textcolor{hrred}{\textbf{Hertentamen}} &  \\[1ex]
 }{3}
 \iftoggle{ebook}{\end{small}}{}
 	
 \needspace{5cm}
-\versiehistorie{
-	12-2020 & 1.0 & Eerste versie. & \mailafko{BroJZ} \\
-	05-2021 & 2.0 & Urenverantwoording aangepast. & \mailafko{BroJZ} 
+\versiehistoriezondernamen{
+	12-2020 & 1.0 & Eerste versie.\\
+	05-2021 & 2.0 & Urenverantwoording aangepast.\\
+	07-2026 & 3.0 & Geen namen meer in versiehistorie, punten vervangen door cijfers, beperkte geldigheid deelresultaten en docentenbereikbaarheid verwijderd, frauderegeling en gebruik AI toegevoegd.
 }
 
 \end{document}
