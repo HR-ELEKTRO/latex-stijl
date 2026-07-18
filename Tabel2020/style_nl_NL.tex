@@ -181,7 +181,18 @@
 % xcolor is nodig om tabellen te kunnen kleuren
 \usepackage[table]{xcolor}
 % alle rood moet Rotterdam's rood zijn ;-)
-\definecolor{hrred}{HTML}{cc0033}
+% Nieuwe huisstijl 2024? https://onsmerk.hr.nl/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=6744
+% De primaire kleur is rood.
+\definecolor{hrred}{HTML}{d3104c}
+% De secundaire hoofdkleuren zijn juist niet te fel, zodat uitingen kwalitatief zijn en het rood goed tot zijn recht komt zonder  overweldigend te worden.  De donkerrood is geschikt om ton-sur-ton te kunnen werken. 
+\definecolor{hrdarkblue}{HTML}{003340}
+\definecolor{hrcream}{HTML}{f7efe3}
+\definecolor{hrwhite}{HTML}{ffffff}
+\definecolor{hrdarkred}{HTML}{b41e4b}
+% Accentkleuren. Te gebruiken om aandacht te geven aan een knop, URL of in grafieken en illustraties. Niet gebruiken voor vlakken.
+\definecolor{hryellow}{HTML}{fcc200}
+\definecolor{hrgreen}{HTML}{3ab7b0}
+\definecolor{hrblue}{HTML}{00b0eb}
 
 % Zie: http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf
 \usepackage{tikz}
@@ -325,6 +336,39 @@
 }
 %<versiehistorie
 
+%>versiehistoriezondernamen
+% commando voor versiehistorie tabel zonder namen van auteurs
+% #1 = tabel inhoud
+% tabel heeft 3 kolommen:
+% Datum & Versie & Omschrijving
+% Gebruik \\ \line om de rijen te scheiden.
+\newcommand{\versiehistorieheaderzondernamen}{%
+	\arrayrulecolor{hrred}\hline
+	\rowcolor{hrred} 
+	\multicolumn{1}{c}{\textcolor{white}{\textbf{Datum}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Versie}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Omschrijving}}}
+	\\ \hline
+}
+\newcommand{\versiehistoriezondernamen}[1]{
+	\section*{Versiehistorie}
+	{\renewcommand{\arraystretch}{1.24}%
+	\vspace*{.1\baselineskip}%
+	\begin{xltabular}{\textwidth}{|cc>{\raggedright\arraybackslash}X|}
+		\versiehistorieheaderzondernamen
+		\endfirsthead
+		\multicolumn{3}{l}{\hspace*{-\tabcolsep}\sffamily\small\ Vervolg~van~de~vorige~pagina.}\\ \hline
+		\versiehistorieheaderzondernamen
+		\endhead
+		\multicolumn{3}{r}{\sffamily\small Wordt~vervolgd~op~de~volgende~pagina.\hspace*{-\tabcolsep}}\\
+		\endfoot
+		\hline
+		\endlastfoot
+		#1%
+	\end{xltabular}
+	\addtocounter{table}{-1}%
+	}\vspace{-.45\baselineskip}%
+}
+%<versiehistoriezondernamen
+
 \newcommand{\mailafko}[1]{%
     \href{mailto:#1@hr.nl}{#1}%
 }
@@ -336,7 +380,8 @@
     \vspace{.3\baselineskip}
     \begin{itemize}[leftmargin=*, itemsep=1mm]
 }{
-        \vspace*{-.7\baselineskip}
+        %Niet meer nodig sinds TeXLive 2026
+        %\vspace*{-.7\baselineskip}
     \end{itemize}
 }
 

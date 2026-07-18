@@ -336,6 +336,39 @@
 }
 %<versiehistorie
 
+%>versiehistoriezondernamen
+% commando voor versiehistorie tabel zonder namen van auteurs
+% #1 = tabel inhoud
+% tabel heeft 3 kolommen:
+% Date & Version & Description
+% Gebruik \\ \line om de rijen te scheiden.
+\newcommand{\versiehistorieheaderzondernamen}{%
+	\arrayrulecolor{hrred}\hline
+	\rowcolor{hrred} 
+	\multicolumn{1}{c}{\textcolor{white}{\textbf{Date}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Version}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Description}}}
+	\\ \hline
+}
+\newcommand{\versiehistoriezondernamen}[1]{
+	\section*{Version History}
+	{\renewcommand{\arraystretch}{1.24}%
+	\vspace*{.1\baselineskip}%
+	\begin{xltabular}{\textwidth}{|cc>{\raggedright\arraybackslash}X|}
+		\versiehistorieheaderzondernamen
+		\endfirsthead
+		\multicolumn{3}{l}{\hspace*{-\tabcolsep}\sffamily\small\ Continued~from~the~previous~page.}\\ \hline
+		\versiehistorieheaderzondernamen
+		\endhead
+		\multicolumn{3}{r}{\sffamily\small Continued~on~next~page.\hspace*{-\tabcolsep}}\\
+		\endfoot
+		\hline
+		\endlastfoot
+		#1%
+	\end{xltabular}
+	\addtocounter{table}{-1}%
+	}\vspace{-.45\baselineskip}%
+}
+%<versiehistoriezondernamen
+
 \newcommand{\mailafko}[1]{%
     \href{mailto:#1@hr.nl}{#1}%
 }
@@ -347,7 +380,8 @@
     \vspace{.3\baselineskip}
     \begin{itemize}[leftmargin=*, itemsep=1mm]
 }{
-        \vspace*{-.7\baselineskip}
+        %Niet meer nodig sinds TeXLive 2026
+        %\vspace*{-.7\baselineskip}
     \end{itemize}
 }
 
