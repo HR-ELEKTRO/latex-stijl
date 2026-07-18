@@ -1,3 +1,4 @@
+% !TEX root=main.tex
 % LTeX: language=nl
 % De bijbehorende makefile genereert zowel de printed als de ebook versie
 
@@ -5,7 +6,7 @@
 \newcommand{\modulecode}{TST10}
 \newcommand{\titel}{Figuren, tabellen en listings}
 \newcommand{\documenttype}{Dictaat}
-\newcommand{\huidigeversie}{1.0}
+\newcommand{\huidigeversie}{2.0}
 \newcommand{\auteurs}{
     J.Z.M. Broeders
 }
@@ -224,20 +225,19 @@ Het effect van het commando |\handtekening| zie je hieronder.
 \clearpage
 Dit is een stukje tekst dat gebruikt kan worden om de afstand tussen de tekst en de versietabel te meten. 
 Hieronder vind je een versietabel gedefinieerd met het commando |\versiehistorie|. 
-Dit is om de regel verder te vullen.
 
 \versiehistorie{
-	25-12-2018 & 2.0 & Paar puntjes verbeterd (\code{itemizeintabu}):
+	18-07-2026 & 2.0 & Paar puntjes verbeterd (\code{itemizeintabel}):
 	\begin{itemizeintabel}
 		\item punt 1;
 		\item punt 2.
 	\end{itemizeintabel} & \mailafko{BroJZ} \\
 	25-12-2018 & 1.1 & Eerste versie. 
 	Paar puntjes verbeterd (\code{itemize}):
-	\begin{itemizeintabel}
+	\begin{itemize}
 		\item punt 1;
 		\item \code{itemize} werkt niet goed.
-	\end{itemizeintabel} & \mailafko{BroJZ} \\
+	\end{itemize} & \mailafko{BroJZ} \\
 	25-12-2018 & 1.0 & Eerste versie. & \mailafko{BroJZ}
 }
 
@@ -537,7 +537,7 @@ Er volgt nu een harde pagebreak.
 
 \clearpage
 \section{Pinky-assemblercode}
-Dit is een stukje \href{https://bytebucket.org/HR_ELEKTRO/rts10/wiki/LEGv7/LEGv7-Pinky_ebook.pdf}{Pinky}-assemblercode:
+Dit is een stukje \href{https://github.com/HR-ELEKTRO/rts1/wiki/LEGv7/LEGv7-Pinky_ebook.pdf}{Pinky}-assemblercode:
 \begin{lstfragment}[style=pinkystyle]
     .cpu cortex-m4
     .thumb

@@ -108,17 +108,17 @@ Bijvoorbeeld:
 In een book begint elk hoofdstuk op een nieuwe pagina, in een article niet.
 De class article kun je gebruiken voor eenvoudige documenten zoals bijvoorbeeld een korte instructie%
 \footnote{%
-	Zie: \href{https://bitbucket.org/HR_ELEKTRO/tds02/wiki/Report\%20Requirements/Report_Requirements_TDS02.pdf}{Report\_Requirements\_TDS02.pdf} en 
-	\href{https://bitbucket.org/HR_ELEKTRO/tds02/wiki/Report\%20Requirements/Report_Requirements_TDS02_ebook.pdf}{Report\_Requirements\_TDS02\_ebook.pdf}.
-	De sourcecode vind je hier: \url{https://bitbucket.org/HR_ELEKTRO/tds02/}.%
+	Zie: \href{https://github.com/Harry-Broeders/tds02/wiki/Report_Requirements/Report_Requirements_TDS02.pdf}{Report\_Requirements\_TDS02.pdf} en 
+	\href{https://github.com/Harry-Broeders/tds02/wiki/Report_Requirements/Report_Requirements_TDS02_ebook.pdf}{Report\_Requirements\_TDS02\_ebook.pdf}.
+	De sourcecode vind je hier: \url{https://bitbucket.org/HR_ELEKTRO/tds02/src/master/Report\%20Requirements}.%
 }.
 
 Als je de commando's |\frontmatter| en |\mainmatter| gebruikt in een book, dan worden de pagina's tussen deze twee commando's (in de papieren versie) Romeins genummerd.
 In de ebook versie worden de pagina's altijd gewoon doorgenummerd zodat het paginanummer dat door de reader wordt weergegeven overeenkomt met het werkelijke paginanummer.
 
 \section{Cursushandleiding}
-De in dit document beschreven stijl is ook te gebruiken om een cursushandleiding mee te maken. Er is daarvoor een speciale file |styleCursusHandleiding.tex| beschikbaar. Je kunt de cursushandleiding van EMS20\footnote{%
-	Zie \url{https://bitbucket.org/HR_ELEKTRO/ems20}, de source is te vinden in de private repository van EMS20. 
+De in dit document beschreven stijl is ook te gebruiken om een cursushandleiding mee te maken. Er is daarvoor een speciale file |styleCursusHandleiding.tex| beschikbaar. Je kunt de cursushandleiding van EMS3\footnote{%
+	Zie \url{https://github.com/HR-ELEKTRO/ems3/wiki}, de source is te vinden in de private repository van EMS3. 
 } als voorbeeld gebruiken.
 
 \section{Tentamen}
@@ -145,6 +145,7 @@ Het logo (\hcode{./figs/\\-logo\\-HR.pdf}) en vervagende logo \hcode{./figs/\\-l
 Deze bestanden moeten aanwezig zijn in het |./figs| directory.
 
 \section{Versiehistorie}
+\label{sec:versiehistorie}
 Een tabel waarin de versiehistorie staat weergegeven kan eenvoudig aangemaakt worden met het commando |\versiehistorie|.
 Dit commando maakt gebruik van een |\longtabu| wat ervoor zorgt dat het geen probleem is als de tabel langer is dan een pagina.
 De tabel heeft 4 kolommen: Datum, Versie, Omschrijving en Auteur.
@@ -165,6 +166,11 @@ De versiehistorie van dit document ziet er in \LaTeX{}-code als volgt uit:
     rangeendprefix=\%<,
     linerange={versiehistorie-versiehistorie},
 ]{../titlepage.tex}
+
+\section{Versiehistoriezondernamen}
+\label{sec:versiehistoriezondernamen}
+Als je om een of andere reden, bijvoorbeeld vanwege privacy-overwegingen, de namen van de auteurs niet in de versiehistorie wilt opnemen, dan kun je gebruik maken van het commando |\versiehistoriezondernamen|.
+Dit commando heeft dezelfde syntax als het commando |\versiehistorie|, zie \cref{sec:versiehistorie}, maar heeft slechts 3 kolommen: Datum, Versie en Omschrijving.
 
 \section{Licentie}
 Onder de versiehistorie kan de licentie voor het gebruik van het document vermeld worden.
@@ -846,13 +852,13 @@ Als je naar een met \LaTeX{} gemaakt document verwijst, dan kun je een link opne
 commando |\pdfdeelref|.
 
 Zo verwijst deze link:
-\pdfdeelref{section}{paragraaf~}{https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}
+\pdfdeelref{section}{paragraaf~}{https://github.com/HR-ELEKTRO/cppprog/wiki/Dictaat_OPinCpp\iftoggle{ebook}{_ebook}{}.pdf}{6.2}
 naar paragraaf 6.2 van mijn \Cpp{}-dictaat.
 De voorgaande link is als volgt gecodeerd:
 
 \begin{lstfragment}[style=lstyle]
 \pdfdeelref{section}{paragraaf~}{%
-https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp%
+https://github.com/HR-ELEKTRO/cppprog/wiki/Dictaat_OPinCpp%
 \iftoggle{ebook}{_ebook}{}.pdf}{6.2}
 \end{lstfragment}
 
@@ -867,24 +873,24 @@ naar de \squote{papieren} versie van het dictaat.
 De code:
 \begin{lstfragment}[style=lstyle]
 Bla, bla, zie \pdfdeelref{chapter}{hoofdstuk~}{%
-https://bytebucket.org/HR_ELEKTRO/dis10/wiki/Dictaat/ Dictaat_DIS10%
+https://github.com/HR-ELEKTRO/dis1/wiki/Dictaat/Dictaat_DIS10%
 \iftoggle{ebook}{_ebook}{}.pdf}{4} van het DIS10 dictaat.
 \end{lstfragment}
 Levert de volgende uitvoer:
 Bla, bla, zie
-\pdfdeelref{chapter}{hoofdstuk~}{https://bytebucket.org/HR_ELEKTRO/dis10/wiki/Dictaat/Dictaat_DIS10\iftoggle{ebook}{_ebook}{}.pdf}{4}
+\pdfdeelref{chapter}{hoofdstuk~}{https://github.com/HR-ELEKTRO/dis1/wiki/Dictaat/Dictaat_DIS10\iftoggle{ebook}{_ebook}{}.pdf}{4}
 van het DIS10 dictaat.
 
 Dit commando kan ook handig gebruikt worden als optioneel argument van het |\cite| command:
 
 \begin{lstfragment}[style=lstyle]
 Bla, bla namespaces, zie \cite[\pdfdeelref{section}{paragraaf~}{%
-https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp%
+https://github.com/HR-ELEKTRO/cppprog/wiki/Dictaat_OPinCpp%
 \iftoggle{ebook}{_ebook}{}.pdf}{15.4}]{Broeders2019}.
 \end{lstfragment}
 
 Bovenstaande code geeft: Bla, bla namespaces,
-zie \cite[\pdfdeelref{section}{paragraaf~}{https://bytebucket.org/HR_ELEKTRO/cppprog/wiki/Dictaat_OPinCpp\iftoggle{ebook}{_ebook}{}.pdf}{15.4}]{Broeders2019}.
+zie \cite[\pdfdeelref{section}{paragraaf~}{https://github.com/HR-ELEKTRO/cppprog/wiki/Dictaat_OPinCpp\iftoggle{ebook}{_ebook}{}.pdf}{15.4}]{Broeders2019}.
 
 Als de URL ook in de biblatex informatie is opgenomen dan is het eenvoudiger om het command |\citepdfdeel| te gebruiken.
 Dit commando heeft dezelfde parameters als het |\pdfdeelref| commando behalve dat als derde parameter de biblatex key in plaats van de URL wordt opgegeven.
