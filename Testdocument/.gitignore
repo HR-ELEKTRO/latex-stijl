@@ -1,0 +1,15 @@
+#ignore all files!
+*.*
+
+#except for these...
+!*/*
+!.gitignore
+!*.tex
+!*.bib
+!makefile
+!*.txss
+!*.cmd
+!*.md
+
+#only in this repo:
+!*.pdf
